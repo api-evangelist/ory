@@ -1,0 +1,38 @@
+aid: ory
+name: Ory
+description: >-
+  Ory is an open source identity infrastructure platform providing OAuth2 (Hydra), identity management (Kratos), permissions (Keto), and reverse proxy (Oathkeeper).
+type: Index
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+tags:
+  - Authentication
+  - Open Source
+url: >-
+  https://raw.githubusercontent.com/api-evangelist/ory/refs/heads/main/apis.yml
+created: '2026-03-25'
+modified: '2026-03-25'
+specificationVersion: '0.19'
+apis:
+  - aid: ory:ory
+    name: Ory
+    description: >-
+      Ory is an open source identity infrastructure platform providing OAuth2 (Hydra), identity management (Kratos), permissions (Keto), and reverse proxy (Oathkeeper).
+    humanURL: https://www.ory.sh
+    tags:
+      - Authentication
+      - Open Source
+    properties:
+      - type: Documentation
+        url: https://www.ory.sh/docs/
+      - type: GitHub Repository
+        url: https://github.com/ory
+common:
+  - type: Website
+    url: https://www.ory.sh
+  - type: Documentation
+    url: https://www.ory.sh/docs/
+  - type: GitHub Organization
+    url: https://github.com/ory
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
