@@ -38,7 +38,7 @@ apis:
           https://raw.githubusercontent.com/api-evangelist/ory/refs/heads/main/openapi/ory-hydra-openapi.json
       - type: Documentation
         url: https://www.ory.sh/docs/hydra/
-      - type: GitHub Repository
+      - type: GitHubRepository
         url: https://github.com/ory/hydra
   - aid: ory:kratos
     name: Ory Kratos
@@ -58,7 +58,7 @@ apis:
           https://raw.githubusercontent.com/api-evangelist/ory/refs/heads/main/openapi/ory-kratos-openapi.json
       - type: Documentation
         url: https://www.ory.sh/docs/kratos/
-      - type: GitHub Repository
+      - type: GitHubRepository
         url: https://github.com/ory/kratos
   - aid: ory:keto
     name: Ory Keto
@@ -77,7 +77,7 @@ apis:
           https://raw.githubusercontent.com/api-evangelist/ory/refs/heads/main/openapi/ory-keto-openapi.json
       - type: Documentation
         url: https://www.ory.sh/docs/keto/
-      - type: GitHub Repository
+      - type: GitHubRepository
         url: https://github.com/ory/keto
   - aid: ory:oathkeeper
     name: Ory Oathkeeper
@@ -96,14 +96,14 @@ apis:
           https://raw.githubusercontent.com/api-evangelist/ory/refs/heads/main/openapi/ory-oathkeeper-openapi.json
       - type: Documentation
         url: https://www.ory.sh/docs/oathkeeper/
-      - type: GitHub Repository
+      - type: GitHubRepository
         url: https://github.com/ory/oathkeeper
 common:
   - type: Website
     url: https://www.ory.sh
   - type: Documentation
     url: https://www.ory.sh/docs/
-  - type: GitHub Organization
+  - type: GitHubOrganization
     url: https://github.com/ory
   - type: Blog
     url: https://www.ory.sh/blog/
