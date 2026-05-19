@@ -1,0 +1,337 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Ory Hydra API — oidc
+  description: 'Ory Hydra API — oidc. 8 operations. Lead operation: OpenID Connect Discovery. Self-contained Naftiko capability
+    covering one Ory business surface.'
+  tags:
+  - Ory
+  - oidc
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    ORY_API_KEY: ORY_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: hydra-oidc
+    baseUri: ''
+    description: Ory Hydra API — oidc business capability. Self-contained, no shared references.
+    resources:
+    - name: .well-known-openid-configuration
+      path: /.well-known/openid-configuration
+      operations:
+      - name: discoveroidcconfiguration
+        method: GET
+        description: OpenID Connect Discovery
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: credentials
+      path: /credentials
+      operations:
+      - name: createverifiablecredential
+        method: POST
+        description: Issues a Verifiable Credential
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: oauth2-register
+      path: /oauth2/register
+      operations:
+      - name: createoidcdynamicclient
+        method: POST
+        description: Register OAuth2 Client using OpenID Dynamic Client Registration
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: oauth2-register-id
+      path: /oauth2/register/{id}
+      operations:
+      - name: deleteoidcdynamicclient
+        method: DELETE
+        description: Delete OAuth 2.0 Client using the OpenID Dynamic Client Registration Management Protocol
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: The id of the OAuth 2.0 Client.
+          required: true
+      - name: getoidcdynamicclient
+        method: GET
+        description: Get OAuth2 Client using OpenID Dynamic Client Registration
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: The id of the OAuth 2.0 Client.
+          required: true
+      - name: setoidcdynamicclient
+        method: PUT
+        description: Set OAuth2 Client using OpenID Dynamic Client Registration
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: OAuth 2.0 Client ID
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: oauth2-sessions-logout
+      path: /oauth2/sessions/logout
+      operations:
+      - name: revokeoidcsession
+        method: GET
+        description: OpenID Connect Front- and Back-channel Enabled Logout
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: userinfo
+      path: /userinfo
+      operations:
+      - name: getoidcuserinfo
+        method: GET
+        description: OpenID Connect Userinfo
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.ORY_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: hydra-oidc-rest
+    port: 8080
+    description: REST adapter for Ory Hydra API — oidc. One Spectral-compliant resource per consumed operation, prefixed with
+      /v1.
+    resources:
+    - path: /v1/well-known/openid-configuration
+      name: well-known-openid-configuration
+      description: REST surface for .well-known-openid-configuration.
+      operations:
+      - method: GET
+        name: discoveroidcconfiguration
+        description: OpenID Connect Discovery
+        call: hydra-oidc.discoveroidcconfiguration
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/credentials
+      name: credentials
+      description: REST surface for credentials.
+      operations:
+      - method: POST
+        name: createverifiablecredential
+        description: Issues a Verifiable Credential
+        call: hydra-oidc.createverifiablecredential
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/oauth2/register
+      name: oauth2-register
+      description: REST surface for oauth2-register.
+      operations:
+      - method: POST
+        name: createoidcdynamicclient
+        description: Register OAuth2 Client using OpenID Dynamic Client Registration
+        call: hydra-oidc.createoidcdynamicclient
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/oauth2/register/{id}
+      name: oauth2-register-id
+      description: REST surface for oauth2-register-id.
+      operations:
+      - method: DELETE
+        name: deleteoidcdynamicclient
+        description: Delete OAuth 2.0 Client using the OpenID Dynamic Client Registration Management Protocol
+        call: hydra-oidc.deleteoidcdynamicclient
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: GET
+        name: getoidcdynamicclient
+        description: Get OAuth2 Client using OpenID Dynamic Client Registration
+        call: hydra-oidc.getoidcdynamicclient
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: setoidcdynamicclient
+        description: Set OAuth2 Client using OpenID Dynamic Client Registration
+        call: hydra-oidc.setoidcdynamicclient
+        with:
+          id: rest.id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/oauth2/sessions/logout
+      name: oauth2-sessions-logout
+      description: REST surface for oauth2-sessions-logout.
+      operations:
+      - method: GET
+        name: revokeoidcsession
+        description: OpenID Connect Front- and Back-channel Enabled Logout
+        call: hydra-oidc.revokeoidcsession
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/userinfo
+      name: userinfo
+      description: REST surface for userinfo.
+      operations:
+      - method: GET
+        name: getoidcuserinfo
+        description: OpenID Connect Userinfo
+        call: hydra-oidc.getoidcuserinfo
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: hydra-oidc-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Ory Hydra API — oidc. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: openid-connect-discovery
+      description: OpenID Connect Discovery
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: hydra-oidc.discoveroidcconfiguration
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: issues-verifiable-credential
+      description: Issues a Verifiable Credential
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: hydra-oidc.createverifiablecredential
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: register-oauth2-client-using-openid
+      description: Register OAuth2 Client using OpenID Dynamic Client Registration
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: hydra-oidc.createoidcdynamicclient
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-oauth-2-0-client-using
+      description: Delete OAuth 2.0 Client using the OpenID Dynamic Client Registration Management Protocol
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: hydra-oidc.deleteoidcdynamicclient
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-oauth2-client-using-openid
+      description: Get OAuth2 Client using OpenID Dynamic Client Registration
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: hydra-oidc.getoidcdynamicclient
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: set-oauth2-client-using-openid
+      description: Set OAuth2 Client using OpenID Dynamic Client Registration
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: hydra-oidc.setoidcdynamicclient
+      with:
+        id: tools.id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: openid-connect-front-and-back
+      description: OpenID Connect Front- and Back-channel Enabled Logout
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: hydra-oidc.revokeoidcsession
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: openid-connect-userinfo
+      description: OpenID Connect Userinfo
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: hydra-oidc.getoidcuserinfo
+      outputParameters:
+      - type: object
+        mapping: $.

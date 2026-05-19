@@ -1,0 +1,339 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Ory Hydra API — jwk
+  description: 'Ory Hydra API — jwk. 7 operations. Lead operation: Delete JSON Web Key Set. Self-contained Naftiko capability
+    covering one Ory business surface.'
+  tags:
+  - Ory
+  - jwk
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    ORY_API_KEY: ORY_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: hydra-jwk
+    baseUri: ''
+    description: Ory Hydra API — jwk business capability. Self-contained, no shared references.
+    resources:
+    - name: admin-keys-set
+      path: /admin/keys/{set}
+      operations:
+      - name: deletejsonwebkeyset
+        method: DELETE
+        description: Delete JSON Web Key Set
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: set
+          in: path
+          type: string
+          description: The JSON Web Key Set
+          required: true
+      - name: getjsonwebkeyset
+        method: GET
+        description: Retrieve a JSON Web Key Set
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: set
+          in: path
+          type: string
+          description: JSON Web Key Set ID
+          required: true
+      - name: createjsonwebkeyset
+        method: POST
+        description: Create JSON Web Key
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: set
+          in: path
+          type: string
+          description: The JSON Web Key Set ID
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: setjsonwebkeyset
+        method: PUT
+        description: Update a JSON Web Key Set
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: set
+          in: path
+          type: string
+          description: The JSON Web Key Set ID
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: admin-keys-set-kid
+      path: /admin/keys/{set}/{kid}
+      operations:
+      - name: deletejsonwebkey
+        method: DELETE
+        description: Delete JSON Web Key
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: set
+          in: path
+          type: string
+          description: The JSON Web Key Set
+          required: true
+        - name: kid
+          in: path
+          type: string
+          description: The JSON Web Key ID (kid)
+          required: true
+      - name: getjsonwebkey
+        method: GET
+        description: Get JSON Web Key
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: set
+          in: path
+          type: string
+          description: JSON Web Key Set ID
+          required: true
+        - name: kid
+          in: path
+          type: string
+          description: JSON Web Key ID
+          required: true
+      - name: setjsonwebkey
+        method: PUT
+        description: Set JSON Web Key
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: set
+          in: path
+          type: string
+          description: The JSON Web Key Set ID
+          required: true
+        - name: kid
+          in: path
+          type: string
+          description: JSON Web Key ID
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    authentication:
+      type: bearer
+      token: '{{env.ORY_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: hydra-jwk-rest
+    port: 8080
+    description: REST adapter for Ory Hydra API — jwk. One Spectral-compliant resource per consumed operation, prefixed with
+      /v1.
+    resources:
+    - path: /v1/admin/keys/{set}
+      name: admin-keys-set
+      description: REST surface for admin-keys-set.
+      operations:
+      - method: DELETE
+        name: deletejsonwebkeyset
+        description: Delete JSON Web Key Set
+        call: hydra-jwk.deletejsonwebkeyset
+        with:
+          set: rest.set
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: GET
+        name: getjsonwebkeyset
+        description: Retrieve a JSON Web Key Set
+        call: hydra-jwk.getjsonwebkeyset
+        with:
+          set: rest.set
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createjsonwebkeyset
+        description: Create JSON Web Key
+        call: hydra-jwk.createjsonwebkeyset
+        with:
+          set: rest.set
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: setjsonwebkeyset
+        description: Update a JSON Web Key Set
+        call: hydra-jwk.setjsonwebkeyset
+        with:
+          set: rest.set
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/admin/keys/{set}/{kid}
+      name: admin-keys-set-kid
+      description: REST surface for admin-keys-set-kid.
+      operations:
+      - method: DELETE
+        name: deletejsonwebkey
+        description: Delete JSON Web Key
+        call: hydra-jwk.deletejsonwebkey
+        with:
+          set: rest.set
+          kid: rest.kid
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: GET
+        name: getjsonwebkey
+        description: Get JSON Web Key
+        call: hydra-jwk.getjsonwebkey
+        with:
+          set: rest.set
+          kid: rest.kid
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: setjsonwebkey
+        description: Set JSON Web Key
+        call: hydra-jwk.setjsonwebkey
+        with:
+          set: rest.set
+          kid: rest.kid
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: hydra-jwk-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Ory Hydra API — jwk. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: delete-json-web-key-set
+      description: Delete JSON Web Key Set
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: hydra-jwk.deletejsonwebkeyset
+      with:
+        set: tools.set
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: retrieve-json-web-key-set
+      description: Retrieve a JSON Web Key Set
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: hydra-jwk.getjsonwebkeyset
+      with:
+        set: tools.set
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-json-web-key
+      description: Create JSON Web Key
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: hydra-jwk.createjsonwebkeyset
+      with:
+        set: tools.set
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-json-web-key-set
+      description: Update a JSON Web Key Set
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: hydra-jwk.setjsonwebkeyset
+      with:
+        set: tools.set
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-json-web-key
+      description: Delete JSON Web Key
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: hydra-jwk.deletejsonwebkey
+      with:
+        set: tools.set
+        kid: tools.kid
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-json-web-key
+      description: Get JSON Web Key
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: hydra-jwk.getjsonwebkey
+      with:
+        set: tools.set
+        kid: tools.kid
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: set-json-web-key
+      description: Set JSON Web Key
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: hydra-jwk.setjsonwebkey
+      with:
+        set: tools.set
+        kid: tools.kid
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

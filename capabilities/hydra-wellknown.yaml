@@ -1,0 +1,70 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Ory Hydra API — wellknown
+  description: 'Ory Hydra API — wellknown. 1 operations. Lead operation: Discover Well-Known JSON Web Keys. Self-contained
+    Naftiko capability covering one Ory business surface.'
+  tags:
+  - Ory
+  - wellknown
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    ORY_API_KEY: ORY_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: hydra-wellknown
+    baseUri: ''
+    description: Ory Hydra API — wellknown business capability. Self-contained, no shared references.
+    resources:
+    - name: .well-known-jwks.json
+      path: /.well-known/jwks.json
+      operations:
+      - name: discoverjsonwebkeys
+        method: GET
+        description: Discover Well-Known JSON Web Keys
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.ORY_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: hydra-wellknown-rest
+    port: 8080
+    description: REST adapter for Ory Hydra API — wellknown. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/well-known/jwks-json
+      name: well-known-jwks-json
+      description: REST surface for .well-known-jwks.json.
+      operations:
+      - method: GET
+        name: discoverjsonwebkeys
+        description: Discover Well-Known JSON Web Keys
+        call: hydra-wellknown.discoverjsonwebkeys
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: hydra-wellknown-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Ory Hydra API — wellknown. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: discover-well-known-json-web
+      description: Discover Well-Known JSON Web Keys
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: hydra-wellknown.discoverjsonwebkeys
+      outputParameters:
+      - type: object
+        mapping: $.

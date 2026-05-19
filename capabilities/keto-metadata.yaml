@@ -1,0 +1,131 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Ory Keto API — metadata
+  description: 'Ory Keto API — metadata. 3 operations. Lead operation: Check HTTP Server Status. Self-contained Naftiko capability
+    covering one Ory business surface.'
+  tags:
+  - Ory
+  - metadata
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    ORY_API_KEY: ORY_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: keto-metadata
+    baseUri: ''
+    description: Ory Keto API — metadata business capability. Self-contained, no shared references.
+    resources:
+    - name: health-alive
+      path: /health/alive
+      operations:
+      - name: isalive
+        method: GET
+        description: Check HTTP Server Status
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: health-ready
+      path: /health/ready
+      operations:
+      - name: isready
+        method: GET
+        description: Check HTTP Server and Database Status
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: version
+      path: /version
+      operations:
+      - name: getversion
+        method: GET
+        description: Return Running Software Version.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+  exposes:
+  - type: rest
+    namespace: keto-metadata-rest
+    port: 8080
+    description: REST adapter for Ory Keto API — metadata. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/health/alive
+      name: health-alive
+      description: REST surface for health-alive.
+      operations:
+      - method: GET
+        name: isalive
+        description: Check HTTP Server Status
+        call: keto-metadata.isalive
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/health/ready
+      name: health-ready
+      description: REST surface for health-ready.
+      operations:
+      - method: GET
+        name: isready
+        description: Check HTTP Server and Database Status
+        call: keto-metadata.isready
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/version
+      name: version
+      description: REST surface for version.
+      operations:
+      - method: GET
+        name: getversion
+        description: Return Running Software Version.
+        call: keto-metadata.getversion
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: keto-metadata-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Ory Keto API — metadata. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: check-http-server-status
+      description: Check HTTP Server Status
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: keto-metadata.isalive
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: check-http-server-and-database
+      description: Check HTTP Server and Database Status
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: keto-metadata.isready
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: return-running-software-version
+      description: Return Running Software Version.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: keto-metadata.getversion
+      outputParameters:
+      - type: object
+        mapping: $.
