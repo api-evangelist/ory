@@ -1,0 +1,462 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Ory Keto API"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "relationship",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a Relationship",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/admin/relation-tuples",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Use this endpoint to create a relationship."
+        },
+        {
+          "info": {
+            "name": "Patch Multiple Relationships",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/admin/relation-tuples",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Use this endpoint to patch one or more relationships."
+        },
+        {
+          "info": {
+            "name": "Delete Relationships",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/admin/relation-tuples",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "query",
+                "description": "Namespace of the Relationship"
+              },
+              {
+                "name": "object",
+                "value": "",
+                "type": "query",
+                "description": "Object of the Relationship"
+              },
+              {
+                "name": "relation",
+                "value": "",
+                "type": "query",
+                "description": "Relation of the Relationship"
+              },
+              {
+                "name": "subject_id",
+                "value": "",
+                "type": "query",
+                "description": "SubjectID of the Relationship"
+              },
+              {
+                "name": "subject_set.namespace",
+                "value": "",
+                "type": "query",
+                "description": "Namespace of the Subject Set"
+              },
+              {
+                "name": "subject_set.object",
+                "value": "",
+                "type": "query",
+                "description": "Object of the Subject Set"
+              },
+              {
+                "name": "subject_set.relation",
+                "value": "",
+                "type": "query",
+                "description": "Relation of the Subject Set"
+              }
+            ]
+          },
+          "docs": "Use this endpoint to delete relationships"
+        },
+        {
+          "info": {
+            "name": "Query namespaces",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/namespaces"
+          },
+          "docs": "Get all namespaces"
+        },
+        {
+          "info": {
+            "name": "Check the syntax of an OPL file",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/opl/syntax/check"
+          },
+          "docs": "The OPL file is expected in the body of the request."
+        },
+        {
+          "info": {
+            "name": "Query relationships",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/relation-tuples",
+            "params": [
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Items per Page\n\nThis is the number of items per page to return.\nFor details on pagination please head over to the [pagination documentation](https://www.ory.com/docs/ecosystem/api-design#pagination)."
+              },
+              {
+                "name": "page_token",
+                "value": "",
+                "type": "query",
+                "description": "Next Page Token\n\nThe next page token.\nFor details on pagination please head over to the [pagination documentation](https://www.ory.com/docs/ecosystem/api-design#pagination)."
+              },
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "query",
+                "description": "Namespace of the Relationship"
+              },
+              {
+                "name": "object",
+                "value": "",
+                "type": "query",
+                "description": "Object of the Relationship"
+              },
+              {
+                "name": "relation",
+                "value": "",
+                "type": "query",
+                "description": "Relation of the Relationship"
+              },
+              {
+                "name": "subject_id",
+                "value": "",
+                "type": "query",
+                "description": "SubjectID of the Relationship"
+              },
+              {
+                "name": "subject_set.namespace",
+                "value": "",
+                "type": "query",
+                "description": "Namespace of the Subject Set"
+              },
+              {
+                "name": "subject_set.object",
+                "value": "",
+                "type": "query",
+                "description": "Object of the Subject Set"
+              },
+              {
+                "name": "subject_set.relation",
+                "value": "",
+                "type": "query",
+                "description": "Relation of the Subject Set"
+              }
+            ]
+          },
+          "docs": "Get all relationships that match the query. Only the namespace field is required."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "metadata",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Check HTTP Server Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/health/alive"
+          },
+          "docs": "This endpoint returns a HTTP 200 status code when Ory Keto is accepting incoming\nHTTP requests. This status does currently not include checks whether the database connection is working.\n\nIf the service supports TLS Edge Termination, this endpoint does not require the\n`X-Forwarded-Proto` header to be set.\n\nBe aware that if you are running multiple nodes of this service, the health status will never\nrefer to the cluster state, only to a single instance."
+        },
+        {
+          "info": {
+            "name": "Check HTTP Server and Database Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/health/ready"
+          },
+          "docs": "This endpoint returns a HTTP 200 status code when Ory Keto is up running and the environment dependencies (e.g.\nthe database) are responsive as well.\n\nIf the service supports TLS Edge Termination, this endpoint does not require the\n`X-Forwarded-Proto` header to be set.\n\nBe aware that if you are running multiple nodes of Ory Keto, the health status will never\nrefer to the cluster state, only to a single instance."
+        },
+        {
+          "info": {
+            "name": "Return Running Software Version.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/version"
+          },
+          "docs": "This endpoint returns the version of Ory Keto.\n\nIf the service supports TLS Edge Termination, this endpoint does not require the\n`X-Forwarded-Proto` header to be set.\n\nBe aware that if you are running multiple nodes of this service, the version will never\nrefer to the cluster state, only to a single instance."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "permission",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Batch check permissions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/relation-tuples/batch/check",
+            "params": [
+              {
+                "name": "max-depth",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "To learn how relationship tuples and the check works, head over to [the documentation](https://www.ory.com/docs/keto/concepts/api-overview)."
+        },
+        {
+          "info": {
+            "name": "Check a permission",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/relation-tuples/check",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "query",
+                "description": "Namespace of the Relationship"
+              },
+              {
+                "name": "object",
+                "value": "",
+                "type": "query",
+                "description": "Object of the Relationship"
+              },
+              {
+                "name": "relation",
+                "value": "",
+                "type": "query",
+                "description": "Relation of the Relationship"
+              },
+              {
+                "name": "subject_id",
+                "value": "",
+                "type": "query",
+                "description": "SubjectID of the Relationship"
+              },
+              {
+                "name": "subject_set.namespace",
+                "value": "",
+                "type": "query",
+                "description": "Namespace of the Subject Set"
+              },
+              {
+                "name": "subject_set.object",
+                "value": "",
+                "type": "query",
+                "description": "Object of the Subject Set"
+              },
+              {
+                "name": "subject_set.relation",
+                "value": "",
+                "type": "query",
+                "description": "Relation of the Subject Set"
+              },
+              {
+                "name": "max-depth",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "To learn how relationship tuples and the check works, head over to [the documentation](https://www.ory.com/docs/keto/concepts/api-overview)."
+        },
+        {
+          "info": {
+            "name": "Check a permission",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/relation-tuples/check",
+            "params": [
+              {
+                "name": "max-depth",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "To learn how relationship tuples and the check works, head over to [the documentation](https://www.ory.com/docs/keto/concepts/api-overview)."
+        },
+        {
+          "info": {
+            "name": "Check a permission",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/relation-tuples/check/openapi",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "query",
+                "description": "Namespace of the Relationship"
+              },
+              {
+                "name": "object",
+                "value": "",
+                "type": "query",
+                "description": "Object of the Relationship"
+              },
+              {
+                "name": "relation",
+                "value": "",
+                "type": "query",
+                "description": "Relation of the Relationship"
+              },
+              {
+                "name": "subject_id",
+                "value": "",
+                "type": "query",
+                "description": "SubjectID of the Relationship"
+              },
+              {
+                "name": "subject_set.namespace",
+                "value": "",
+                "type": "query",
+                "description": "Namespace of the Subject Set"
+              },
+              {
+                "name": "subject_set.object",
+                "value": "",
+                "type": "query",
+                "description": "Object of the Subject Set"
+              },
+              {
+                "name": "subject_set.relation",
+                "value": "",
+                "type": "query",
+                "description": "Relation of the Subject Set"
+              },
+              {
+                "name": "max-depth",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "To learn how relationship tuples and the check works, head over to [the documentation](https://www.ory.com/docs/keto/concepts/api-overview)."
+        },
+        {
+          "info": {
+            "name": "Check a permission",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/relation-tuples/check/openapi",
+            "params": [
+              {
+                "name": "max-depth",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "To learn how relationship tuples and the check works, head over to [the documentation](https://www.ory.com/docs/keto/concepts/api-overview)."
+        },
+        {
+          "info": {
+            "name": "Expand a Relationship into permissions.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/relation-tuples/expand",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "query",
+                "description": "Namespace of the Subject Set"
+              },
+              {
+                "name": "object",
+                "value": "",
+                "type": "query",
+                "description": "Object of the Subject Set"
+              },
+              {
+                "name": "relation",
+                "value": "",
+                "type": "query",
+                "description": "Relation of the Subject Set"
+              },
+              {
+                "name": "max-depth",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Use this endpoint to expand a relationship tuple into permissions."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,1101 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Ory Hydra API"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "wellknown",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Discover Well-Known JSON Web Keys",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/.well-known/jwks.json"
+          },
+          "docs": "This endpoint returns JSON Web Keys required to verifying OpenID Connect ID Tokens and,\nif enabled, OAuth 2.0 JWT Access Tokens. This endpoint can be used with client libraries like\n[node-jwks-rsa](https://github.com/auth0/node-jwks-rsa) among others.\n\nAdding custom keys requires first creating a keyset via the createJsonWebKeySet operation,\nand then configuring the webfinger.jwks.broadcast_keys configuration value to include the keyset name."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "oidc",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "OpenID Connect Discovery",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/.well-known/openid-configuration"
+          },
+          "docs": "A mechanism for an OpenID Connect Relying Party to discover the End-User's OpenID Provider and obtain information needed to interact with it, including its OAuth 2.0 endpoint locations.\n\nPopular libraries for OpenID Connect clients include oidc-client-js (JavaScript), go-oidc (Golang), and others.\nFor a full list of clients go here: https://openid.net/developers/certified/"
+        },
+        {
+          "info": {
+            "name": "Issues a Verifiable Credential",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/credentials",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "This endpoint creates a verifiable credential that attests that the user\nauthenticated with the provided access token owns a certain public/private key\npair.\n\nMore information can be found at\nhttps://openid.net/specs/openid-connect-userinfo-vc-1_0.html."
+        },
+        {
+          "info": {
+            "name": "Register OAuth2 Client using OpenID Dynamic Client Registration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/oauth2/register",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "This endpoint behaves like the administrative counterpart (`createOAuth2Client`) but is capable of facing the\npublic internet directly and can be used in self-service. It implements the OpenID Connect\nDynamic Client Registration Protocol. This feature needs to be enabled in the configuration. This endpoint\nis disabled by default. It can be enabled by an administrator.\n\nPlease note that using this endpoint you are not able to choose the `client_secret` nor the `client_id` as those\nvalues will be "
+        },
+        {
+          "info": {
+            "name": "Get OAuth2 Client using OpenID Dynamic Client Registration",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/oauth2/register/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The id of the OAuth 2.0 Client."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This endpoint behaves like the administrative counterpart (`getOAuth2Client`) but is capable of facing the\npublic internet directly and can be used in self-service. It implements the OpenID Connect\nDynamic Client Registration Protocol.\n\nTo use this endpoint, you will need to present the client's authentication credentials. If the OAuth2 Client\nuses the Token Endpoint Authentication Method `client_secret_post`, you need to present the client secret in the URL query.\nIf it uses `client_secret_basi"
+        },
+        {
+          "info": {
+            "name": "Set OAuth2 Client using OpenID Dynamic Client Registration",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/oauth2/register/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "OAuth 2.0 Client ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This endpoint behaves like the administrative counterpart (`setOAuth2Client`) but is capable of facing the\npublic internet directly to be used by third parties. It implements the OpenID Connect\nDynamic Client Registration Protocol.\n\nThis feature is disabled per default. It can be enabled by a system administrator.\n\nIf you pass `client_secret` the secret is used, otherwise the existing secret is used. If set, the secret is echoed in the response.\nIt is not possible to retrieve it later on.\n\nTo us"
+        },
+        {
+          "info": {
+            "name": "Delete OAuth 2.0 Client using the OpenID Dynamic Client Registration Management Protocol",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/oauth2/register/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The id of the OAuth 2.0 Client."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This endpoint behaves like the administrative counterpart (`deleteOAuth2Client`) but is capable of facing the\npublic internet directly and can be used in self-service. It implements the OpenID Connect\nDynamic Client Registration Protocol. This feature needs to be enabled in the configuration. This endpoint\nis disabled by default. It can be enabled by an administrator.\n\nTo use this endpoint, you will need to present the client's authentication credentials. If the OAuth2 Client\nuses the Token Endp"
+        },
+        {
+          "info": {
+            "name": "OpenID Connect Front- and Back-channel Enabled Logout",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/oauth2/sessions/logout"
+          },
+          "docs": "This endpoint initiates and completes user logout at the Ory OAuth2 & OpenID provider and initiates OpenID Connect Front- / Back-channel logout:\n\nhttps://openid.net/specs/openid-connect-frontchannel-1_0.html\nhttps://openid.net/specs/openid-connect-backchannel-1_0.html\n\nBack-channel logout is performed asynchronously and does not affect logout flow."
+        },
+        {
+          "info": {
+            "name": "OpenID Connect Userinfo",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/userinfo",
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://hydra.demo.ory.sh/oauth2/auth",
+              "accessTokenUrl": "https://hydra.demo.ory.sh/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This endpoint returns the payload of the ID Token, including `session.id_token` values, of\nthe provided OAuth 2.0 Access Token's consent request.\n\nIn the case of authentication error, a WWW-Authenticate header might be set in the response\nwith more information about the error. See [the spec](https://datatracker.ietf.org/doc/html/rfc6750#section-3)\nfor more details about header format."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "oAuth2",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List OAuth 2.0 Clients",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/admin/clients",
+            "params": [
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Items per Page\n\nThis is the number of items per page to return.\nFor details on pagination please head over to the [pagination documentation](https://www.ory.com/docs/ecosystem/api-design#pagination)."
+              },
+              {
+                "name": "page_token",
+                "value": "",
+                "type": "query",
+                "description": "Next Page Token\n\nThe next page token.\nFor details on pagination please head over to the [pagination documentation](https://www.ory.com/docs/ecosystem/api-design#pagination)."
+              },
+              {
+                "name": "client_name",
+                "value": "",
+                "type": "query",
+                "description": "The name of the clients to filter by."
+              },
+              {
+                "name": "owner",
+                "value": "",
+                "type": "query",
+                "description": "The owner of the clients to filter by."
+              }
+            ]
+          },
+          "docs": "This endpoint lists all clients in the database, and never returns client secrets.\nAs a default it lists the first 100 clients."
+        },
+        {
+          "info": {
+            "name": "Create OAuth 2.0 Client",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/admin/clients",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new OAuth 2.0 client. If you pass `client_secret` the secret is used, otherwise a random secret\nis generated. The secret is echoed in the response. It is not possible to retrieve it later on."
+        },
+        {
+          "info": {
+            "name": "Get an OAuth 2.0 Client",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/admin/clients/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The id of the OAuth 2.0 Client."
+              }
+            ]
+          },
+          "docs": "Get an OAuth 2.0 client by its ID. This endpoint never returns the client secret.\n\nOAuth 2.0 clients are used to perform OAuth 2.0 and OpenID Connect flows. Usually, OAuth 2.0 clients are\ngenerated for applications which want to consume your OAuth 2.0 or OpenID Connect capabilities."
+        },
+        {
+          "info": {
+            "name": "Set OAuth 2.0 Client",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/admin/clients/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "OAuth 2.0 Client ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Replaces an existing OAuth 2.0 Client with the payload you send. If you pass `client_secret` the secret is used,\notherwise the existing secret is used.\n\nIf set, the secret is echoed in the response. It is not possible to retrieve it later on.\n\nOAuth 2.0 Clients are used to perform OAuth 2.0 and OpenID Connect flows. Usually, OAuth 2.0 clients are\ngenerated for applications which want to consume your OAuth 2.0 or OpenID Connect capabilities."
+        },
+        {
+          "info": {
+            "name": "Patch OAuth 2.0 Client",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/admin/clients/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The id of the OAuth 2.0 Client."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Patch an existing OAuth 2.0 Client using JSON Patch. If you pass `client_secret`\nthe secret will be updated and returned via the API. This is the\nonly time you will be able to retrieve the client secret, so write it down and keep it safe.\n\nOAuth 2.0 clients are used to perform OAuth 2.0 and OpenID Connect flows. Usually, OAuth 2.0 clients are\ngenerated for applications which want to consume your OAuth 2.0 or OpenID Connect capabilities."
+        },
+        {
+          "info": {
+            "name": "Delete OAuth 2.0 Client",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/admin/clients/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The id of the OAuth 2.0 Client."
+              }
+            ]
+          },
+          "docs": "Delete an existing OAuth 2.0 Client by its ID.\n\nOAuth 2.0 clients are used to perform OAuth 2.0 and OpenID Connect flows. Usually, OAuth 2.0 clients are\ngenerated for applications which want to consume your OAuth 2.0 or OpenID Connect capabilities.\n\nMake sure that this endpoint is well protected and only callable by first-party components."
+        },
+        {
+          "info": {
+            "name": "Set OAuth2 Client Token Lifespans",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/admin/clients/:id/lifespans",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "OAuth 2.0 Client ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Set lifespans of different token types issued for this OAuth 2.0 client. Does not modify other fields."
+        },
+        {
+          "info": {
+            "name": "Get OAuth 2.0 Consent Request",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/admin/oauth2/auth/requests/consent",
+            "params": [
+              {
+                "name": "consent_challenge",
+                "value": "",
+                "type": "query",
+                "description": "OAuth 2.0 Consent Request Challenge"
+              }
+            ]
+          },
+          "docs": "When an authorization code, hybrid, or implicit OAuth 2.0 Flow is initiated, Ory asks the login provider\nto authenticate the subject and then tell Ory now about it. If the subject authenticated, he/she must now be asked if\nthe OAuth 2.0 Client which initiated the flow should be allowed to access the resources on the subject's behalf.\n\nThe consent challenge is appended to the consent provider's URL to which the subject's user-agent (browser) is redirected to. The consent\nprovider uses that challe"
+        },
+        {
+          "info": {
+            "name": "Accept OAuth 2.0 Consent Request",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/admin/oauth2/auth/requests/consent/accept",
+            "params": [
+              {
+                "name": "consent_challenge",
+                "value": "",
+                "type": "query",
+                "description": "OAuth 2.0 Consent Request Challenge"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "When an authorization code, hybrid, or implicit OAuth 2.0 Flow is initiated, Ory asks the login provider\nto authenticate the subject and then tell Ory now about it. If the subject authenticated, he/she must now be asked if\nthe OAuth 2.0 Client which initiated the flow should be allowed to access the resources on the subject's behalf.\n\nThe consent challenge is appended to the consent provider's URL to which the subject's user-agent (browser) is redirected to. The consent\nprovider uses that challe"
+        },
+        {
+          "info": {
+            "name": "Reject OAuth 2.0 Consent Request",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/admin/oauth2/auth/requests/consent/reject",
+            "params": [
+              {
+                "name": "consent_challenge",
+                "value": "",
+                "type": "query",
+                "description": "OAuth 2.0 Consent Request Challenge"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "When an authorization code, hybrid, or implicit OAuth 2.0 Flow is initiated, Ory asks the login provider\nto authenticate the subject and then tell Ory now about it. If the subject authenticated, he/she must now be asked if\nthe OAuth 2.0 Client which initiated the flow should be allowed to access the resources on the subject's behalf.\n\nThe consent challenge is appended to the consent provider's URL to which the subject's user-agent (browser) is redirected to. The consent\nprovider uses that challe"
+        },
+        {
+          "info": {
+            "name": "Accepts a device grant user_code request",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/admin/oauth2/auth/requests/device/accept",
+            "params": [
+              {
+                "name": "device_challenge",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Accepts a device grant user_code request"
+        },
+        {
+          "info": {
+            "name": "Get OAuth 2.0 Login Request",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/admin/oauth2/auth/requests/login",
+            "params": [
+              {
+                "name": "login_challenge",
+                "value": "",
+                "type": "query",
+                "description": "OAuth 2.0 Login Request Challenge"
+              }
+            ]
+          },
+          "docs": "When an authorization code, hybrid, or implicit OAuth 2.0 Flow is initiated, Ory asks the login provider\nto authenticate the subject and then tell the Ory OAuth2 Service about it.\n\nPer default, the login provider is Ory itself. You may use a different login provider which needs to be a web-app\nyou write and host, and it must be able to authenticate (\"show the subject a login screen\")\na subject (in OAuth2 the proper name for subject is \"resource owner\").\n\nThe authentication challenge is appended "
+        },
+        {
+          "info": {
+            "name": "Accept OAuth 2.0 Login Request",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/admin/oauth2/auth/requests/login/accept",
+            "params": [
+              {
+                "name": "login_challenge",
+                "value": "",
+                "type": "query",
+                "description": "OAuth 2.0 Login Request Challenge"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "When an authorization code, hybrid, or implicit OAuth 2.0 Flow is initiated, Ory asks the login provider\nto authenticate the subject and then tell the Ory OAuth2 Service about it.\n\nThe authentication challenge is appended to the login provider URL to which the subject's user-agent (browser) is redirected to. The login\nprovider uses that challenge to fetch information on the OAuth2 request and then accept or reject the requested authentication process.\n\nThis endpoint tells Ory that the subject ha"
+        },
+        {
+          "info": {
+            "name": "Reject OAuth 2.0 Login Request",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/admin/oauth2/auth/requests/login/reject",
+            "params": [
+              {
+                "name": "login_challenge",
+                "value": "",
+                "type": "query",
+                "description": "OAuth 2.0 Login Request Challenge"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "When an authorization code, hybrid, or implicit OAuth 2.0 Flow is initiated, Ory asks the login provider\nto authenticate the subject and then tell the Ory OAuth2 Service about it.\n\nThe authentication challenge is appended to the login provider URL to which the subject's user-agent (browser) is redirected to. The login\nprovider uses that challenge to fetch information on the OAuth2 request and then accept or reject the requested authentication process.\n\nThis endpoint tells Ory that the subject ha"
+        },
+        {
+          "info": {
+            "name": "Get OAuth 2.0 Session Logout Request",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/admin/oauth2/auth/requests/logout",
+            "params": [
+              {
+                "name": "logout_challenge",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Use this endpoint to fetch an Ory OAuth 2.0 logout request."
+        },
+        {
+          "info": {
+            "name": "Accept OAuth 2.0 Session Logout Request",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/admin/oauth2/auth/requests/logout/accept",
+            "params": [
+              {
+                "name": "logout_challenge",
+                "value": "",
+                "type": "query",
+                "description": "OAuth 2.0 Logout Request Challenge"
+              }
+            ]
+          },
+          "docs": "When a user or an application requests Ory OAuth 2.0 to remove the session state of a subject, this endpoint is used to confirm that logout request.\n\nThe response contains a redirect URL which the consent provider should redirect the user-agent to."
+        },
+        {
+          "info": {
+            "name": "Reject OAuth 2.0 Session Logout Request",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/admin/oauth2/auth/requests/logout/reject",
+            "params": [
+              {
+                "name": "logout_challenge",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "When a user or an application requests Ory OAuth 2.0 to remove the session state of a subject, this endpoint is used to deny that logout request.\nNo HTTP request body is required.\n\nThe response is empty as the logout provider has to chose what action to perform next."
+        },
+        {
+          "info": {
+            "name": "List OAuth 2.0 Consent Sessions of a Subject",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/admin/oauth2/auth/sessions/consent",
+            "params": [
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Items per Page\n\nThis is the number of items per page to return.\nFor details on pagination please head over to the [pagination documentation](https://www.ory.com/docs/ecosystem/api-design#pagination)."
+              },
+              {
+                "name": "page_token",
+                "value": "",
+                "type": "query",
+                "description": "Next Page Token\n\nThe next page token.\nFor details on pagination please head over to the [pagination documentation](https://www.ory.com/docs/ecosystem/api-design#pagination)."
+              },
+              {
+                "name": "subject",
+                "value": "",
+                "type": "query",
+                "description": "The subject to list the consent sessions for."
+              },
+              {
+                "name": "login_session_id",
+                "value": "",
+                "type": "query",
+                "description": "The login session id to list the consent sessions for."
+              }
+            ]
+          },
+          "docs": "This endpoint lists all subject's granted consent sessions, including client and granted scope.\nIf the subject is unknown or has not granted any consent sessions yet, the endpoint returns an\nempty JSON array with status code 200 OK."
+        },
+        {
+          "info": {
+            "name": "Revoke OAuth 2.0 Consent Sessions of a Subject",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/admin/oauth2/auth/sessions/consent",
+            "params": [
+              {
+                "name": "subject",
+                "value": "",
+                "type": "query",
+                "description": "OAuth 2.0 Consent Subject\n\nThe subject whose consent sessions should be deleted."
+              },
+              {
+                "name": "client",
+                "value": "",
+                "type": "query",
+                "description": "OAuth 2.0 Client ID\n\nIf set, deletes only those consent sessions that have been granted to the specified OAuth 2.0 Client ID."
+              },
+              {
+                "name": "consent_request_id",
+                "value": "",
+                "type": "query",
+                "description": "Consent Request ID\n\nIf set, revoke all token chains derived from this particular consent request ID."
+              },
+              {
+                "name": "all",
+                "value": "",
+                "type": "query",
+                "description": "Revoke All Consent Sessions\n\nIf set to `true` deletes all consent sessions by the Subject that have been granted."
+              }
+            ]
+          },
+          "docs": "This endpoint revokes a subject's granted consent sessions and invalidates all\nassociated OAuth 2.0 Access Tokens. You may also only revoke sessions for a specific OAuth 2.0 Client ID."
+        },
+        {
+          "info": {
+            "name": "Revokes OAuth 2.0 Login Sessions by either a Subject or a SessionID",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/admin/oauth2/auth/sessions/login",
+            "params": [
+              {
+                "name": "subject",
+                "value": "",
+                "type": "query",
+                "description": "OAuth 2.0 Subject\n\nThe subject to revoke authentication sessions for."
+              },
+              {
+                "name": "sid",
+                "value": "",
+                "type": "query",
+                "description": "Login Session ID\n\nThe login session to revoke."
+              }
+            ]
+          },
+          "docs": "This endpoint invalidates authentication sessions. After revoking the authentication session(s), the subject\nhas to re-authenticate at the Ory OAuth2 Provider. This endpoint does not invalidate any tokens.\n\nIf you send the subject in a query param, all authentication sessions that belong to that subject are revoked.\nNo OpenID Connect Front- or Back-channel logout is performed in this case.\n\nAlternatively, you can send a SessionID via `sid` query param, in which case, only the session that is con"
+        },
+        {
+          "info": {
+            "name": "Introspect OAuth2 Access and Refresh Tokens",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/admin/oauth2/introspect",
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "scope",
+                  "value": ""
+                },
+                {
+                  "name": "token",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "The introspection endpoint allows to check if a token (both refresh and access) is active or not. An active token\nis neither expired nor revoked. If a token is active, additional information on the token will be included. You can\nset additional data for a token by setting `session.access_token` during the consent flow."
+        },
+        {
+          "info": {
+            "name": "Delete OAuth 2.0 Access Tokens from specific OAuth 2.0 Client",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/admin/oauth2/tokens",
+            "params": [
+              {
+                "name": "client_id",
+                "value": "",
+                "type": "query",
+                "description": "OAuth 2.0 Client ID"
+              }
+            ]
+          },
+          "docs": "This endpoint deletes OAuth2 access tokens issued to an OAuth 2.0 Client from the database."
+        },
+        {
+          "info": {
+            "name": "List Trusted OAuth2 JWT Bearer Grant Type Issuers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/admin/trust/grants/jwt-bearer/issuers",
+            "params": [
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Items per Page\n\nThis is the number of items per page to return.\nFor details on pagination please head over to the [pagination documentation](https://www.ory.com/docs/ecosystem/api-design#pagination)."
+              },
+              {
+                "name": "page_token",
+                "value": "",
+                "type": "query",
+                "description": "Next Page Token\n\nThe next page token.\nFor details on pagination please head over to the [pagination documentation](https://www.ory.com/docs/ecosystem/api-design#pagination)."
+              },
+              {
+                "name": "issuer",
+                "value": "",
+                "type": "query",
+                "description": "If optional \"issuer\" is supplied, only jwt-bearer grants with this issuer will be returned."
+              }
+            ]
+          },
+          "docs": "Use this endpoint to list all trusted JWT Bearer Grant Type Issuers."
+        },
+        {
+          "info": {
+            "name": "Trust OAuth2 JWT Bearer Grant Type Issuer",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/admin/trust/grants/jwt-bearer/issuers",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Use this endpoint to establish a trust relationship for a JWT issuer\nto perform JSON Web Token (JWT) Profile for OAuth 2.0 Client Authentication\nand Authorization Grants [RFC7523](https://datatracker.ietf.org/doc/html/rfc7523)."
+        },
+        {
+          "info": {
+            "name": "Get Trusted OAuth2 JWT Bearer Grant Type Issuer",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/admin/trust/grants/jwt-bearer/issuers/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The id of the desired grant"
+              }
+            ]
+          },
+          "docs": "Use this endpoint to get a trusted JWT Bearer Grant Type Issuer. The ID is the one returned when you\ncreated the trust relationship."
+        },
+        {
+          "info": {
+            "name": "Delete Trusted OAuth2 JWT Bearer Grant Type Issuer",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/admin/trust/grants/jwt-bearer/issuers/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The id of the desired grant"
+              }
+            ]
+          },
+          "docs": "Use this endpoint to delete trusted JWT Bearer Grant Type Issuer. The ID is the one returned when you\ncreated the trust relationship.\n\nOnce deleted, the associated issuer will no longer be able to perform the JSON Web Token (JWT) Profile\nfor OAuth 2.0 Client Authentication and Authorization Grant."
+        },
+        {
+          "info": {
+            "name": "OAuth 2.0 Authorize Endpoint",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/oauth2/auth"
+          },
+          "docs": "Use open source libraries to perform OAuth 2.0 and OpenID Connect\navailable for any programming language. You can find a list of libraries at https://oauth.net/code/\n\nThis endpoint should not be used via the Ory SDK and is only included for technical reasons.\nInstead, use one of the libraries linked above."
+        },
+        {
+          "info": {
+            "name": "The OAuth 2.0 Device Authorize Endpoint",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/oauth2/device/auth"
+          },
+          "docs": "This endpoint is not documented here because you should never use your own implementation to perform OAuth2 flows.\nOAuth2 is a very popular protocol and a library for your programming language will exist.\n\nTo learn more about this flow please refer to the specification: https://tools.ietf.org/html/rfc8628"
+        },
+        {
+          "info": {
+            "name": "OAuth 2.0 Device Verification Endpoint",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/oauth2/device/verify"
+          },
+          "docs": "This is the device user verification endpoint. The user is redirected here when trying to log in using the device flow."
+        },
+        {
+          "info": {
+            "name": "Revoke OAuth 2.0 Access or Refresh Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/oauth2/revoke",
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "client_id",
+                  "value": ""
+                },
+                {
+                  "name": "client_secret",
+                  "value": ""
+                },
+                {
+                  "name": "token",
+                  "value": ""
+                }
+              ]
+            },
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Revoking a token (both access and refresh) means that the tokens will be invalid. A revoked access token can no\nlonger be used to make access requests, and a revoked refresh token can no longer be used to refresh an access token.\nRevoking a refresh token also invalidates the access token that was created with it. A token may only be revoked by\nthe client the token was generated for."
+        },
+        {
+          "info": {
+            "name": "The OAuth 2.0 Token Endpoint",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/oauth2/token",
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "client_id",
+                  "value": ""
+                },
+                {
+                  "name": "code",
+                  "value": ""
+                },
+                {
+                  "name": "grant_type",
+                  "value": ""
+                },
+                {
+                  "name": "redirect_uri",
+                  "value": ""
+                },
+                {
+                  "name": "refresh_token",
+                  "value": ""
+                }
+              ]
+            },
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Use open source libraries to perform OAuth 2.0 and OpenID Connect\navailable for any programming language. You can find a list of libraries here https://oauth.net/code/\n\nThis endpoint should not be used via the Ory SDK and is only included for technical reasons.\nInstead, use one of the libraries linked above."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "jwk",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve a JSON Web Key Set",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/admin/keys/:set",
+            "params": [
+              {
+                "name": "set",
+                "value": "",
+                "type": "path",
+                "description": "JSON Web Key Set ID"
+              }
+            ]
+          },
+          "docs": "This endpoint can be used to retrieve JWK Sets stored in ORY Hydra.\n\nA JSON Web Key (JWK) is a JavaScript Object Notation (JSON) data structure that represents a cryptographic key. A JWK Set is a JSON data structure that represents a set of JWKs. A JSON Web Key is identified by its set and key id. ORY Hydra uses this functionality to store cryptographic keys used for TLS and JSON Web Tokens (such as OpenID Connect ID tokens), and allows storing user-defined keys as well."
+        },
+        {
+          "info": {
+            "name": "Create JSON Web Key",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/admin/keys/:set",
+            "params": [
+              {
+                "name": "set",
+                "value": "",
+                "type": "path",
+                "description": "The JSON Web Key Set ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "This endpoint is capable of generating JSON Web Key Sets for you. There are different strategies available, such as symmetric cryptographic keys (HS256, HS512) and asymmetric cryptographic keys (RS256, ECDSA). If the specified JSON Web Key Set does not exist, it will be created.\n\nA JSON Web Key (JWK) is a JavaScript Object Notation (JSON) data structure that represents a cryptographic key. A JWK Set is a JSON data structure that represents a set of JWKs. A JSON Web Key is identified by its set a"
+        },
+        {
+          "info": {
+            "name": "Update a JSON Web Key Set",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/admin/keys/:set",
+            "params": [
+              {
+                "name": "set",
+                "value": "",
+                "type": "path",
+                "description": "The JSON Web Key Set ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Use this method if you do not want to let Hydra generate the JWKs for you, but instead save your own.\n\nA JSON Web Key (JWK) is a JavaScript Object Notation (JSON) data structure that represents a cryptographic key. A JWK Set is a JSON data structure that represents a set of JWKs. A JSON Web Key is identified by its set and key id. ORY Hydra uses this functionality to store cryptographic keys used for TLS and JSON Web Tokens (such as OpenID Connect ID tokens), and allows storing user-defined keys"
+        },
+        {
+          "info": {
+            "name": "Delete JSON Web Key Set",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/admin/keys/:set",
+            "params": [
+              {
+                "name": "set",
+                "value": "",
+                "type": "path",
+                "description": "The JSON Web Key Set"
+              }
+            ]
+          },
+          "docs": "Use this endpoint to delete a complete JSON Web Key Set and all the keys in that set.\n\nA JSON Web Key (JWK) is a JavaScript Object Notation (JSON) data structure that represents a cryptographic key. A JWK Set is a JSON data structure that represents a set of JWKs. A JSON Web Key is identified by its set and key id. ORY Hydra uses this functionality to store cryptographic keys used for TLS and JSON Web Tokens (such as OpenID Connect ID tokens), and allows storing user-defined keys as well."
+        },
+        {
+          "info": {
+            "name": "Get JSON Web Key",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/admin/keys/:set/:kid",
+            "params": [
+              {
+                "name": "set",
+                "value": "",
+                "type": "path",
+                "description": "JSON Web Key Set ID"
+              },
+              {
+                "name": "kid",
+                "value": "",
+                "type": "path",
+                "description": "JSON Web Key ID"
+              }
+            ]
+          },
+          "docs": "This endpoint returns a singular JSON Web Key contained in a set. It is identified by the set and the specific key ID (kid)."
+        },
+        {
+          "info": {
+            "name": "Set JSON Web Key",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/admin/keys/:set/:kid",
+            "params": [
+              {
+                "name": "set",
+                "value": "",
+                "type": "path",
+                "description": "The JSON Web Key Set ID"
+              },
+              {
+                "name": "kid",
+                "value": "",
+                "type": "path",
+                "description": "JSON Web Key ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Use this method if you do not want to let Hydra generate the JWKs for you, but instead save your own.\n\nA JSON Web Key (JWK) is a JavaScript Object Notation (JSON) data structure that represents a cryptographic key. A JWK Set is a JSON data structure that represents a set of JWKs. A JSON Web Key is identified by its set and key id. ORY Hydra uses this functionality to store cryptographic keys used for TLS and JSON Web Tokens (such as OpenID Connect ID tokens), and allows storing user-defined keys"
+        },
+        {
+          "info": {
+            "name": "Delete JSON Web Key",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/admin/keys/:set/:kid",
+            "params": [
+              {
+                "name": "set",
+                "value": "",
+                "type": "path",
+                "description": "The JSON Web Key Set"
+              },
+              {
+                "name": "kid",
+                "value": "",
+                "type": "path",
+                "description": "The JSON Web Key ID (kid)"
+              }
+            ]
+          },
+          "docs": "Use this endpoint to delete a single JSON Web Key.\n\nA JSON Web Key (JWK) is a JavaScript Object Notation (JSON) data structure that represents a cryptographic key. A\nJWK Set is a JSON data structure that represents a set of JWKs. A JSON Web Key is identified by its set and key id. ORY Hydra uses\nthis functionality to store cryptographic keys used for TLS and JSON Web Tokens (such as OpenID Connect ID tokens),\nand allows storing user-defined keys as well."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "metadata",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Check HTTP Server Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/health/alive"
+          },
+          "docs": "This endpoint returns a HTTP 200 status code when Ory Hydra is accepting incoming\nHTTP requests. This status does currently not include checks whether the database connection is working.\n\nIf the service supports TLS Edge Termination, this endpoint does not require the\n`X-Forwarded-Proto` header to be set.\n\nBe aware that if you are running multiple nodes of this service, the health status will never\nrefer to the cluster state, only to a single instance."
+        },
+        {
+          "info": {
+            "name": "Check HTTP Server and Database Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/health/ready"
+          },
+          "docs": "This endpoint returns a HTTP 200 status code when Ory Hydra is up running and the environment dependencies (e.g.\nthe database) are responsive as well.\n\nIf the service supports TLS Edge Termination, this endpoint does not require the\n`X-Forwarded-Proto` header to be set.\n\nBe aware that if you are running multiple nodes of Ory Hydra, the health status will never\nrefer to the cluster state, only to a single instance."
+        },
+        {
+          "info": {
+            "name": "Return Running Software Version.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/version"
+          },
+          "docs": "This endpoint returns the version of Ory Hydra.\n\nIf the service supports TLS Edge Termination, this endpoint does not require the\n`X-Forwarded-Proto` header to be set.\n\nBe aware that if you are running multiple nodes of this service, the version will never\nrefer to the cluster state, only to a single instance."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
