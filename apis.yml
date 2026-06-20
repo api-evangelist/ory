@@ -4,7 +4,7 @@ description: >-
   Ory is an open source identity infrastructure platform providing OAuth2 and OpenID Connect (Hydra), identity and user
   management (Kratos), permissions and authorization (Keto), and a reverse proxy with policy enforcement (Oathkeeper).
 type: Index
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 tags:
   - Authentication
   - Authorization
