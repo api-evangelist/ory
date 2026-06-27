@@ -2,20 +2,13 @@
   "repo": "ory",
   "feeds": [
     {
-      "source": "https://www.ory.com/blog/rss.xml",
-      "feed_url": "https://www.ory.com/blog/rss.xml",
-      "title": "",
-      "saved": 0,
-      "method": "none"
-    },
-    {
-      "source": "https://github.com/ory",
-      "feed_url": "https://github.com/ory",
-      "title": "",
-      "saved": 0,
-      "method": "none"
+      "source": "https://www.ory.com/blog/",
+      "feed_url": "",
+      "saved": 4,
+      "method": "agent-scrape"
     }
   ],
-  "post_count": 3,
-  "fetched": "2026-06-14T20:42:17Z"
+  "post_count": 9,
+  "fetched": "2026-06-27T12:59:22Z",
+  "agent_pulled": "2026-06-27"
 }
