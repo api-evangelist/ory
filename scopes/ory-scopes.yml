@@ -1,0 +1,29 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/ory-hydra-openapi.json
+schemes:
+- name: oauth2
+  source: openapi/ory-hydra-openapi.json
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://hydra.demo.ory.sh/oauth2/auth
+    tokenUrl: https://hydra.demo.ory.sh/oauth2/token
+scopes:
+- scope: offline
+  description: A scope required when requesting refresh tokens (alias for `offline_access`)
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/ory-hydra-openapi.json
+- scope: offline_access
+  description: A scope required when requesting refresh tokens
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/ory-hydra-openapi.json
+- scope: openid
+  description: Request an OpenID Connect ID Token
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/ory-hydra-openapi.json
