@@ -1,0 +1,38 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/ory-hydra-openapi.json, openapi/ory-kratos-openapi.json
+summary:
+  types:
+  - apiKey
+  - http
+  - oauth2
+  api_key_in:
+  - header
+  oauth2_flows:
+  - authorizationCode
+schemes:
+- name: basic
+  type: http
+  scheme: basic
+  sources:
+  - openapi/ory-hydra-openapi.json
+- name: bearer
+  type: http
+  scheme: bearer
+  sources:
+  - openapi/ory-hydra-openapi.json
+- name: oauth2
+  type: oauth2
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://hydra.demo.ory.sh/oauth2/auth
+    tokenUrl: https://hydra.demo.ory.sh/oauth2/token
+    scopes: 3
+  sources:
+  - openapi/ory-hydra-openapi.json
+- name: oryAccessToken
+  type: apiKey
+  in: header
+  parameter: Authorization
+  sources:
+  - openapi/ory-kratos-openapi.json

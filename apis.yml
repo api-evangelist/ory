@@ -87,6 +87,14 @@ apis:
       - type: GitHubRepository
         url: https://github.com/ory/oathkeeper
 common:
+  - type: TrustCenter
+    url: security/ory-trust-center.yml
+  - type: VulnerabilityDisclosure
+    url: security/ory-vulnerability-disclosure.yml
+  - type: DomainSecurity
+    url: security/ory-domain-security.yml
+  - type: Authentication
+    url: authentication/ory-authentication.yml
   - type: OAuthScopes
     url: scopes/ory-scopes.yml
   - type: LinkedIn
