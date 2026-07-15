@@ -87,6 +87,8 @@ apis:
       - type: GitHubRepository
         url: https://github.com/ory/oathkeeper
 common:
+  - type: AgenticAccess
+    url: agentic-access/ory-agentic-access.yml
   - type: TrustCenter
     url: security/ory-trust-center.yml
   - type: VulnerabilityDisclosure
