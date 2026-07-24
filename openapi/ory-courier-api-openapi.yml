@@ -1,0 +1,375 @@
+openapi: 3.0.3
+info:
+  contact:
+    email: hi@ory.sh
+  description: 'Documentation for all of Ory Hydra''s APIs.
+
+    '
+  license:
+    name: Apache 2.0
+  title: Ory Hydra api courier API
+  version: ''
+tags:
+- description: APIs for managing email and SMS message delivery.
+  name: courier
+paths:
+  /admin/courier/messages:
+    get:
+      description: Lists all messages by given status and recipient.
+      operationId: listCourierMessages
+      parameters:
+      - description: 'Items per Page
+
+
+          This is the number of items per page to return.
+
+          For details on pagination please head over to the [pagination documentation](https://www.ory.com/docs/ecosystem/api-design#pagination).'
+        in: query
+        name: page_size
+        schema:
+          default: 250
+          format: int64
+          maximum: 1000
+          minimum: 1
+          type: integer
+      - description: 'Next Page Token
+
+
+          The next page token.
+
+          For details on pagination please head over to the [pagination documentation](https://www.ory.com/docs/ecosystem/api-design#pagination).'
+        in: query
+        name: page_token
+        schema:
+          type: string
+      - description: 'Status filters out messages based on status.
+
+          If no value is provided, it doesn''t take effect on filter.'
+        in: query
+        name: status
+        schema:
+          $ref: '#/components/schemas/courierMessageStatus'
+      - description: 'Recipient filters out messages based on recipient.
+
+          If no value is provided, it doesn''t take effect on filter.'
+        in: query
+        name: recipient
+        schema:
+          type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/listCourierMessages'
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorGeneric'
+          description: errorGeneric
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorGeneric'
+          description: errorGeneric
+      security:
+      - oryAccessToken: []
+      summary: List Messages
+      tags:
+      - courier
+      x-ory-ratelimit-bucket: kratos-admin-low
+  /admin/courier/messages/{id}:
+    get:
+      description: Gets a specific messages by the given ID.
+      operationId: getCourierMessage
+      parameters:
+      - description: MessageID is the ID of the message.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/message'
+          description: message
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorGeneric'
+          description: errorGeneric
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorGeneric'
+          description: errorGeneric
+      security:
+      - oryAccessToken: []
+      summary: Get a Message
+      tags:
+      - courier
+      x-ory-ratelimit-bucket: kratos-admin-medium
+components:
+  schemas:
+    genericError:
+      properties:
+        code:
+          description: The status code
+          example: 404
+          format: int64
+          type: integer
+        debug:
+          description: 'Debug information
+
+
+            This field is often not exposed to protect against leaking
+
+            sensitive information.'
+          example: SQL field "foo" is not a bool.
+          type: string
+        details:
+          additionalProperties: false
+          description: Further error details
+          type: object
+        id:
+          description: 'The error ID
+
+
+            Useful when trying to identify various errors in application logic.'
+          type: string
+        message:
+          description: 'Error message
+
+
+            The error''s message.'
+          example: The resource could not be found
+          type: string
+        reason:
+          description: A human-readable reason for the error
+          example: User with ID 1234 does not exist.
+          type: string
+        request:
+          description: 'The request ID
+
+
+            The request ID is often exposed internally in order to trace
+
+            errors across service architectures. This is often a UUID.'
+          example: d7ef54b1-ec15-46e6-bccb-524b82c035e6
+          type: string
+        status:
+          description: The status description
+          example: Not Found
+          type: string
+      required:
+      - message
+      type: object
+    errorGeneric:
+      description: The standard Ory JSON API error format.
+      properties:
+        error:
+          $ref: '#/components/schemas/genericError'
+      required:
+      - error
+      title: JSON API Error Response
+      type: object
+    courierMessageStatus:
+      description: A Message's Status
+      enum:
+      - queued
+      - sent
+      - processing
+      - abandoned
+      type: string
+    messageDispatch:
+      description: 'MessageDispatch represents an attempt of sending a courier message
+
+        It contains the status of the attempt (failed or successful) and the error if any occured'
+      properties:
+        created_at:
+          description: CreatedAt is a helper struct field for gobuffalo.pop.
+          format: date-time
+          type: string
+        error:
+          $ref: '#/components/schemas/JSONRawMessage'
+        id:
+          description: The ID of this message dispatch
+          format: uuid
+          type: string
+        message_id:
+          description: The ID of the message being dispatched
+          format: uuid
+          type: string
+        status:
+          description: 'The status of this dispatch
+
+            Either "failed" or "success"
+
+            failed CourierMessageDispatchStatusFailed
+
+            success CourierMessageDispatchStatusSuccess'
+          enum:
+          - failed
+          - success
+          type: string
+          x-go-enum-desc: 'failed CourierMessageDispatchStatusFailed
+
+            success CourierMessageDispatchStatusSuccess'
+        updated_at:
+          description: UpdatedAt is a helper struct field for gobuffalo.pop.
+          format: date-time
+          type: string
+      required:
+      - id
+      - message_id
+      - status
+      - created_at
+      - updated_at
+      type: object
+    courierMessageType:
+      description: It can either be `email` or `phone`
+      enum:
+      - email
+      - phone
+      title: A Message's Type
+      type: string
+    message:
+      properties:
+        body:
+          type: string
+        channel:
+          type: string
+        created_at:
+          description: CreatedAt is a helper struct field for gobuffalo.pop.
+          format: date-time
+          type: string
+        dispatches:
+          description: 'Dispatches store information about the attempts of delivering a message
+
+            May contain an error if any happened, or just the `success` state.'
+          items:
+            $ref: '#/components/schemas/messageDispatch'
+          type: array
+        id:
+          format: uuid
+          type: string
+        recipient:
+          type: string
+        send_count:
+          format: int64
+          type: integer
+        status:
+          $ref: '#/components/schemas/courierMessageStatus'
+        subject:
+          type: string
+        template_type:
+          description: '
+
+            recovery_invalid TypeRecoveryInvalid
+
+            recovery_valid TypeRecoveryValid
+
+            recovery_code_invalid TypeRecoveryCodeInvalid
+
+            recovery_code_valid TypeRecoveryCodeValid
+
+            verification_invalid TypeVerificationInvalid
+
+            verification_valid TypeVerificationValid
+
+            verification_code_invalid TypeVerificationCodeInvalid
+
+            verification_code_valid TypeVerificationCodeValid
+
+            stub TypeTestStub
+
+            login_code_valid TypeLoginCodeValid
+
+            registration_code_valid TypeRegistrationCodeValid'
+          enum:
+          - recovery_invalid
+          - recovery_valid
+          - recovery_code_invalid
+          - recovery_code_valid
+          - verification_invalid
+          - verification_valid
+          - verification_code_invalid
+          - verification_code_valid
+          - stub
+          - login_code_valid
+          - registration_code_valid
+          type: string
+          x-go-enum-desc: 'recovery_invalid TypeRecoveryInvalid
+
+            recovery_valid TypeRecoveryValid
+
+            recovery_code_invalid TypeRecoveryCodeInvalid
+
+            recovery_code_valid TypeRecoveryCodeValid
+
+            verification_invalid TypeVerificationInvalid
+
+            verification_valid TypeVerificationValid
+
+            verification_code_invalid TypeVerificationCodeInvalid
+
+            verification_code_valid TypeVerificationCodeValid
+
+            stub TypeTestStub
+
+            login_code_valid TypeLoginCodeValid
+
+            registration_code_valid TypeRegistrationCodeValid'
+        type:
+          $ref: '#/components/schemas/courierMessageType'
+        updated_at:
+          description: UpdatedAt is a helper struct field for gobuffalo.pop.
+          format: date-time
+          type: string
+      required:
+      - id
+      - status
+      - type
+      - recipient
+      - body
+      - subject
+      - template_type
+      - send_count
+      - created_at
+      - updated_at
+      type: object
+    JSONRawMessage:
+      title: JSONRawMessage represents a json.RawMessage that works well with JSON, SQL, and Swagger.
+      type: object
+  responses:
+    listCourierMessages:
+      content:
+        application/json:
+          schema:
+            items:
+              $ref: '#/components/schemas/message'
+            type: array
+      description: Paginated Courier Message List Response
+  securitySchemes:
+    basic:
+      scheme: basic
+      type: http
+    bearer:
+      scheme: bearer
+      type: http
+    oauth2:
+      flows:
+        authorizationCode:
+          authorizationUrl: https://hydra.demo.ory.sh/oauth2/auth
+          scopes:
+            offline: A scope required when requesting refresh tokens (alias for `offline_access`)
+            offline_access: A scope required when requesting refresh tokens
+            openid: Request an OpenID Connect ID Token
+          tokenUrl: https://hydra.demo.ory.sh/oauth2/token
+      type: oauth2
+x-forwarded-proto: string
+x-request-id: string

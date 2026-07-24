@@ -1,0 +1,196 @@
+openapi: 3.0.3
+info:
+  contact:
+    email: hi@ory.sh
+  description: 'Documentation for all of Ory Hydra''s APIs.
+
+    '
+  license:
+    name: Apache 2.0
+  title: Ory Hydra api metadata API
+  version: ''
+tags:
+- description: Service Metadata
+  name: metadata
+paths:
+  /health/alive:
+    get:
+      description: 'This endpoint returns a HTTP 200 status code when Ory Hydra is accepting incoming
+
+        HTTP requests. This status does currently not include checks whether the database connection is working.
+
+
+        If the service supports TLS Edge Termination, this endpoint does not require the
+
+        `X-Forwarded-Proto` header to be set.
+
+
+        Be aware that if you are running multiple nodes of this service, the health status will never
+
+        refer to the cluster state, only to a single instance.'
+      operationId: isAlive
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/healthStatus'
+          description: Ory Hydra is ready to accept connections.
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/genericError'
+          description: genericError
+      summary: Check HTTP Server Status
+      tags:
+      - metadata
+  /health/ready:
+    get:
+      description: 'This endpoint returns a HTTP 200 status code when Ory Hydra is up running and the environment dependencies (e.g.
+
+        the database) are responsive as well.
+
+
+        If the service supports TLS Edge Termination, this endpoint does not require the
+
+        `X-Forwarded-Proto` header to be set.
+
+
+        Be aware that if you are running multiple nodes of Ory Hydra, the health status will never
+
+        refer to the cluster state, only to a single instance.'
+      operationId: isReady
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  status:
+                    description: Always "ok".
+                    type: string
+                type: object
+          description: Ory Hydra is ready to accept requests.
+        '503':
+          content:
+            application/json:
+              schema:
+                properties:
+                  errors:
+                    additionalProperties:
+                      type: string
+                    description: Errors contains a list of errors that caused the not ready status.
+                    type: object
+                type: object
+          description: Ory Kratos is not yet ready to accept requests.
+      summary: Check HTTP Server and Database Status
+      tags:
+      - metadata
+  /version:
+    get:
+      description: 'This endpoint returns the version of Ory Hydra.
+
+
+        If the service supports TLS Edge Termination, this endpoint does not require the
+
+        `X-Forwarded-Proto` header to be set.
+
+
+        Be aware that if you are running multiple nodes of this service, the version will never
+
+        refer to the cluster state, only to a single instance.'
+      operationId: getVersion
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  version:
+                    description: The version of Ory Hydra.
+                    type: string
+                type: object
+          description: Returns the Ory Hydra version.
+      summary: Return Running Software Version.
+      tags:
+      - metadata
+components:
+  schemas:
+    healthStatus:
+      properties:
+        status:
+          description: Status always contains "ok".
+          type: string
+      title: The health status of the service.
+      type: object
+    genericError:
+      properties:
+        code:
+          description: The status code
+          example: 404
+          format: int64
+          type: integer
+        debug:
+          description: 'Debug information
+
+
+            This field is often not exposed to protect against leaking
+
+            sensitive information.'
+          example: SQL field "foo" is not a bool.
+          type: string
+        details:
+          description: Further error details
+        id:
+          description: 'The error ID
+
+
+            Useful when trying to identify various errors in application logic.'
+          type: string
+        message:
+          description: 'Error message
+
+
+            The error''s message.'
+          example: The resource could not be found
+          type: string
+        reason:
+          description: A human-readable reason for the error
+          example: User with ID 1234 does not exist.
+          type: string
+        request:
+          description: 'The request ID
+
+
+            The request ID is often exposed internally in order to trace
+
+            errors across service architectures. This is often a UUID.'
+          example: d7ef54b1-ec15-46e6-bccb-524b82c035e6
+          type: string
+        status:
+          description: The status description
+          example: Not Found
+          type: string
+      required:
+      - message
+      type: object
+  securitySchemes:
+    basic:
+      scheme: basic
+      type: http
+    bearer:
+      scheme: bearer
+      type: http
+    oauth2:
+      flows:
+        authorizationCode:
+          authorizationUrl: https://hydra.demo.ory.sh/oauth2/auth
+          scopes:
+            offline: A scope required when requesting refresh tokens (alias for `offline_access`)
+            offline_access: A scope required when requesting refresh tokens
+            openid: Request an OpenID Connect ID Token
+          tokenUrl: https://hydra.demo.ory.sh/oauth2/token
+      type: oauth2
+x-forwarded-proto: string
+x-request-id: string

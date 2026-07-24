@@ -1,0 +1,2455 @@
+openapi: 3.0.3
+info:
+  contact:
+    email: hi@ory.sh
+  description: 'Documentation for all of Ory Hydra''s APIs.
+
+    '
+  license:
+    name: Apache 2.0
+  title: Ory Hydra api identity API
+  version: ''
+tags:
+- description: APIs for managing identities.
+  name: identity
+paths:
+  /admin/identities:
+    get:
+      description: 'Lists all [identities](https://www.ory.com/docs/kratos/concepts/identity-user-model) in the system. Note: filters cannot be combined.'
+      operationId: listIdentities
+      parameters:
+      - description: 'Deprecated Items per Page
+
+
+          DEPRECATED: Please use `page_token` instead. This parameter will be removed in the future.
+
+
+          This is the number of items per page.'
+        in: query
+        name: per_page
+        schema:
+          default: 250
+          format: int64
+          maximum: 1000
+          minimum: 1
+          type: integer
+      - description: 'Deprecated Pagination Page
+
+
+          DEPRECATED: Please use `page_token` instead. This parameter will be removed in the future.
+
+
+          This value is currently an integer, but it is not sequential. The value is not the page number, but a
+
+          reference. The next page can be any number and some numbers might return an empty list.
+
+
+          For example, page 2 might not follow after page 1. And even if page 3 and 5 exist, but page 4 might not exist.
+
+          The first page can be retrieved by omitting this parameter. Following page pointers will be returned in the
+
+          `Link` header.'
+        in: query
+        name: page
+        schema:
+          format: int64
+          type: integer
+      - description: 'Page Size
+
+
+          This is the number of items per page to return. For details on pagination please head over to the
+
+          [pagination documentation](https://www.ory.com/docs/ecosystem/api-design#pagination).'
+        in: query
+        name: page_size
+        schema:
+          default: 250
+          format: int64
+          maximum: 500
+          minimum: 1
+          type: integer
+      - description: 'Next Page Token
+
+
+          The next page token. For details on pagination please head over to the
+
+          [pagination documentation](https://www.ory.com/docs/ecosystem/api-design#pagination).'
+        in: query
+        name: page_token
+        schema:
+          type: string
+      - description: "Read Consistency Level (preview)\n\nThe read consistency level determines the consistency guarantee for reads:\n\nstrong (slow): The read is guaranteed to return the most recent data committed at the start of the read.\neventual (very fast): The result will return data that is about 4.8 seconds old.\n\nThe default consistency guarantee can be changed in the Ory Network Console or using the Ory CLI with\n`ory patch project --replace '/previews/default_read_consistency_level=\"strong\"'`.\n\nSetting the default consistency level to `eventual` may cause regressions in the future as we add consistency\ncontrols to more APIs. Currently, the following APIs will be affected by this setting:\n\n`GET /admin/identities`\n\nThis feature is in preview and only available in Ory Network.\n ConsistencyLevelUnset  ConsistencyLevelUnset is the unset / default consistency level.\nstrong ConsistencyLevelStrong  ConsistencyLevelStrong is the strong consistency level.\neventual ConsistencyLevelEventual  ConsistencyLevelEventual is the eventual consistency level using follower read timestamps."
+        in: query
+        name: consistency
+        schema:
+          enum:
+          - ''
+          - strong
+          - eventual
+          type: string
+        x-go-enum-desc: ' ConsistencyLevelUnset  ConsistencyLevelUnset is the unset / default consistency level.
+
+          strong ConsistencyLevelStrong  ConsistencyLevelStrong is the strong consistency level.
+
+          eventual ConsistencyLevelEventual  ConsistencyLevelEventual is the eventual consistency level using follower read timestamps.'
+      - description: 'Retrieve multiple identities by their IDs.
+
+
+          This parameter has the following limitations:
+
+
+          Duplicate or non-existent IDs are ignored.
+
+          The order of returned IDs may be different from the request.
+
+          This filter does not support pagination. You must implement your own pagination as the maximum number of items returned by this endpoint may not exceed a certain threshold (currently 500).'
+        in: query
+        name: ids
+        schema:
+          items:
+            type: string
+          type: array
+      - description: 'CredentialsIdentifier is the identifier (username, email) of the credentials to look up using exact match.
+
+          Only one of CredentialsIdentifier and CredentialsIdentifierSimilar can be used.'
+        in: query
+        name: credentials_identifier
+        schema:
+          type: string
+      - description: 'This is an EXPERIMENTAL parameter that WILL CHANGE. Do NOT rely on consistent, deterministic behavior.
+
+          THIS PARAMETER WILL BE REMOVED IN AN UPCOMING RELEASE WITHOUT ANY MIGRATION PATH.
+
+
+          CredentialsIdentifierSimilar is the (partial) identifier (username, email) of the credentials to look up using similarity search.
+
+          Only one of CredentialsIdentifier and CredentialsIdentifierSimilar can be used.'
+        in: query
+        name: preview_credentials_identifier_similar
+        schema:
+          type: string
+      - description: 'Include Credentials in Response
+
+
+          Include any credential, for example `password` or `oidc`, in the response. When set to `oidc`, This will return
+
+          the initial OAuth 2.0 Access Token, OAuth 2.0 Refresh Token, and the OpenID Connect ID Token if available.'
+        in: query
+        name: include_credential
+        schema:
+          items:
+            type: string
+          type: array
+      - description: List identities that belong to a specific organization.
+        in: query
+        name: organization_id
+        schema:
+          type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/listIdentities'
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorGeneric'
+          description: errorGeneric
+      security:
+      - oryAccessToken: []
+      summary: List Identities
+      tags:
+      - identity
+      x-ory-ratelimit-bucket: kratos-admin-medium
+    patch:
+      description: 'Creates multiple [identities](https://www.ory.com/docs/kratos/concepts/identity-user-model).
+
+
+        You can also use this endpoint to [import credentials](https://www.ory.com/docs/kratos/manage-identities/import-user-accounts-identities),
+
+        including passwords, social sign-in settings, and multi-factor authentication methods.
+
+
+        If the patch includes hashed passwords you can import up to 1,000 identities per request.
+
+
+        If the patch includes at least one plaintext password you can import up to 200 identities per request.
+
+
+        Avoid importing large batches with plaintext passwords. They can cause timeouts as the passwords need to be hashed before they are stored.
+
+
+        If at least one identity is imported successfully, the response status is 200 OK.
+
+        If all imports fail, the response is one of the following 4xx errors:
+
+        400 Bad Request: The request payload is invalid or improperly formatted.
+
+        409 Conflict: Duplicate identities or conflicting data were detected.
+
+
+        If you get a 504 Gateway Timeout:
+
+        Reduce the batch size
+
+        Avoid duplicate identities
+
+        Pre-hash passwords with BCrypt
+
+
+        If the issue persists, contact support.'
+      operationId: batchPatchIdentities
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/patchIdentitiesBody'
+        x-originalParamName: Body
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/batchPatchIdentitiesResponse'
+          description: batchPatchIdentitiesResponse
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorGeneric'
+          description: errorGeneric
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorGeneric'
+          description: errorGeneric
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorGeneric'
+          description: errorGeneric
+      security:
+      - oryAccessToken: []
+      summary: Create multiple identities
+      tags:
+      - identity
+      x-ory-ratelimit-bucket: kratos-admin-low
+    post:
+      description: 'Create an [identity](https://www.ory.com/docs/kratos/concepts/identity-user-model).  This endpoint can also be used to
+
+        [import credentials](https://www.ory.com/docs/kratos/manage-identities/import-user-accounts-identities)
+
+        for instance passwords, social sign in configurations, or multifactor methods.'
+      operationId: createIdentity
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createIdentityBody'
+        x-originalParamName: Body
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/identity'
+          description: identity
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorGeneric'
+          description: errorGeneric
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorGeneric'
+          description: errorGeneric
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorGeneric'
+          description: errorGeneric
+      security:
+      - oryAccessToken: []
+      summary: Create an Identity
+      tags:
+      - identity
+      x-ory-ratelimit-bucket: kratos-admin-low
+  /admin/identities/by/external/{externalID}:
+    get:
+      description: 'Return an [identity](https://www.ory.com/docs/kratos/concepts/identity-user-model) by its external ID. You can optionally
+
+        include credentials (e.g. social sign in connections) in the response by using the `include_credential` query parameter.'
+      operationId: getIdentityByExternalID
+      parameters:
+      - description: ExternalID must be set to the ID of identity you want to get
+        in: path
+        name: externalID
+        required: true
+        schema:
+          type: string
+      - description: 'Include Credentials in Response
+
+
+          Include any credential, for example `password` or `oidc`, in the response. When set to `oidc`, This will return
+
+          the initial OAuth 2.0 Access Token, OAuth 2.0 Refresh Token, and the OpenID Connect ID Token if available.'
+        in: query
+        name: include_credential
+        schema:
+          items:
+            enum:
+            - password
+            - oidc
+            - totp
+            - lookup_secret
+            - webauthn
+            - code
+            - passkey
+            - profile
+            - saml
+            - deviceauthn
+            - link_recovery
+            - code_recovery
+            type: string
+          type: array
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/identity'
+          description: identity
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorGeneric'
+          description: errorGeneric
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorGeneric'
+          description: errorGeneric
+      security:
+      - oryAccessToken: []
+      summary: Get an Identity by its External ID
+      tags:
+      - identity
+      x-ory-ratelimit-bucket: kratos-admin-medium
+  /admin/identities/{id}:
+    delete:
+      description: 'Calling this endpoint irrecoverably and permanently deletes the [identity](https://www.ory.com/docs/kratos/concepts/identity-user-model) given its ID. This action can not be undone.
+
+        This endpoint returns 204 when the identity was deleted or 404 if the identity was not found.'
+      operationId: deleteIdentity
+      parameters:
+      - description: ID is the identity's ID.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          $ref: '#/components/responses/emptyResponse'
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorGeneric'
+          description: errorGeneric
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorGeneric'
+          description: errorGeneric
+      security:
+      - oryAccessToken: []
+      summary: Delete an Identity
+      tags:
+      - identity
+      x-ory-ratelimit-bucket: kratos-admin-low
+    get:
+      description: 'Return an [identity](https://www.ory.com/docs/kratos/concepts/identity-user-model) by its ID. You can optionally
+
+        include credentials (e.g. social sign in connections) in the response by using the `include_credential` query parameter.'
+      operationId: getIdentity
+      parameters:
+      - description: ID must be set to the ID of identity you want to get
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      - description: 'Include Credentials in Response
+
+
+          Include any credential, for example `password` or `oidc`, in the response. When set to `oidc`, This will return
+
+          the initial OAuth 2.0 Access Token, OAuth 2.0 Refresh Token, and the OpenID Connect ID Token if available.'
+        in: query
+        name: include_credential
+        schema:
+          items:
+            enum:
+            - password
+            - oidc
+            - totp
+            - lookup_secret
+            - webauthn
+            - code
+            - passkey
+            - profile
+            - saml
+            - deviceauthn
+            - link_recovery
+            - code_recovery
+            type: string
+          type: array
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/identity'
+          description: identity
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorGeneric'
+          description: errorGeneric
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorGeneric'
+          description: errorGeneric
+      security:
+      - oryAccessToken: []
+      summary: Get an Identity
+      tags:
+      - identity
+      x-ory-ratelimit-bucket: kratos-admin-high
+    patch:
+      description: 'Partially updates an [identity''s](https://www.ory.com/docs/kratos/concepts/identity-user-model) field using [JSON Patch](https://jsonpatch.com/).
+
+        The fields `id`, `stateChangedAt` and `credentials` can not be updated using this method.'
+      operationId: patchIdentity
+      parameters:
+      - description: ID must be set to the ID of identity you want to update
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/jsonPatchDocument'
+        x-originalParamName: Body
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/identity'
+          description: identity
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorGeneric'
+          description: errorGeneric
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorGeneric'
+          description: errorGeneric
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorGeneric'
+          description: errorGeneric
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorGeneric'
+          description: errorGeneric
+      security:
+      - oryAccessToken: []
+      summary: Patch an Identity
+      tags:
+      - identity
+      x-ory-ratelimit-bucket: kratos-admin-low
+    put:
+      description: 'This endpoint updates an [identity](https://www.ory.com/docs/kratos/concepts/identity-user-model). The full identity
+
+        payload (except credentials) is expected.
+
+
+        It is possible to update the identity''s credentials as well. Using this operation, credentials will not be overwritten
+
+        but instead added to the list. For example, if a user has a social sign in connection set up, updating the credentials
+
+        will keep the social sign in connection and add the new credentials to the list. This prevents accidentally overwriting
+
+        credentials and locking out users. A complete view of all credential types is here:
+
+
+        `password`: The existing password credential will be completely replaced with the new configuration. You can provide either a hashed password, a plaintext password (which will be hashed), or enable the password migration hook.
+
+        `oidc`, `saml`: The existing OIDC and SAML credentials will be kept and the new credentials will be added to the list.
+
+        `totp`: The existing TOTP credentials will be replaced with the new configuration.
+
+        `lookup_secret`: The existing Lookup Secret codes will be kept and the new codes will be added to the list.
+
+        `webauthn`, `passkey`: The existing credentials are preserved, new credentials are added, and credentials with matching IDs are updated with new values. If a new `user_handle` is provided, it''s added to the identity''s identifiers list while preserving previous user handles.
+
+        `code`: To import code credentials, configure your identity schema to use one of the identity traits as an identifier source (`{"ory.sh/kratos":{"code":{"identifier":true", "via":"email"}}}`).'
+      operationId: updateIdentity
+      parameters:
+      - description: ID must be set to the ID of identity you want to update
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/updateIdentityBody'
+        x-originalParamName: Body
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/identity'
+          description: identity
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorGeneric'
+          description: errorGeneric
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorGeneric'
+          description: errorGeneric
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorGeneric'
+          description: errorGeneric
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorGeneric'
+          description: errorGeneric
+      security:
+      - oryAccessToken: []
+      summary: Update an Identity
+      tags:
+      - identity
+      x-ory-ratelimit-bucket: kratos-admin-low
+  /admin/identities/{id}/credentials/{type}:
+    delete:
+      description: 'Delete an [identity](https://www.ory.com/docs/kratos/concepts/identity-user-model) credential by its type.
+
+        You cannot delete passkeys or code auth credentials through this API.'
+      operationId: deleteIdentityCredentials
+      parameters:
+      - description: ID is the identity's ID.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      - description: 'Type is the type of credentials to delete.
+
+          password CredentialsTypePassword
+
+          oidc CredentialsTypeOIDC
+
+          totp CredentialsTypeTOTP
+
+          lookup_secret CredentialsTypeLookup
+
+          webauthn CredentialsTypeWebAuthn
+
+          code CredentialsTypeCodeAuth
+
+          passkey CredentialsTypePasskey
+
+          profile CredentialsTypeProfile
+
+          saml CredentialsTypeSAML
+
+          deviceauthn CredentialsTypeDeviceAuthn
+
+          link_recovery CredentialsTypeRecoveryLink  CredentialsTypeRecoveryLink is a special credential type linked to the link strategy (recovery flow).  It is not used within the credentials object itself.
+
+          code_recovery CredentialsTypeRecoveryCode'
+        in: path
+        name: type
+        required: true
+        schema:
+          enum:
+          - password
+          - oidc
+          - totp
+          - lookup_secret
+          - webauthn
+          - code
+          - passkey
+          - profile
+          - saml
+          - deviceauthn
+          - link_recovery
+          - code_recovery
+          type: string
+        x-go-enum-desc: 'password CredentialsTypePassword
+
+          oidc CredentialsTypeOIDC
+
+          totp CredentialsTypeTOTP
+
+          lookup_secret CredentialsTypeLookup
+
+          webauthn CredentialsTypeWebAuthn
+
+          code CredentialsTypeCodeAuth
+
+          passkey CredentialsTypePasskey
+
+          profile CredentialsTypeProfile
+
+          saml CredentialsTypeSAML
+
+          deviceauthn CredentialsTypeDeviceAuthn
+
+          link_recovery CredentialsTypeRecoveryLink  CredentialsTypeRecoveryLink is a special credential type linked to the link strategy (recovery flow).  It is not used within the credentials object itself.
+
+          code_recovery CredentialsTypeRecoveryCode'
+      - description: 'Identifier is the identifier of the OIDC/SAML credential to delete.
+
+          Find the identifier by calling the `GET /admin/identities/{id}?include_credential={oidc,saml}` endpoint.'
+        in: query
+        name: identifier
+        schema:
+          type: string
+      responses:
+        '204':
+          $ref: '#/components/responses/emptyResponse'
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorGeneric'
+          description: errorGeneric
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorGeneric'
+          description: errorGeneric
+      security:
+      - oryAccessToken: []
+      summary: Delete a credential for a specific identity
+      tags:
+      - identity
+      x-ory-ratelimit-bucket: kratos-admin-low
+  /admin/identities/{id}/sessions:
+    delete:
+      description: Calling this endpoint irrecoverably and permanently deletes and invalidates all sessions that belong to the given Identity.
+      operationId: deleteIdentitySessions
+      parameters:
+      - description: ID is the identity's ID.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          $ref: '#/components/responses/emptyResponse'
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorGeneric'
+          description: errorGeneric
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorGeneric'
+          description: errorGeneric
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorGeneric'
+          description: errorGeneric
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorGeneric'
+          description: errorGeneric
+      security:
+      - oryAccessToken: []
+      summary: Delete & Invalidate an Identity's Sessions
+      tags:
+      - identity
+      x-ory-ratelimit-bucket: kratos-admin-low
+    get:
+      description: This endpoint returns all sessions that belong to the given Identity.
+      operationId: listIdentitySessions
+      parameters:
+      - description: 'Deprecated Items per Page
+
+
+          DEPRECATED: Please use `page_token` instead. This parameter will be removed in the future.
+
+
+          This is the number of items per page.'
+        in: query
+        name: per_page
+        schema:
+          default: 250
+          format: int64
+          maximum: 1000
+          minimum: 1
+          type: integer
+      - description: 'Deprecated Pagination Page
+
+
+          DEPRECATED: Please use `page_token` instead. This parameter will be removed in the future.
+
+
+          This value is currently an integer, but it is not sequential. The value is not the page number, but a
+
+          reference. The next page can be any number and some numbers might return an empty list.
+
+
+          For example, page 2 might not follow after page 1. And even if page 3 and 5 exist, but page 4 might not exist.
+
+          The first page can be retrieved by omitting this parameter. Following page pointers will be returned in the
+
+          `Link` header.'
+        in: query
+        name: page
+        schema:
+          format: int64
+          type: integer
+      - description: 'Page Size
+
+
+          This is the number of items per page to return. For details on pagination please head over to the
+
+          [pagination documentation](https://www.ory.com/docs/ecosystem/api-design#pagination).'
+        in: query
+        name: page_size
+        schema:
+          default: 250
+          format: int64
+          maximum: 500
+          minimum: 1
+          type: integer
+      - description: 'Next Page Token
+
+
+          The next page token. For details on pagination please head over to the
+
+          [pagination documentation](https://www.ory.com/docs/ecosystem/api-design#pagination).'
+        in: query
+        name: page_token
+        schema:
+          type: string
+      - description: ID is the identity's ID.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      - description: Active is a boolean flag that filters out sessions based on the state. If no value is provided, all sessions are returned.
+        in: query
+        name: active
+        schema:
+          type: boolean
+      responses:
+        '200':
+          $ref: '#/components/responses/listIdentitySessions'
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorGeneric'
+          description: errorGeneric
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorGeneric'
+          description: errorGeneric
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorGeneric'
+          description: errorGeneric
+      security:
+      - oryAccessToken: []
+      summary: List an Identity's Sessions
+      tags:
+      - identity
+      x-ory-ratelimit-bucket: kratos-admin-medium
+  /admin/recovery/code:
+    post:
+      description: 'This endpoint creates a recovery code which should be given to the user in order for them to recover
+
+        (or activate) their account.'
+      operationId: createRecoveryCodeForIdentity
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createRecoveryCodeForIdentityBody'
+        x-originalParamName: Body
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/recoveryCodeForIdentity'
+          description: recoveryCodeForIdentity
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorGeneric'
+          description: errorGeneric
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorGeneric'
+          description: errorGeneric
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorGeneric'
+          description: errorGeneric
+      security:
+      - oryAccessToken: []
+      summary: Create a Recovery Code
+      tags:
+      - identity
+      x-ory-ratelimit-bucket: kratos-admin-low
+  /admin/recovery/link:
+    post:
+      description: 'This endpoint creates a recovery link which should be given to the user in order for them to recover
+
+        (or activate) their account.'
+      operationId: createRecoveryLinkForIdentity
+      parameters:
+      - in: query
+        name: return_to
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createRecoveryLinkForIdentityBody'
+        x-originalParamName: Body
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/recoveryLinkForIdentity'
+          description: recoveryLinkForIdentity
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorGeneric'
+          description: errorGeneric
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorGeneric'
+          description: errorGeneric
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorGeneric'
+          description: errorGeneric
+      security:
+      - oryAccessToken: []
+      summary: Create a Recovery Link
+      tags:
+      - identity
+      x-ory-ratelimit-bucket: kratos-admin-low
+  /admin/sessions:
+    get:
+      description: Listing all sessions that exist.
+      operationId: listSessions
+      parameters:
+      - description: 'Items per Page
+
+
+          This is the number of items per page to return.
+
+          For details on pagination please head over to the [pagination documentation](https://www.ory.com/docs/ecosystem/api-design#pagination).'
+        in: query
+        name: page_size
+        schema:
+          default: 250
+          format: int64
+          maximum: 1000
+          minimum: 1
+          type: integer
+      - description: 'Next Page Token
+
+
+          The next page token.
+
+          For details on pagination please head over to the [pagination documentation](https://www.ory.com/docs/ecosystem/api-design#pagination).'
+        in: query
+        name: page_token
+        schema:
+          type: string
+      - description: Active is a boolean flag that filters out sessions based on the state. If no value is provided, all sessions are returned.
+        in: query
+        name: active
+        schema:
+          type: boolean
+      - description: 'ExpandOptions is a query parameter encoded list of all properties that must be expanded in the Session.
+
+          If no value is provided, the expandable properties are skipped.'
+        in: query
+        name: expand
+        schema:
+          items:
+            enum:
+            - identity
+            - devices
+            type: string
+          type: array
+      responses:
+        '200':
+          $ref: '#/components/responses/listSessions'
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorGeneric'
+          description: errorGeneric
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorGeneric'
+          description: errorGeneric
+      security:
+      - oryAccessToken: []
+      summary: List All Sessions
+      tags:
+      - identity
+      x-ory-ratelimit-bucket: kratos-admin-medium
+  /admin/sessions/{id}:
+    delete:
+      description: Calling this endpoint deactivates the specified session. Session data is not deleted.
+      operationId: disableSession
+      parameters:
+      - description: ID is the session's ID.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          $ref: '#/components/responses/emptyResponse'
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorGeneric'
+          description: errorGeneric
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorGeneric'
+          description: errorGeneric
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorGeneric'
+          description: errorGeneric
+      security:
+      - oryAccessToken: []
+      summary: Deactivate a Session
+      tags:
+      - identity
+      x-ory-ratelimit-bucket: kratos-admin-low
+    get:
+      description: 'This endpoint is useful for:
+
+
+        Getting a session object with all specified expandables that exist in an administrative context.'
+      operationId: getSession
+      parameters:
+      - description: 'ExpandOptions is a query parameter encoded list of all properties that must be expanded in the Session.
+
+          Example - ?expand=Identity&expand=Devices
+
+          If no value is provided, the expandable properties are skipped.'
+        in: query
+        name: expand
+        schema:
+          items:
+            enum:
+            - identity
+            - devices
+            type: string
+          type: array
+      - description: ID is the session's ID.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/session'
+          description: session
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorGeneric'
+          description: errorGeneric
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorGeneric'
+          description: errorGeneric
+      security:
+      - oryAccessToken: []
+      summary: Get Session
+      tags:
+      - identity
+      x-ory-ratelimit-bucket: kratos-admin-high
+  /admin/sessions/{id}/extend:
+    patch:
+      description: 'Calling this endpoint extends the given session ID. If `session.earliest_possible_extend` is set it
+
+        will only extend the session after the specified time has passed.
+
+
+        This endpoint returns per default a 204 No Content response on success. Older Ory Network projects may
+
+        return a 200 OK response with the session in the body. Returning the session as part of the response
+
+        will be deprecated in the future and should not be relied upon.
+
+
+        This endpoint ignores consecutive requests to extend the same session and returns a 404 error in those
+
+        scenarios. This endpoint also returns 404 errors if the session does not exist.
+
+
+        Retrieve the session ID from the `/sessions/whoami` endpoint / `toSession` SDK method.'
+      operationId: extendSession
+      parameters:
+      - description: ID is the session's ID.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/session'
+          description: session
+        '204':
+          $ref: '#/components/responses/emptyResponse'
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorGeneric'
+          description: errorGeneric
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorGeneric'
+          description: errorGeneric
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorGeneric'
+          description: errorGeneric
+      security:
+      - oryAccessToken: []
+      summary: Extend a Session
+      tags:
+      - identity
+      x-ory-ratelimit-bucket: kratos-admin-low
+  /schemas:
+    get:
+      description: Returns a list of all identity schemas currently in use.
+      operationId: listIdentitySchemas
+      parameters:
+      - description: 'Deprecated Items per Page
+
+
+          DEPRECATED: Please use `page_token` instead. This parameter will be removed in the future.
+
+
+          This is the number of items per page.'
+        in: query
+        name: per_page
+        schema:
+          default: 250
+          format: int64
+          maximum: 1000
+          minimum: 1
+          type: integer
+      - description: 'Deprecated Pagination Page
+
+
+          DEPRECATED: Please use `page_token` instead. This parameter will be removed in the future.
+
+
+          This value is currently an integer, but it is not sequential. The value is not the page number, but a
+
+          reference. The next page can be any number and some numbers might return an empty list.
+
+
+          For example, page 2 might not follow after page 1. And even if page 3 and 5 exist, but page 4 might not exist.
+
+          The first page can be retrieved by omitting this parameter. Following page pointers will be returned in the
+
+          `Link` header.'
+        in: query
+        name: page
+        schema:
+          format: int64
+          type: integer
+      - description: 'Page Size
+
+
+          This is the number of items per page to return. For details on pagination please head over to the
+
+          [pagination documentation](https://www.ory.com/docs/ecosystem/api-design#pagination).'
+        in: query
+        name: page_size
+        schema:
+          default: 250
+          format: int64
+          maximum: 500
+          minimum: 1
+          type: integer
+      - description: 'Next Page Token
+
+
+          The next page token. For details on pagination please head over to the
+
+          [pagination documentation](https://www.ory.com/docs/ecosystem/api-design#pagination).'
+        in: query
+        name: page_token
+        schema:
+          type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/identitySchemas'
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorGeneric'
+          description: errorGeneric
+      summary: Get all Identity Schemas
+      tags:
+      - identity
+      x-ory-ratelimit-bucket: kratos-admin-medium
+  /schemas/{id}:
+    get:
+      description: Return a specific identity schema.
+      operationId: getIdentitySchema
+      parameters:
+      - description: ID must be set to the ID of schema you want to get
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/identitySchema'
+          description: identitySchema
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorGeneric'
+          description: errorGeneric
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorGeneric'
+          description: errorGeneric
+      summary: Get Identity JSON Schema
+      tags:
+      - identity
+      x-ory-ratelimit-bucket: kratos-admin-medium
+components:
+  schemas:
+    sessionAuthenticationMethod:
+      description: A singular authenticator used during authentication / login.
+      properties:
+        aal:
+          $ref: '#/components/schemas/authenticatorAssuranceLevel'
+        completed_at:
+          description: When the authentication challenge was completed.
+          format: date-time
+          type: string
+        method:
+          description: 'The method used in this authenticator.
+
+            password CredentialsTypePassword
+
+            oidc CredentialsTypeOIDC
+
+            totp CredentialsTypeTOTP
+
+            lookup_secret CredentialsTypeLookup
+
+            webauthn CredentialsTypeWebAuthn
+
+            code CredentialsTypeCodeAuth
+
+            passkey CredentialsTypePasskey
+
+            profile CredentialsTypeProfile
+
+            saml CredentialsTypeSAML
+
+            deviceauthn CredentialsTypeDeviceAuthn
+
+            link_recovery CredentialsTypeRecoveryLink  CredentialsTypeRecoveryLink is a special credential type linked to the link strategy (recovery flow).  It is not used within the credentials object itself.
+
+            code_recovery CredentialsTypeRecoveryCode'
+          enum:
+          - password
+          - oidc
+          - totp
+          - lookup_secret
+          - webauthn
+          - code
+          - passkey
+          - profile
+          - saml
+          - deviceauthn
+          - link_recovery
+          - code_recovery
+          type: string
+          x-go-enum-desc: 'password CredentialsTypePassword
+
+            oidc CredentialsTypeOIDC
+
+            totp CredentialsTypeTOTP
+
+            lookup_secret CredentialsTypeLookup
+
+            webauthn CredentialsTypeWebAuthn
+
+            code CredentialsTypeCodeAuth
+
+            passkey CredentialsTypePasskey
+
+            profile CredentialsTypeProfile
+
+            saml CredentialsTypeSAML
+
+            deviceauthn CredentialsTypeDeviceAuthn
+
+            link_recovery CredentialsTypeRecoveryLink  CredentialsTypeRecoveryLink is a special credential type linked to the link strategy (recovery flow).  It is not used within the credentials object itself.
+
+            code_recovery CredentialsTypeRecoveryCode'
+        organization:
+          description: The Organization id used for authentication
+          type: string
+        provider:
+          description: OIDC or SAML provider id used for authentication
+          type: string
+        upstream_acr:
+          description: 'UpstreamACR is the `acr` claim reported by the upstream OIDC
+
+            provider, if any. Populated only for OIDC login methods when the
+
+            upstream ID token contained an `acr` claim.'
+          type: string
+        upstream_amr:
+          description: 'UpstreamAMR is the `amr` claim reported by the upstream OIDC
+
+            provider, if any. Populated only for OIDC login methods when the
+
+            upstream ID token contained an `amr` claim.'
+          items:
+            type: string
+          type: array
+      title: AuthenticationMethod identifies an authentication method
+      type: object
+    genericError:
+      properties:
+        code:
+          description: The status code
+          example: 404
+          format: int64
+          type: integer
+        debug:
+          description: 'Debug information
+
+
+            This field is often not exposed to protect against leaking
+
+            sensitive information.'
+          example: SQL field "foo" is not a bool.
+          type: string
+        details:
+          additionalProperties: false
+          description: Further error details
+          type: object
+        id:
+          description: 'The error ID
+
+
+            Useful when trying to identify various errors in application logic.'
+          type: string
+        message:
+          description: 'Error message
+
+
+            The error''s message.'
+          example: The resource could not be found
+          type: string
+        reason:
+          description: A human-readable reason for the error
+          example: User with ID 1234 does not exist.
+          type: string
+        request:
+          description: 'The request ID
+
+
+            The request ID is often exposed internally in order to trace
+
+            errors across service architectures. This is often a UUID.'
+          example: d7ef54b1-ec15-46e6-bccb-524b82c035e6
+          type: string
+        status:
+          description: The status description
+          example: Not Found
+          type: string
+      required:
+      - message
+      type: object
+    jsonPatchDocument:
+      description: A JSONPatchDocument request
+      items:
+        $ref: '#/components/schemas/jsonPatch'
+      type: array
+    identityTraits:
+      description: 'Traits represent an identity''s traits. The identity is able to create, modify, and delete traits
+
+        in a self-service manner. The input will always be validated against the JSON Schema defined
+
+        in `schema_url`.'
+    selfServiceFlowType:
+      description: The flow type can either be `api` or `browser`.
+      title: Type is the flow type.
+      type: string
+    createIdentityBody:
+      description: Create Identity Body
+      properties:
+        credentials:
+          $ref: '#/components/schemas/identityWithCredentials'
+        external_id:
+          description: 'ExternalID is an optional external ID of the identity. This is used to link
+
+            the identity to an external system. If set, the external ID must be unique
+
+            across all identities.'
+          type: string
+        metadata_admin:
+          description: Store metadata about the user which is only accessible through admin APIs such as `GET /admin/identities/<id>`.
+        metadata_public:
+          description: 'Store metadata about the identity which the identity itself can see when calling for example the
+
+            session endpoint. Do not store sensitive information (e.g. credit score) about the identity in this field.'
+        organization_id:
+          $ref: '#/components/schemas/NullUUID'
+        recovery_addresses:
+          description: 'RecoveryAddresses contains all the addresses that can be used to recover an identity.
+
+
+            Use this structure to import recovery addresses for an identity. Please keep in mind
+
+            that the address needs to be represented in the Identity Schema or this field will be overwritten
+
+            on the next identity update.'
+          items:
+            $ref: '#/components/schemas/recoveryIdentityAddress'
+          type: array
+        schema_id:
+          description: SchemaID is the ID of the JSON Schema to be used for validating the identity's traits.
+          type: string
+        state:
+          description: 'State is the identity''s state.
+
+            active StateActive
+
+            inactive StateInactive'
+          enum:
+          - active
+          - inactive
+          type: string
+          x-go-enum-desc: 'active StateActive
+
+            inactive StateInactive'
+        traits:
+          description: 'Traits represent an identity''s traits. The identity is able to create, modify, and delete traits
+
+            in a self-service manner. The input will always be validated against the JSON Schema defined
+
+            in `schema_url`.'
+          type: object
+        verifiable_addresses:
+          description: 'VerifiableAddresses contains all the addresses that can be verified by the user.
+
+
+            Use this structure to import verified addresses for an identity. Please keep in mind
+
+            that the address needs to be represented in the Identity Schema or this field will be overwritten
+
+            on the next identity update.'
+          items:
+            $ref: '#/components/schemas/verifiableIdentityAddress'
+          type: array
+      required:
+      - schema_id
+      - traits
+      type: object
+    recoveryCodeForIdentity:
+      description: Used when an administrator creates a recovery code for an identity.
+      properties:
+        expires_at:
+          description: 'Expires At is the timestamp of when the recovery flow expires
+
+
+            The timestamp when the recovery code expires.'
+          format: date-time
+          type: string
+        recovery_code:
+          description: RecoveryCode is the code that can be used to recover the account
+          type: string
+        recovery_link:
+          description: 'RecoveryLink with flow
+
+
+            This link opens the recovery UI with an empty `code` field.'
+          type: string
+      required:
+      - recovery_link
+      - recovery_code
+      title: Recovery Code for Identity
+      type: object
+    identityWithCredentialsTotp:
+      description: Create Identity and Import TOTP 2FA Credentials
+      properties:
+        config:
+          $ref: '#/components/schemas/identityWithCredentialsTotpConfig'
+      type: object
+    identityCredentialsLookupSecretCode:
+      description: Recovery codes can be used once and are invalidated after use.
+      properties:
+        code:
+          description: A recovery code
+          type: string
+        used_at:
+          $ref: '#/components/schemas/nullTime'
+      title: RecoveryCode represents one recovery code associated with a lookup_secret credential.
+      type: object
+    identityWithCredentialsOidcConfigProvider:
+      description: Create Identity and Import Social Sign In Credentials Configuration
+      properties:
+        organization:
+          $ref: '#/components/schemas/NullUUID'
+        provider:
+          description: The OpenID Connect provider to link the subject to. Usually something like `google` or `github`.
+          type: string
+        subject:
+          description: The subject (`sub`) of the OpenID Connect connection. Usually the `sub` field of the ID Token.
+          type: string
+        use_auto_link:
+          description: If set, this credential allows the user to sign in using the OpenID Connect provider without setting the subject first.
+          type: boolean
+      required:
+      - subject
+      - provider
+      type: object
+    identityCredentials:
+      description: Credentials represents a specific credential type
+      properties:
+        config:
+          $ref: '#/components/schemas/JSONRawMessage'
+        created_at:
+          description: CreatedAt is a helper struct field for gobuffalo.pop.
+          format: date-time
+          type: string
+        identifiers:
+          description: Identifiers represent a list of unique identifiers this credential type matches.
+          items:
+            type: string
+          type: array
+        type:
+          description: 'Type discriminates between different types of credentials.
+
+            password CredentialsTypePassword
+
+            oidc CredentialsTypeOIDC
+
+            totp CredentialsTypeTOTP
+
+            lookup_secret CredentialsTypeLookup
+
+            webauthn CredentialsTypeWebAuthn
+
+            code CredentialsTypeCodeAuth
+
+            passkey CredentialsTypePasskey
+
+            profile CredentialsTypeProfile
+
+            saml CredentialsTypeSAML
+
+            deviceauthn CredentialsTypeDeviceAuthn
+
+            link_recovery CredentialsTypeRecoveryLink  CredentialsTypeRecoveryLink is a special credential type linked to the link strategy (recovery flow).  It is not used within the credentials object itself.
+
+            code_recovery CredentialsTypeRecoveryCode'
+          enum:
+          - password
+          - oidc
+          - totp
+          - lookup_secret
+          - webauthn
+          - code
+          - passkey
+          - profile
+          - saml
+          - deviceauthn
+          - link_recovery
+          - code_recovery
+          type: string
+          x-go-enum-desc: 'password CredentialsTypePassword
+
+            oidc CredentialsTypeOIDC
+
+            totp CredentialsTypeTOTP
+
+            lookup_secret CredentialsTypeLookup
+
+            webauthn CredentialsTypeWebAuthn
+
+            code CredentialsTypeCodeAuth
+
+            passkey CredentialsTypePasskey
+
+            profile CredentialsTypeProfile
+
+            saml CredentialsTypeSAML
+
+            deviceauthn CredentialsTypeDeviceAuthn
+
+            link_recovery CredentialsTypeRecoveryLink  CredentialsTypeRecoveryLink is a special credential type linked to the link strategy (recovery flow).  It is not used within the credentials object itself.
+
+            code_recovery CredentialsTypeRecoveryCode'
+        updated_at:
+          description: UpdatedAt is a helper struct field for gobuffalo.pop.
+          format: date-time
+          type: string
+        version:
+          description: Version refers to the version of the credential. Useful when changing the config schema.
+          format: int64
+          type: integer
+      type: object
+    identityWithCredentialsSaml:
+      description: Payload to import SAML credentials
+      properties:
+        config:
+          $ref: '#/components/schemas/identityWithCredentialsSamlConfig'
+      type: object
+    sessionAuthenticationMethods:
+      description: A list of authenticators which were used to authenticate the session.
+      items:
+        $ref: '#/components/schemas/sessionAuthenticationMethod'
+      title: List of (Used) AuthenticationMethods
+      type: array
+    identityWithCredentials:
+      description: Create Identity and Import Credentials
+      properties:
+        lookup_secret:
+          $ref: '#/components/schemas/AdminIdentityImportCredentialsLookupSecret'
+        oidc:
+          $ref: '#/components/schemas/identityWithCredentialsOidc'
+        passkey:
+          $ref: '#/components/schemas/identityWithCredentialsPasskey'
+        password:
+          $ref: '#/components/schemas/identityWithCredentialsPassword'
+        saml:
+          $ref: '#/components/schemas/identityWithCredentialsSaml'
+        totp:
+          $ref: '#/components/schemas/identityWithCredentialsTotp'
+        webauthn:
+          $ref: '#/components/schemas/identityWithCredentialsWebAuthn'
+      type: object
+    identityPatchResponse:
+      description: Response for a single identity patch
+      properties:
+        action:
+          description: 'The action for this specific patch
+
+            create ActionCreate  Create this identity.
+
+            error ActionError  Error indicates that the patch failed.'
+          enum:
+          - create
+          - error
+          type: string
+          x-go-enum-desc: 'create ActionCreate  Create this identity.
+
+            error ActionError  Error indicates that the patch failed.'
+        error:
+          $ref: '#/components/schemas/DefaultError'
+        identity:
+          description: The identity ID payload of this patch
+          format: uuid
+          type: string
+        patch_id:
+          description: The ID of this patch response, if an ID was specified in the patch.
+          format: uuid
+          type: string
+      type: object
+    identityCredentialsWebAuthnFlags:
+      properties:
+        backup_eligible:
+          type: boolean
+        backup_state:
+          type: boolean
+        user_present:
+          type: boolean
+        user_verified:
+          type: boolean
+      title: CredentialWebAuthnFlags contains information about the flags of a webauthn credential.
+      type: object
+    sessionDevice:
+      description: Device corresponding to a Session
+      properties:
+        id:
+          description: Device record ID
+          format: uuid
+          type: string
+        ip_address:
+          description: IPAddress of the client
+          type: string
+        location:
+          description: Geo Location corresponding to the IP Address
+          type: string
+        user_agent:
+          description: UserAgent of the client
+          type: string
+      required:
+      - id
+      type: object
+    identityWithCredentialsPasskey:
+      description: Create Identity and Import Passkey Credentials
+      properties:
+        config:
+          $ref: '#/components/schemas/identityWithCredentialsPasskeyConfig'
+      type: object
+    identityWithCredentialsPasskeyConfig:
+      description: Create Identity and Import Passkey Credentials Configuration
+      properties:
+        credentials:
+          $ref: '#/components/schemas/identityCredentialsWebAuthnList'
+        user_handle:
+          description: UserHandle is the user handle of the webauthn credential.
+          items:
+            format: uint8
+            type: integer
+          type: array
+      type: object
+    identityWithCredentialsSamlConfig:
+      description: Payload of SAML providers
+      properties:
+        providers:
+          description: A list of SAML Providers
+          items:
+            $ref: '#/components/schemas/identityWithCredentialsSamlConfigProvider'
+          type: array
+      type: object
+    createRecoveryCodeForIdentityBody:
+      description: Create Recovery Code for Identity Request Body
+      properties:
+        expires_in:
+          description: 'Code Expires In
+
+
+            The recovery code will expire after that amount of time has passed. Defaults to the configuration value of
+
+            `selfservice.methods.code.config.lifespan`.'
+          pattern: ^([0-9]+(ns|us|ms|s|m|h))*$
+          type: string
+        flow_type:
+          $ref: '#/components/schemas/selfServiceFlowType'
+        identity_id:
+          description: 'Identity to Recover
+
+
+            The identity''s ID you wish to recover.'
+          format: uuid
+          type: string
+      required:
+      - identity_id
+      type: object
+    createRecoveryLinkForIdentityBody:
+      description: Create Recovery Link for Identity Request Body
+      properties:
+        expires_in:
+          description: 'Link Expires In
+
+
+            The recovery link will expire after that amount of time has passed. Defaults to the configuration value of
+
+            `selfservice.methods.code.config.lifespan`.'
+          pattern: ^[0-9]+(ns|us|ms|s|m|h)$
+          type: string
+        identity_id:
+          description: 'Identity to Recover
+
+
+            The identity''s ID you wish to recover.'
+          format: uuid
+          type: string
+      required:
+      - identity_id
+      type: object
+    identityWithCredentialsWebAuthn:
+      description: Create Identity and Import WebAuthn Credentials
+      properties:
+        config:
+          $ref: '#/components/schemas/identityWithCredentialsWebAuthnConfig'
+      type: object
+    batchPatchIdentitiesResponse:
+      description: Patch identities response
+      properties:
+        identities:
+          description: The patch responses for the individual identities.
+          items:
+            $ref: '#/components/schemas/identityPatchResponse'
+          type: array
+      type: object
+    identityCredentialsWebAuthnList:
+      items:
+        $ref: '#/components/schemas/identityCredentialsWebAuthn'
+      type: array
+    identity:
+      description: An [identity](https://www.ory.com/docs/kratos/concepts/identity-user-model) represents a (human) user in Ory.
+      properties:
+        created_at:
+          description: CreatedAt is a helper struct field for gobuffalo.pop.
+          format: date-time
+          type: string
+        credentials:
+          additionalProperties:
+            $ref: '#/components/schemas/identityCredentials'
+          description: Credentials represents all credentials that can be used for authenticating this identity.
+          type: object
+        external_id:
+          description: 'ExternalID is an optional external ID of the identity. This is used to link
+
+            the identity to an external system. If set, the external ID must be unique
+
+            across all identities.'
+          type: string
+        id:
+          description: 'ID is the identity''s unique identifier.
+
+
+            The Identity ID can not be changed and can not be chosen. This ensures future
+
+            compatibility and optimization for distributed stores such as CockroachDB.'
+          format: uuid
+          type: string
+        metadata_admin:
+          $ref: '#/components/schemas/nullJsonRawMessage'
+        metadata_public:
+          $ref: '#/components/schemas/nullJsonRawMessage'
+        organization_id:
+          $ref: '#/components/schemas/NullUUID'
+        recovery_addresses:
+          description: RecoveryAddresses contains all the addresses that can be used to recover an identity.
+          items:
+            $ref: '#/components/schemas/recoveryIdentityAddress'
+          type: array
+          x-omitempty: true
+        schema_id:
+          description: SchemaID is the ID of the JSON Schema to be used for validating the identity's traits.
+          type: string
+        schema_url:
+          description: 'SchemaURL is the URL of the endpoint where the identity''s traits schema can be fetched from.
+
+
+            format: url'
+          type: string
+        state:
+          description: 'State is the identity''s state.
+
+
+            This value has currently no effect.
+
+            active StateActive
+
+            inactive StateInactive'
+          enum:
+          - active
+          - inactive
+          type: string
+          x-go-enum-desc: 'active StateActive
+
+            inactive StateInactive'
+        state_changed_at:
+          $ref: '#/components/schemas/nullTime'
+        traits:
+          $ref: '#/components/schemas/identityTraits'
+        updated_at:
+          description: UpdatedAt is a helper struct field for gobuffalo.pop.
+          format: date-time
+          type: string
+        verifiable_addresses:
+          description: VerifiableAddresses contains all the addresses that can be verified by the user.
+          items:
+            $ref: '#/components/schemas/verifiableIdentityAddress'
+          type: array
+          x-omitempty: true
+      required:
+      - id
+      - schema_id
+      - schema_url
+      - traits
+      title: Identity represents an Ory Kratos identity
+      type: object
+    identitySchemas:
+      description: List of Identity JSON Schemas
+      items:
+        $ref: '#/components/schemas/identitySchemaContainer'
+      type: array
+    identityPatch:
+      description: Payload for patching an identity
+      properties:
+        create:
+          $ref: '#/components/schemas/createIdentityBody'
+        patch_id:
+          description: 'The ID of this patch.
+
+
+            The patch ID is optional. If specified, the ID will be returned in the
+
+            response, so consumers of this API can correlate the response with the
+
+            patch.'
+          format: uuid
+          type: string
+      type: object
+    identityCredentialsWebAuthn:
+      properties:
+        added_at:
+          format: date-time
+          type: string
+        attestation:
+          $ref: '#/components/schemas/identityCredentialsWebAuthnAttestation'
+        attestation_type:
+          type: string
+        authenticator:
+          $ref: '#/components/schemas/identityCredentialsWebAuthnAuthenticator'
+        display_name:
+          type: string
+        flags:
+          $ref: '#/components/schemas/identityCredentialsWebAuthnFlags'
+        id:
+          items:
+            format: uint8
+            type: integer
+          type: array
+        is_passwordless:
+          type: boolean
+        public_key:
+          items:
+            format: uint8
+            type: integer
+          type: array
+        transport:
+          items:
+            $ref: '#/components/schemas/AuthenticatorTransport'
+          type: array
+      title: CredentialWebAuthn contains information about a webauthn credential.
+      type: object
+    identitySchema:
+      description: Raw JSON Schema
+      type: object
+    identityWithCredentialsSamlConfigProvider:
+      description: Payload of specific SAML provider
+      properties:
+        organization:
+          $ref: '#/components/schemas/NullUUID'
+        provider:
+          description: The SAML provider to link the subject to.
+          type: string
+        subject:
+          description: The unique subject of the SAML connection. This value must be immutable at the source.
+          type: string
+      required:
+      - subject
+      - provider
+      type: object
+    identityWithCredentialsPasswordConfig:
+      description: Create Identity and Import Password Credentials Configuration
+      properties:
+        hashed_password:
+          description: The hashed password in [PHC format](https://www.ory.com/docs/kratos/manage-identities/import-user-accounts-identities#hashed-passwords)
+          type: string
+        password:
+          description: The password in plain text if no hash is available.
+          type: string
+        use_password_migration_hook:
+          description: If set to true, the password will be migrated using the password migration hook.
+          type: boolean
+      type: object
+    nullTime:
+      format: date-time
+      title: NullTime implements sql.NullTime functionality.
+      type: string
+    updateIdentityBody:
+      description: Update Identity Body
+      properties:
+        credentials:
+          $ref: '#/components/schemas/identityWithCredentials'
+        external_id:
+          description: 'ExternalID is an optional external ID of the identity. This is used to link
+
+            the identity to an external system. If set, the external ID must be unique
+
+            across all identities.'
+          type: string
+        metadata_admin:
+          description: Store metadata about the user which is only accessible through admin APIs such as `GET /admin/identities/<id>`.
+        metadata_public:
+          description: 'Store metadata about the identity which the identity itself can see when calling for example the
+
+            session endpoint. Do not store sensitive information (e.g. credit score) about the identity in this field.'
+        schema_id:
+          description: 'SchemaID is the ID of the JSON Schema to be used for validating the identity''s traits. If set
+
+            will update the Identity''s SchemaID.'
+          type: string
+        state:
+          description: 'State is the identity''s state.
+
+            active StateActive
+
+            inactive StateInactive'
+          enum:
+          - active
+          - inactive
+          type: string
+          x-go-enum-desc: 'active StateActive
+
+            inactive StateInactive'
+        traits:
+          description: 'Traits represent an identity''s traits. The identity is able to create, modify, and delete traits
+
+            in a self-service manner. The input will always be validated against the JSON Schema defined
+
+            in `schema_id`.'
+          type: object
+      required:
+      - schema_id
+      - traits
+      - state
+      type: object
+    identityWithCredentialsOidcConfig:
+      properties:
+        providers:
+          description: A list of OpenID Connect Providers
+          items:
+            $ref: '#/components/schemas/identityWithCredentialsOidcConfigProvider'
+          type: array
+      type: object
+    errorGeneric:
+      description: The standard Ory JSON API error format.
+      properties:
+        error:
+          $ref: '#/components/schemas/genericError'
+      required:
+      - error
+      title: JSON API Error Response
+      type: object
+    identityWithCredentialsWebAuthnConfig:
+      description: Create Identity and Import WebAuthn Credentials Configuration
+      properties:
+        credentials:
+          $ref: '#/components/schemas/identityCredentialsWebAuthnList'
+        user_handle:
+          description: UserHandle is the user handle of the webauthn credential.
+          items:
+            format: uint8
+            type: integer
+          type: array
+      type: object
+    identityCredentialsWebAuthnAuthenticator:
+      properties:
+        aaguid:
+          items:
+            format: uint8
+            type: integer
+          type: array
+        clone_warning:
+          type: boolean
+        sign_count:
+          format: uint32
+          type: integer
+      title: AuthenticatorWebAuthn contains information about the authenticator of a webauthn credential.
+      type: object
+    identityCredentialsWebAuthnAttestation:
+      properties:
+        authenticator_data:
+          items:
+            format: uint8
+            type: integer
+          type: array
+        client_dataJSON:
+          items:
+            format: uint8
+            type: integer
+          type: array
+        client_data_hash:
+          items:
+            format: uint8
+            type: integer
+          type: array
+        object:
+          items:
+            format: uint8
+            type: integer
+          type: array
+        public_key_algorithm:
+          format: int64
+          type: integer
+      title: CredentialWebAuthnAttestation contains information about attestation of a webauthn credential.
+      type: object
+    identityWithCredentialsOidc:
+      description: Create Identity and Import Social Sign In Credentials
+      properties:
+        config:
+          $ref: '#/components/schemas/identityWithCredentialsOidcConfig'
+      type: object
+    recoveryLinkForIdentity:
+      description: Used when an administrator creates a recovery link for an identity.
+      properties:
+        expires_at:
+          description: 'Recovery Link Expires At
+
+
+            The timestamp when the recovery link expires.'
+          format: date-time
+          type: string
+        recovery_link:
+          description: 'Recovery Link
+
+
+            This link can be used to recover the account.'
+          type: string
+      required:
+      - recovery_link
+      title: Identity Recovery Link
+      type: object
+    patchIdentitiesBody:
+      description: Patch Identities Body
+      properties:
+        identities:
+          description: 'Identities holds the list of patches to apply
+
+
+            required'
+          items:
+            $ref: '#/components/schemas/identityPatch'
+          type: array
+      type: object
+    identityWithCredentialsTotpConfig:
+      description: Create Identity and Import TOTP 2FA Credentials Configuration
+      properties:
+        totp_url:
+          description: 'TOTPURL is the TOTP URL
+
+
+            For more details see: https://github.com/google/google-authenticator/wiki/Key-Uri-Format'
+          type: string
+      type: object
+    AdminIdentityImportCredentialsLookupSecret:
+      description: Create Identity and Import Lookup Secret Credentials
+      properties:
+        config:
+          $ref: '#/components/schemas/AdminIdentityImportCredentialsLookupSecretConfig'
+      type: object
+    verifiableIdentityAddress:
+      description: VerifiableAddress is an identity's verifiable address
+      properties:
+        created_at:
+          description: When this entry was created
+          example: '2014-01-01T23:28:56.782Z'
+          format: date-time
+          type: string
+        id:
+          description: The ID
+          format: uuid
+          type: string
+        status:
+          $ref: '#/components/schemas/identityVerifiableAddressStatus'
+        updated_at:
+          description: When this entry was last updated
+          example: '2014-01-01T23:28:56.782Z'
+          format: date-time
+          type: string
+        value:
+          description: 'The address value
+
+
+            example foo@user.com'
+          type: string
+        verified:
+          description: Indicates if the address has already been verified
+          example: true
+          type: boolean
+        verified_at:
+          $ref: '#/components/schemas/nullTime'
+        via:
+          description: The delivery method
+          enum:
+          - email
+          - sms
+          example: email
+          type: string
+      required:
+      - value
+      - verified
+      - via
+      - status
+      type: object
+    identityWithCredentialsPassword:
+      description: Create Identity and Import Password Credentials
+      properties:
+        config:
+          $ref: '#/components/schemas/identityWithCredentialsPasswordConfig'
+      type: object
+    DefaultError:
+      description: 'From https://go.dev/wiki/CodeReviewComments#receiver-type:
+
+        > Can function or methods, either concurrently or when called from this method, be mutating the receiver? A value type creates a copy of the receiver when the method is invoked, so outside updates will not be applied to this receiver. If changes must be visible in the original receiver, the receiver must be a pointer.
+
+        > If the receiver is a struct, array or slice and any of its elements is a pointer to something that might be mutating,
+
+        > prefer a pointer receiver, as it will make the intention clearer to the reader.
+
+        > Don’t mix receiver types. Choose either pointers or struct types for all available methods.'
+      title: 'DefaultError is not safe to shallow copy because it contains
+
+        fields which are not value types, e.g. maps.
+
+        A shallow copy would inadvertently share these underlying fields,
+
+        leading to incorrect behavior and data races in a concurrent context.
+
+        Consequently, all methods take the type by pointer and not by value.'
+    recoveryIdentityAddress:
+      properties:
+        break_glass_for_organization:
+          $ref: '#/components/schemas/NullUUID'
+        created_at:
+          description: CreatedAt is a helper struct field for gobuffalo.pop.
+          format: date-time
+          type: string
+        id:
+          format: uuid
+          type: string
+        updated_at:
+          description: UpdatedAt is a helper struct field for gobuffalo.pop.
+          format: date-time
+          type: string
+        value:
+          type: string
+        via:
+          type: string
+      required:
+      - value
+      - via
+      type: object
+    identitySchemaContainer:
+      description: An Identity JSON Schema Container
+      properties:
+        id:
+          description: The ID of the Identity JSON Schema
+          type: string
+        schema:
+          description: The actual Identity JSON Schema
+          type: object
+      required:
+      - id
+      - schema
+      type: object
+    AuthenticatorTransport:
+      description: 'Authenticators may implement various transports for communicating with clients. This enumeration defines hints as to
+
+        how clients might communicate with a particular authenticator in order to obtain an assertion for a specific
+
+        credential. Note that these hints represent the WebAuthn Relying Party''s best belief as to how an authenticator may
+
+        be reached. A Relying Party will typically learn of the supported transports for a public key credential via
+
+        getTransports().
+
+
+        Specification: §5.8.4. Authenticator Transport Enumeration (https://www.w3.org/TR/webauthn/#enumdef-authenticatortransport)'
+      title: AuthenticatorTransport represents the IDL enum with the same name.
+      type: string
+    authenticatorAssuranceLevel:
+      description: 'The authenticator assurance level can be one of "aal1", "aal2", or "aal3". A higher number means that it is harder
+
+        for an attacker to compromise the account.
+
+
+        Generally, "aal1" implies that one authentication factor was used while AAL2 implies that two factors (e.g.
+
+        password + TOTP) have been used.
+
+
+        To learn more about these levels please head over to: https://www.ory.com/kratos/docs/concepts/credentials'
+      enum:
+      - aal0
+      - aal1
+      - aal2
+      - aal3
+      title: Authenticator Assurance Level (AAL)
+      type: string
+    jsonPatch:
+      description: A JSONPatch document as defined by RFC 6902
+      properties:
+        from:
+          description: 'This field is used together with operation "move" and uses JSON Pointer notation.
+
+
+            Learn more [about JSON Pointers](https://datatracker.ietf.org/doc/html/rfc6901#section-5).'
+          example: /name
+          type: string
+        op:
+          description: The operation to be performed. One of "add", "remove", "replace", "move", "copy", or "test".
+          example: replace
+          type: string
+        path:
+          description: 'The path to the target path. Uses JSON pointer notation.
+
+
+            Learn more [about JSON Pointers](https://datatracker.ietf.org/doc/html/rfc6901#section-5).'
+          example: /name
+          type: string
+        value:
+          description: 'The value to be used within the operations.
+
+
+            Learn more [about JSON Pointers](https://datatracker.ietf.org/doc/html/rfc6901#section-5).'
+          example: foobar
+      required:
+      - op
+      - path
+      type: object
+    identityVerifiableAddressStatus:
+      description: VerifiableAddressStatus must not exceed 16 characters as that is the limitation in the SQL Schema
+      type: string
+    AdminIdentityImportCredentialsLookupSecretConfig:
+      description: Create Identity and Import Lookup Secret Credentials Configuration
+      properties:
+        codes:
+          description: Codes is a list of "lookup secret" codes configured for the user.
+          items:
+            $ref: '#/components/schemas/identityCredentialsLookupSecretCode'
+          type: array
+      type: object
+    JSONRawMessage:
+      title: JSONRawMessage represents a json.RawMessage that works well with JSON, SQL, and Swagger.
+      type: object
+    session:
+      description: A Session
+      properties:
+        active:
+          description: Active state. If false the session is no longer active.
+          type: boolean
+        authenticated_at:
+          description: 'The Session Authentication Timestamp
+
+
+            When this session was authenticated at. If multi-factor authentication was used this
+
+            is the time when the last factor was authenticated (e.g. the TOTP code challenge was completed).'
+          format: date-time
+          type: string
+        authentication_methods:
+          $ref: '#/components/schemas/sessionAuthenticationMethods'
+        authenticator_assurance_level:
+          $ref: '#/components/schemas/authenticatorAssuranceLevel'
+        devices:
+          description: Devices has history of all endpoints where the session was used
+          items:
+            $ref: '#/components/schemas/sessionDevice'
+          type: array
+        expires_at:
+          description: 'The Session Expiry
+
+
+            When this session expires at.'
+          format: date-time
+          type: string
+        id:
+          description: Session ID
+          format: uuid
+          type: string
+        identity:
+          $ref: '#/components/schemas/identity'
+        issued_at:
+          description: 'The Session Issuance Timestamp
+
+
+            When this session was issued at. Usually equal or close to `authenticated_at`.'
+          format: date-time
+          type: string
+        tokenized:
+          description: 'Tokenized is the tokenized (e.g. JWT) version of the session.
+
+
+            It is only set when the `tokenize_as` query parameter was set to a valid tokenize template during calls to `/session/whoami`.'
+          type: string
+      required:
+      - id
+      type: object
+    NullUUID:
+      format: uuid4
+      nullable: true
+      type: string
+    nullJsonRawMessage:
+      description: NullJSONRawMessage represents a json.RawMessage that works well with JSON, SQL, and Swagger and is NULLable-
+      nullable: true
+  responses:
+    listIdentitySessions:
+      content:
+        application/json:
+          schema:
+            items:
+              $ref: '#/components/schemas/session'
+            type: array
+      description: List Identity Sessions Response
+    listIdentities:
+      content:
+        application/json:
+          schema:
+            items:
+              $ref: '#/components/schemas/identity'
+            type: array
+      description: Paginated Identity List Response
+    identitySchemas:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/identitySchemas'
+      description: List Identity JSON Schemas Response
+    emptyResponse:
+      description: Empty responses are sent when, for example, resources are deleted. The HTTP status code for empty responses is typically 204.
+    listSessions:
+      content:
+        application/json:
+          schema:
+            items:
+              $ref: '#/components/schemas/session'
+            type: array
+      description: 'Session List Response
+
+
+        The response given when listing sessions in an administrative context.'
+  securitySchemes:
+    basic:
+      scheme: basic
+      type: http
+    bearer:
+      scheme: bearer
+      type: http
+    oauth2:
+      flows:
+        authorizationCode:
+          authorizationUrl: https://hydra.demo.ory.sh/oauth2/auth
+          scopes:
+            offline: A scope required when requesting refresh tokens (alias for `offline_access`)
+            offline_access: A scope required when requesting refresh tokens
+            openid: Request an OpenID Connect ID Token
+          tokenUrl: https://hydra.demo.ory.sh/oauth2/token
+      type: oauth2
+x-forwarded-proto: string
+x-request-id: string
