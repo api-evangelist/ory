@@ -8,7 +8,7 @@ info:
   license:
     name: Apache 2.0
   title: Ory Hydra api API
-  version: ''
+  version: "1.0"
 tags:
 - name: api
 paths:

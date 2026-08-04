@@ -1,0 +1,46 @@
+{
+  "provider": "ory",
+  "sources": [
+    "ory-api-api-openapi.yml",
+    "ory-courier-api-openapi.yml",
+    "ory-frontend-api-openapi.yml",
+    "ory-identity-api-openapi.yml",
+    "ory-jwk-api-openapi.yml",
+    "ory-metadata-api-openapi.yml",
+    "ory-oauth2-api-openapi.yml",
+    "ory-oidc-api-openapi.yml",
+    "ory-permission-api-openapi.yml",
+    "ory-relationship-api-openapi.yml",
+    "ory-wellknown-api-openapi.yml"
+  ],
+  "outputs": [
+    "ory-api-api-openapi.yml",
+    "ory-courier-api-openapi.yml",
+    "ory-frontend-api-openapi.yml",
+    "ory-identity-api-openapi.yml",
+    "ory-jwk-api-openapi.yml",
+    "ory-metadata-api-openapi.yml",
+    "ory-oauth2-api-openapi.yml",
+    "ory-oidc-api-openapi.yml",
+    "ory-permission-api-openapi.yml",
+    "ory-relationship-api-openapi.yml",
+    "ory-wellknown-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [
+    "ory-api-api-openapi.yml: info.version missing",
+    "ory-courier-api-openapi.yml: info.version missing",
+    "ory-frontend-api-openapi.yml: info.version missing",
+    "ory-identity-api-openapi.yml: info.version missing",
+    "ory-jwk-api-openapi.yml: info.version missing",
+    "ory-metadata-api-openapi.yml: info.version missing",
+    "ory-oauth2-api-openapi.yml: info.version missing",
+    "ory-oidc-api-openapi.yml: info.version missing",
+    "ory-permission-api-openapi.yml: info.version missing",
+    "ory-relationship-api-openapi.yml: info.version missing",
+    "ory-wellknown-api-openapi.yml: info.version missing"
+  ],
+  "notes": [],
+  "skipped": []
+}

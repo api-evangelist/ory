@@ -8,7 +8,7 @@ info:
   license:
     name: Apache 2.0
   title: Ory Hydra api frontend API
-  version: ''
+  version: "1.0"
 tags:
 - description: Endpoints used by frontend applications (e.g. Single-Page-App, Native Apps, Server Apps, ...) to manage a user's own profile.
   name: frontend

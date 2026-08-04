@@ -8,7 +8,7 @@ info:
   license:
     name: Apache 2.0
   title: Ory Hydra api courier API
-  version: ''
+  version: "1.0"
 tags:
 - description: APIs for managing email and SMS message delivery.
   name: courier

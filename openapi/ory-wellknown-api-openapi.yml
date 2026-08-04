@@ -8,7 +8,7 @@ info:
   license:
     name: Apache 2.0
   title: Ory Hydra api wellknown API
-  version: ''
+  version: "1.0"
 tags:
 - description: Well-Known Endpoints
   name: wellknown

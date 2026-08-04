@@ -8,7 +8,7 @@ info:
   license:
     name: Apache 2.0
   title: Ory Hydra api jwk API
-  version: ''
+  version: "1.0"
 tags:
 - description: JSON Web Keys
   name: jwk

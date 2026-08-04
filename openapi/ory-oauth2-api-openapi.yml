@@ -8,7 +8,7 @@ info:
   license:
     name: Apache 2.0
   title: Ory Hydra api oAuth2 API
-  version: ''
+  version: "1.0"
 tags:
 - description: OAuth 2.0
   name: oAuth2
