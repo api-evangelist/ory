@@ -308,6 +308,9 @@ apis:
   - type: GitHubRepository
     url: https://github.com/ory/oathkeeper
 common:
+  - type: License
+    name: Apache-2.0
+    url: https://github.com/ory/hydra/blob/master/LICENSE
   - type: AgenticAccess
     url: agentic-access/ory-agentic-access.yml
   - type: TrustCenter
