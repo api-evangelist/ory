@@ -1,0 +1,181 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Ory Hydra api jwk API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "jwk",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve a JSON Web Key Set",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/admin/keys/:set",
+            "params": [
+              {
+                "name": "set",
+                "value": "",
+                "type": "path",
+                "description": "JSON Web Key Set ID"
+              }
+            ]
+          },
+          "docs": "This endpoint can be used to retrieve JWK Sets stored in ORY Hydra.\n\nA JSON Web Key (JWK) is a JavaScript Object Notation (JSON) data structure that represents a cryptographic key. A JWK Set is a JSON data structure that represents a set of JWKs. A JSON Web Key is identified by its set and key id. ORY Hydra uses this functionality to store cryptographic keys used for TLS and JSON Web Tokens (such as OpenID Connect ID tokens), and allows storing user-defined keys as well."
+        },
+        {
+          "info": {
+            "name": "Create JSON Web Key",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/admin/keys/:set",
+            "params": [
+              {
+                "name": "set",
+                "value": "",
+                "type": "path",
+                "description": "The JSON Web Key Set ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "This endpoint is capable of generating JSON Web Key Sets for you. There are different strategies available, such as symmetric cryptographic keys (HS256, HS512) and asymmetric cryptographic keys (RS256, ECDSA). If the specified JSON Web Key Set does not exist, it will be created.\n\nA JSON Web Key (JWK) is a JavaScript Object Notation (JSON) data structure that represents a cryptographic key. A JWK Set is a JSON data structure that represents a set of JWKs. A JSON Web Key is identified by its set a"
+        },
+        {
+          "info": {
+            "name": "Update a JSON Web Key Set",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/admin/keys/:set",
+            "params": [
+              {
+                "name": "set",
+                "value": "",
+                "type": "path",
+                "description": "The JSON Web Key Set ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Use this method if you do not want to let Hydra generate the JWKs for you, but instead save your own.\n\nA JSON Web Key (JWK) is a JavaScript Object Notation (JSON) data structure that represents a cryptographic key. A JWK Set is a JSON data structure that represents a set of JWKs. A JSON Web Key is identified by its set and key id. ORY Hydra uses this functionality to store cryptographic keys used for TLS and JSON Web Tokens (such as OpenID Connect ID tokens), and allows storing user-defined keys"
+        },
+        {
+          "info": {
+            "name": "Delete JSON Web Key Set",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/admin/keys/:set",
+            "params": [
+              {
+                "name": "set",
+                "value": "",
+                "type": "path",
+                "description": "The JSON Web Key Set"
+              }
+            ]
+          },
+          "docs": "Use this endpoint to delete a complete JSON Web Key Set and all the keys in that set.\n\nA JSON Web Key (JWK) is a JavaScript Object Notation (JSON) data structure that represents a cryptographic key. A JWK Set is a JSON data structure that represents a set of JWKs. A JSON Web Key is identified by its set and key id. ORY Hydra uses this functionality to store cryptographic keys used for TLS and JSON Web Tokens (such as OpenID Connect ID tokens), and allows storing user-defined keys as well."
+        },
+        {
+          "info": {
+            "name": "Get JSON Web Key",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/admin/keys/:set/:kid",
+            "params": [
+              {
+                "name": "set",
+                "value": "",
+                "type": "path",
+                "description": "JSON Web Key Set ID"
+              },
+              {
+                "name": "kid",
+                "value": "",
+                "type": "path",
+                "description": "JSON Web Key ID"
+              }
+            ]
+          },
+          "docs": "This endpoint returns a singular JSON Web Key contained in a set. It is identified by the set and the specific key ID (kid)."
+        },
+        {
+          "info": {
+            "name": "Set JSON Web Key",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/admin/keys/:set/:kid",
+            "params": [
+              {
+                "name": "set",
+                "value": "",
+                "type": "path",
+                "description": "The JSON Web Key Set ID"
+              },
+              {
+                "name": "kid",
+                "value": "",
+                "type": "path",
+                "description": "JSON Web Key ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Use this method if you do not want to let Hydra generate the JWKs for you, but instead save your own.\n\nA JSON Web Key (JWK) is a JavaScript Object Notation (JSON) data structure that represents a cryptographic key. A JWK Set is a JSON data structure that represents a set of JWKs. A JSON Web Key is identified by its set and key id. ORY Hydra uses this functionality to store cryptographic keys used for TLS and JSON Web Tokens (such as OpenID Connect ID tokens), and allows storing user-defined keys"
+        },
+        {
+          "info": {
+            "name": "Delete JSON Web Key",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/admin/keys/:set/:kid",
+            "params": [
+              {
+                "name": "set",
+                "value": "",
+                "type": "path",
+                "description": "The JSON Web Key Set"
+              },
+              {
+                "name": "kid",
+                "value": "",
+                "type": "path",
+                "description": "The JSON Web Key ID (kid)"
+              }
+            ]
+          },
+          "docs": "Use this endpoint to delete a single JSON Web Key.\n\nA JSON Web Key (JWK) is a JavaScript Object Notation (JSON) data structure that represents a cryptographic key. A\nJWK Set is a JSON data structure that represents a set of JWKs. A JSON Web Key is identified by its set and key id. ORY Hydra uses\nthis functionality to store cryptographic keys used for TLS and JSON Web Tokens (such as OpenID Connect ID tokens),\nand allows storing user-defined keys as well."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

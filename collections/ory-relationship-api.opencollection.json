@@ -1,0 +1,192 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Ory Hydra api relationship API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "relationship",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a Relationship",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/admin/relation-tuples",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Use this endpoint to create a relationship."
+        },
+        {
+          "info": {
+            "name": "Patch Multiple Relationships",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/admin/relation-tuples",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Use this endpoint to patch one or more relationships."
+        },
+        {
+          "info": {
+            "name": "Delete Relationships",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/admin/relation-tuples",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "query",
+                "description": "Namespace of the Relationship"
+              },
+              {
+                "name": "object",
+                "value": "",
+                "type": "query",
+                "description": "Object of the Relationship"
+              },
+              {
+                "name": "relation",
+                "value": "",
+                "type": "query",
+                "description": "Relation of the Relationship"
+              },
+              {
+                "name": "subject_id",
+                "value": "",
+                "type": "query",
+                "description": "SubjectID of the Relationship"
+              },
+              {
+                "name": "subject_set.namespace",
+                "value": "",
+                "type": "query",
+                "description": "Namespace of the Subject Set"
+              },
+              {
+                "name": "subject_set.object",
+                "value": "",
+                "type": "query",
+                "description": "Object of the Subject Set"
+              },
+              {
+                "name": "subject_set.relation",
+                "value": "",
+                "type": "query",
+                "description": "Relation of the Subject Set"
+              }
+            ]
+          },
+          "docs": "Use this endpoint to delete relationships"
+        },
+        {
+          "info": {
+            "name": "Query namespaces",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/namespaces"
+          },
+          "docs": "Get all namespaces"
+        },
+        {
+          "info": {
+            "name": "Check the syntax of an OPL file",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/opl/syntax/check"
+          },
+          "docs": "The OPL file is expected in the body of the request."
+        },
+        {
+          "info": {
+            "name": "Query relationships",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/relation-tuples",
+            "params": [
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Items per Page\n\nThis is the number of items per page to return.\nFor details on pagination please head over to the [pagination documentation](https://www.ory.com/docs/ecosystem/api-design#pagination)."
+              },
+              {
+                "name": "page_token",
+                "value": "",
+                "type": "query",
+                "description": "Next Page Token\n\nThe next page token.\nFor details on pagination please head over to the [pagination documentation](https://www.ory.com/docs/ecosystem/api-design#pagination)."
+              },
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "query",
+                "description": "Namespace of the Relationship"
+              },
+              {
+                "name": "object",
+                "value": "",
+                "type": "query",
+                "description": "Object of the Relationship"
+              },
+              {
+                "name": "relation",
+                "value": "",
+                "type": "query",
+                "description": "Relation of the Relationship"
+              },
+              {
+                "name": "subject_id",
+                "value": "",
+                "type": "query",
+                "description": "SubjectID of the Relationship"
+              },
+              {
+                "name": "subject_set.namespace",
+                "value": "",
+                "type": "query",
+                "description": "Namespace of the Subject Set"
+              },
+              {
+                "name": "subject_set.object",
+                "value": "",
+                "type": "query",
+                "description": "Object of the Subject Set"
+              },
+              {
+                "name": "subject_set.relation",
+                "value": "",
+                "type": "query",
+                "description": "Relation of the Subject Set"
+              }
+            ]
+          },
+          "docs": "Get all relationships that match the query. Only the namespace field is required."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

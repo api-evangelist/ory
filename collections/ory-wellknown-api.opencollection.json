@@ -1,0 +1,29 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Ory Hydra api wellknown API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "wellknown",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Discover Well-Known JSON Web Keys",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/.well-known/jwks.json"
+          },
+          "docs": "This endpoint returns JSON Web Keys required to verifying OpenID Connect ID Tokens and,\nif enabled, OAuth 2.0 JWT Access Tokens. This endpoint can be used with client libraries like\n[node-jwks-rsa](https://github.com/auth0/node-jwks-rsa) among others.\n\nAdding custom keys requires first creating a keyset via the createJsonWebKeySet operation,\nand then configuring the webfinger.jwks.broadcast_keys configuration value to include the keyset name."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

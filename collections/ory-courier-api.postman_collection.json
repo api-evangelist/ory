@@ -1,0 +1,438 @@
+{
+  "item": [
+    {
+      "id": "41b7efdb-24ef-499a-9957-28484cd36b5e",
+      "name": "courier",
+      "description": {
+        "content": "APIs for managing email and SMS message delivery.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "abd3c489-8dee-4e7e-8dde-22b402092d1f",
+          "name": "List Messages",
+          "request": {
+            "name": "List Messages",
+            "description": {
+              "content": "Lists all messages by given status and recipient.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "admin",
+                "courier",
+                "messages"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page_size",
+                  "value": "250",
+                  "description": "Items per Page\n\nThis is the number of items per page to return.\nFor details on pagination please head over to the [pagination documentation](https://www.ory.com/docs/ecosystem/api-design#pagination)."
+                },
+                {
+                  "disabled": false,
+                  "key": "page_token",
+                  "value": "<string>",
+                  "description": "Next Page Token\n\nThe next page token.\nFor details on pagination please head over to the [pagination documentation](https://www.ory.com/docs/ecosystem/api-design#pagination)."
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Status filters out messages based on status.\nIf no value is provided, it doesn't take effect on filter."
+                },
+                {
+                  "disabled": false,
+                  "key": "recipient",
+                  "value": "<string>",
+                  "description": "Recipient filters out messages based on recipient.\nIf no value is provided, it doesn't take effect on filter."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "04eb56f5-d7f6-4908-aecb-e0e1b291dad4",
+              "name": "Paginated Courier Message List Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "courier",
+                    "messages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page_size",
+                      "value": "250"
+                    },
+                    {
+                      "key": "page_token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "recipient",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"c58af3fa-f5d4-c4c3-75de-fd84b741d0b8\",\n    \"status\": \"<string>\",\n    \"type\": \"phone\",\n    \"recipient\": \"string\",\n    \"body\": \"string\",\n    \"subject\": \"string\",\n    \"template_type\": \"verification_invalid\",\n    \"send_count\": 8395,\n    \"created_at\": \"2021-11-15T22:35:21.058Z\",\n    \"updated_at\": \"2011-09-21T17:11:29.640Z\",\n    \"channel\": \"string\",\n    \"dispatches\": [\n      {\n        \"id\": \"5346f6c0-9c7e-e1d8-ca4e-6cae62ef6a82\",\n        \"message_id\": \"cf53327e-213b-c56d-57f3-d2bf4fc7b5ab\",\n        \"status\": \"failed\",\n        \"created_at\": \"1999-02-11T13:18:44.661Z\",\n        \"updated_at\": \"2013-09-03T14:25:09.603Z\",\n        \"error\": {}\n      },\n      {\n        \"id\": \"bc7cb70e-5744-d3a2-4ceb-e5e27ee0e505\",\n        \"message_id\": \"f9805d67-9b0d-5447-0d2d-90fea644e636\",\n        \"status\": \"failed\",\n        \"created_at\": \"1999-11-02T20:47:22.615Z\",\n        \"updated_at\": \"1979-09-07T16:26:28.411Z\",\n        \"error\": {}\n      }\n    ]\n  },\n  {\n    \"id\": \"2b64950e-042e-8ba4-43f4-91a1c8c84d6b\",\n    \"status\": \"<string>\",\n    \"type\": \"email\",\n    \"recipient\": \"string\",\n    \"body\": \"string\",\n    \"subject\": \"string\",\n    \"template_type\": \"stub\",\n    \"send_count\": 5530,\n    \"created_at\": \"2000-10-14T11:38:18.326Z\",\n    \"updated_at\": \"1972-11-26T20:34:54.503Z\",\n    \"channel\": \"string\",\n    \"dispatches\": [\n      {\n        \"id\": \"87481777-bf8c-2ff4-febe-02a46af33d7e\",\n        \"message_id\": \"97465cdb-6363-24dc-2be0-c4bd09552ad8\",\n        \"status\": \"failed\",\n        \"created_at\": \"1975-12-23T04:15:33.358Z\",\n        \"updated_at\": \"1953-04-09T09:34:41.049Z\",\n        \"error\": {}\n      },\n      {\n        \"id\": \"a717668a-e081-ece9-2f51-742659f9caf6\",\n        \"message_id\": \"632b7e04-7751-3db0-d0eb-3f71f0f15fdc\",\n        \"status\": \"success\",\n        \"created_at\": \"1985-11-05T15:11:50.952Z\",\n        \"updated_at\": \"2021-11-29T02:12:34.919Z\",\n        \"error\": {}\n      }\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bd9a7ab3-8b42-42af-ad20-e1ea26b94ea3",
+              "name": "errorGeneric",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "courier",
+                    "messages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page_size",
+                      "value": "250"
+                    },
+                    {
+                      "key": "page_token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "recipient",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"The resource could not be found\",\n    \"code\": 404,\n    \"debug\": \"SQL field \\\"foo\\\" is not a bool.\",\n    \"details\": {},\n    \"id\": \"string\",\n    \"reason\": \"User with ID 1234 does not exist.\",\n    \"request\": \"d7ef54b1-ec15-46e6-bccb-524b82c035e6\",\n    \"status\": \"Not Found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "be8ac65a-a33c-44c0-8a9d-ee1f897d0245",
+              "name": "errorGeneric",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "courier",
+                    "messages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page_size",
+                      "value": "250"
+                    },
+                    {
+                      "key": "page_token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "recipient",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"The resource could not be found\",\n    \"code\": 404,\n    \"debug\": \"SQL field \\\"foo\\\" is not a bool.\",\n    \"details\": {},\n    \"id\": \"string\",\n    \"reason\": \"User with ID 1234 does not exist.\",\n    \"request\": \"d7ef54b1-ec15-46e6-bccb-524b82c035e6\",\n    \"status\": \"Not Found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e14bfca6-3b02-4681-87b2-9fca8b0f6aa1",
+          "name": "Get a Message",
+          "request": {
+            "name": "Get a Message",
+            "description": {
+              "content": "Gets a specific messages by the given ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "admin",
+                "courier",
+                "messages",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) MessageID is the ID of the message."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "58121829-e87f-4f84-b2c4-c64fd6544667",
+              "name": "message",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "courier",
+                    "messages",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) MessageID is the ID of the message."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"70267522-f48f-502a-9ba4-814bdfaaa101\",\n  \"status\": \"<string>\",\n  \"type\": \"email\",\n  \"recipient\": \"string\",\n  \"body\": \"string\",\n  \"subject\": \"string\",\n  \"template_type\": \"verification_code_invalid\",\n  \"send_count\": 9712,\n  \"created_at\": \"1989-10-08T14:41:32.724Z\",\n  \"updated_at\": \"1973-08-02T04:12:17.308Z\",\n  \"channel\": \"string\",\n  \"dispatches\": [\n    {\n      \"id\": \"76f2ab66-b5cf-3d33-0d73-7ad977869b03\",\n      \"message_id\": \"65d6f5a3-9c92-3073-0ceb-56e66ee0fd99\",\n      \"status\": \"success\",\n      \"created_at\": \"2024-06-22T09:15:07.436Z\",\n      \"updated_at\": \"2003-05-13T09:54:09.120Z\",\n      \"error\": {}\n    },\n    {\n      \"id\": \"04d4b8b9-09f4-e513-a559-35785acb358b\",\n      \"message_id\": \"e4257f25-618a-7c12-ce48-f230480424b2\",\n      \"status\": \"success\",\n      \"created_at\": \"2026-02-17T09:35:06.731Z\",\n      \"updated_at\": \"1957-07-09T07:15:40.421Z\",\n      \"error\": {}\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dd815e32-6706-4389-880e-247fbdc4ff38",
+              "name": "errorGeneric",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "courier",
+                    "messages",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) MessageID is the ID of the message."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"The resource could not be found\",\n    \"code\": 404,\n    \"debug\": \"SQL field \\\"foo\\\" is not a bool.\",\n    \"details\": {},\n    \"id\": \"string\",\n    \"reason\": \"User with ID 1234 does not exist.\",\n    \"request\": \"d7ef54b1-ec15-46e6-bccb-524b82c035e6\",\n    \"status\": \"Not Found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8c40c4dc-2469-4dea-b4d2-a6148d10d2fe",
+              "name": "errorGeneric",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "courier",
+                    "messages",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) MessageID is the ID of the message."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"The resource could not be found\",\n    \"code\": 404,\n    \"debug\": \"SQL field \\\"foo\\\" is not a bool.\",\n    \"details\": {},\n    \"id\": \"string\",\n    \"reason\": \"User with ID 1234 does not exist.\",\n    \"request\": \"d7ef54b1-ec15-46e6-bccb-524b82c035e6\",\n    \"status\": \"Not Found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "783d9620-3731-4da8-bb4e-dd76da4e4071",
+    "name": "Ory Hydra api courier API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Documentation for all of Ory Hydra's APIs.\n\n\nContact Support:\n Email: hi@ory.sh",
+      "type": "text/plain"
+    }
+  }
+}

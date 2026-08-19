@@ -1,0 +1,240 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Ory Hydra api permission API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "permission",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Batch check permissions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/relation-tuples/batch/check",
+            "params": [
+              {
+                "name": "max-depth",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "To learn how relationship tuples and the check works, head over to [the documentation](https://www.ory.com/docs/keto/concepts/api-overview)."
+        },
+        {
+          "info": {
+            "name": "Check a permission",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/relation-tuples/check",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "query",
+                "description": "Namespace of the Relationship"
+              },
+              {
+                "name": "object",
+                "value": "",
+                "type": "query",
+                "description": "Object of the Relationship"
+              },
+              {
+                "name": "relation",
+                "value": "",
+                "type": "query",
+                "description": "Relation of the Relationship"
+              },
+              {
+                "name": "subject_id",
+                "value": "",
+                "type": "query",
+                "description": "SubjectID of the Relationship"
+              },
+              {
+                "name": "subject_set.namespace",
+                "value": "",
+                "type": "query",
+                "description": "Namespace of the Subject Set"
+              },
+              {
+                "name": "subject_set.object",
+                "value": "",
+                "type": "query",
+                "description": "Object of the Subject Set"
+              },
+              {
+                "name": "subject_set.relation",
+                "value": "",
+                "type": "query",
+                "description": "Relation of the Subject Set"
+              },
+              {
+                "name": "max-depth",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "To learn how relationship tuples and the check works, head over to [the documentation](https://www.ory.com/docs/keto/concepts/api-overview)."
+        },
+        {
+          "info": {
+            "name": "Check a permission",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/relation-tuples/check",
+            "params": [
+              {
+                "name": "max-depth",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "To learn how relationship tuples and the check works, head over to [the documentation](https://www.ory.com/docs/keto/concepts/api-overview)."
+        },
+        {
+          "info": {
+            "name": "Check a permission",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/relation-tuples/check/openapi",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "query",
+                "description": "Namespace of the Relationship"
+              },
+              {
+                "name": "object",
+                "value": "",
+                "type": "query",
+                "description": "Object of the Relationship"
+              },
+              {
+                "name": "relation",
+                "value": "",
+                "type": "query",
+                "description": "Relation of the Relationship"
+              },
+              {
+                "name": "subject_id",
+                "value": "",
+                "type": "query",
+                "description": "SubjectID of the Relationship"
+              },
+              {
+                "name": "subject_set.namespace",
+                "value": "",
+                "type": "query",
+                "description": "Namespace of the Subject Set"
+              },
+              {
+                "name": "subject_set.object",
+                "value": "",
+                "type": "query",
+                "description": "Object of the Subject Set"
+              },
+              {
+                "name": "subject_set.relation",
+                "value": "",
+                "type": "query",
+                "description": "Relation of the Subject Set"
+              },
+              {
+                "name": "max-depth",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "To learn how relationship tuples and the check works, head over to [the documentation](https://www.ory.com/docs/keto/concepts/api-overview)."
+        },
+        {
+          "info": {
+            "name": "Check a permission",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/relation-tuples/check/openapi",
+            "params": [
+              {
+                "name": "max-depth",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "To learn how relationship tuples and the check works, head over to [the documentation](https://www.ory.com/docs/keto/concepts/api-overview)."
+        },
+        {
+          "info": {
+            "name": "Expand a Relationship into permissions.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/relation-tuples/expand",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "query",
+                "description": "Namespace of the Subject Set"
+              },
+              {
+                "name": "object",
+                "value": "",
+                "type": "query",
+                "description": "Object of the Subject Set"
+              },
+              {
+                "name": "relation",
+                "value": "",
+                "type": "query",
+                "description": "Relation of the Subject Set"
+              },
+              {
+                "name": "max-depth",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Use this endpoint to expand a relationship tuple into permissions."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

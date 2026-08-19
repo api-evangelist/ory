@@ -1,0 +1,656 @@
+{
+  "item": [
+    {
+      "id": "8061be23-9e37-4418-8b81-dbf8b1dd7086",
+      "name": "api",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "086765df-b618-4d86-afe6-2330c410b572",
+          "name": "Lists Cryptographic Keys",
+          "request": {
+            "name": "Lists Cryptographic Keys",
+            "description": {
+              "content": "This endpoint returns cryptographic keys that are required to, for example, verify signatures of ID Tokens.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                ".well-known",
+                "jwks.json"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b133e19b-d042-4f24-8f4f-3d47545c6404",
+              "name": "jsonWebKeySet",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ".well-known",
+                    "jwks.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"keys\": [\n    {\n      \"alg\": \"string\",\n      \"crv\": \"string\",\n      \"d\": \"string\",\n      \"dp\": \"string\",\n      \"dq\": \"string\",\n      \"e\": \"string\",\n      \"k\": \"string\",\n      \"kid\": \"string\",\n      \"kty\": \"string\",\n      \"n\": \"string\",\n      \"p\": \"string\",\n      \"q\": \"string\",\n      \"qi\": \"string\",\n      \"use\": \"string\",\n      \"x\": \"string\",\n      \"x5c\": [\n        \"string\",\n        \"string\"\n      ],\n      \"y\": \"string\"\n    },\n    {\n      \"alg\": \"string\",\n      \"crv\": \"string\",\n      \"d\": \"string\",\n      \"dp\": \"string\",\n      \"dq\": \"string\",\n      \"e\": \"string\",\n      \"k\": \"string\",\n      \"kid\": \"string\",\n      \"kty\": \"string\",\n      \"n\": \"string\",\n      \"p\": \"string\",\n      \"q\": \"string\",\n      \"qi\": \"string\",\n      \"use\": \"string\",\n      \"x\": \"string\",\n      \"x5c\": [\n        \"string\",\n        \"string\"\n      ],\n      \"y\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6ccb6257-a199-4e2b-8269-48b6163f2482",
+              "name": "genericError",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ".well-known",
+                    "jwks.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 6755,\n  \"details\": [\n    {\n      \"key_0\": {},\n      \"key_1\": {},\n      \"key_2\": {}\n    },\n    {\n      \"key_0\": {},\n      \"key_1\": {}\n    }\n  ],\n  \"message\": \"string\",\n  \"reason\": \"string\",\n  \"request\": \"string\",\n  \"status\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6f072b3a-c664-4625-b93c-7ccd89ffc025",
+          "name": "Access Control Decision API",
+          "request": {
+            "name": "Access Control Decision API",
+            "description": {
+              "content": "> This endpoint works with all HTTP Methods (GET, POST, PUT, ...) and matches every path prefixed with /decisions.\n\nThis endpoint mirrors the proxy capability of ORY Oathkeeper's proxy functionality but instead of forwarding the\nrequest to the upstream server, returns 200 (request should be allowed), 401 (unauthorized), or 403 (forbidden)\nstatus codes. This endpoint can be used to integrate with other API Proxies like Ambassador, Kong, Envoy, and many more.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "decisions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7f583c03-3ed3-4db4-901c-e35fd46c7ab0",
+              "name": "An empty response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "decisions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "fe7c380d-de3d-42cd-a665-4dac8981a36f",
+              "name": "genericError",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "decisions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 3447,\n  \"details\": [\n    {\n      \"key_0\": {}\n    },\n    {\n      \"key_0\": {}\n    }\n  ],\n  \"message\": \"string\",\n  \"reason\": \"string\",\n  \"request\": \"string\",\n  \"status\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1c4a5227-4e5a-4448-9ba7-9f32b112e018",
+              "name": "genericError",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "decisions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 3447,\n  \"details\": [\n    {\n      \"key_0\": {}\n    },\n    {\n      \"key_0\": {}\n    }\n  ],\n  \"message\": \"string\",\n  \"reason\": \"string\",\n  \"request\": \"string\",\n  \"status\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "38aab668-2234-4b4c-aa39-76fcee9cd381",
+              "name": "genericError",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "decisions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 3447,\n  \"details\": [\n    {\n      \"key_0\": {}\n    },\n    {\n      \"key_0\": {}\n    }\n  ],\n  \"message\": \"string\",\n  \"reason\": \"string\",\n  \"request\": \"string\",\n  \"status\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1f852a3c-89c0-446c-a5c7-698f10df3036",
+              "name": "genericError",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "decisions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 3447,\n  \"details\": [\n    {\n      \"key_0\": {}\n    },\n    {\n      \"key_0\": {}\n    }\n  ],\n  \"message\": \"string\",\n  \"reason\": \"string\",\n  \"request\": \"string\",\n  \"status\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3f590ee7-7c86-469f-a3ef-d40f43092bea",
+          "name": "List All Rules",
+          "request": {
+            "name": "List All Rules",
+            "description": {
+              "content": "This method returns an array of all rules that are stored in the backend. This is useful if you want to get a full\nview of what rules you have currently in place.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "rules"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<long>",
+                  "description": "The maximum amount of rules returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "<long>",
+                  "description": "The offset from where to start looking."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "08bd2174-a51b-4d18-a30a-41d2c88cd264",
+              "name": "A list of rules",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<long>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"authenticators\": [\n      {\n        \"config\": {},\n        \"handler\": \"string\"\n      },\n      {\n        \"config\": {},\n        \"handler\": \"string\"\n      }\n    ],\n    \"authorizer\": {\n      \"config\": {},\n      \"handler\": \"string\"\n    },\n    \"description\": \"string\",\n    \"id\": \"string\",\n    \"match\": {\n      \"methods\": [\n        \"string\",\n        \"string\"\n      ],\n      \"url\": \"string\"\n    },\n    \"mutators\": [\n      {\n        \"config\": {},\n        \"handler\": \"string\"\n      },\n      {\n        \"config\": {},\n        \"handler\": \"string\"\n      }\n    ],\n    \"upstream\": {\n      \"preserve_host\": false,\n      \"strip_path\": \"string\",\n      \"url\": \"string\"\n    }\n  },\n  {\n    \"authenticators\": [\n      {\n        \"config\": {},\n        \"handler\": \"string\"\n      },\n      {\n        \"config\": {},\n        \"handler\": \"string\"\n      }\n    ],\n    \"authorizer\": {\n      \"config\": {},\n      \"handler\": \"string\"\n    },\n    \"description\": \"string\",\n    \"id\": \"string\",\n    \"match\": {\n      \"methods\": [\n        \"string\",\n        \"string\"\n      ],\n      \"url\": \"string\"\n    },\n    \"mutators\": [\n      {\n        \"config\": {},\n        \"handler\": \"string\"\n      },\n      {\n        \"config\": {},\n        \"handler\": \"string\"\n      }\n    ],\n    \"upstream\": {\n      \"preserve_host\": false,\n      \"strip_path\": \"string\",\n      \"url\": \"string\"\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5e6c76f1-8094-44f5-adba-87806cb55099",
+              "name": "genericError",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<long>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<long>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 3447,\n  \"details\": [\n    {\n      \"key_0\": {}\n    },\n    {\n      \"key_0\": {}\n    }\n  ],\n  \"message\": \"string\",\n  \"reason\": \"string\",\n  \"request\": \"string\",\n  \"status\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e1e41e47-fe34-4ed6-8f6d-47bf8abb260b",
+          "name": "Retrieve a Rule",
+          "request": {
+            "name": "Retrieve a Rule",
+            "description": {
+              "content": "Use this method to retrieve a rule from the storage. If it does not exist you will receive a 404 error.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "rules",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c248726f-e20e-4e79-a950-70fd4d0a8a99",
+              "name": "A rule",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rules",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"authenticators\": [\n    {\n      \"config\": {},\n      \"handler\": \"string\"\n    },\n    {\n      \"config\": {},\n      \"handler\": \"string\"\n    }\n  ],\n  \"authorizer\": {\n    \"config\": {},\n    \"handler\": \"string\"\n  },\n  \"description\": \"string\",\n  \"id\": \"string\",\n  \"match\": {\n    \"methods\": [\n      \"string\",\n      \"string\"\n    ],\n    \"url\": \"string\"\n  },\n  \"mutators\": [\n    {\n      \"config\": {},\n      \"handler\": \"string\"\n    },\n    {\n      \"config\": {},\n      \"handler\": \"string\"\n    }\n  ],\n  \"upstream\": {\n    \"preserve_host\": true,\n    \"strip_path\": \"string\",\n    \"url\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "345e8998-9adf-4ecc-9924-90413414f896",
+              "name": "genericError",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rules",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 3447,\n  \"details\": [\n    {\n      \"key_0\": {}\n    },\n    {\n      \"key_0\": {}\n    }\n  ],\n  \"message\": \"string\",\n  \"reason\": \"string\",\n  \"request\": \"string\",\n  \"status\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ac2b9184-4b3b-47b2-9185-a237fc5d6e51",
+              "name": "genericError",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "rules",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 3447,\n  \"details\": [\n    {\n      \"key_0\": {}\n    },\n    {\n      \"key_0\": {}\n    }\n  ],\n  \"message\": \"string\",\n  \"reason\": \"string\",\n  \"request\": \"string\",\n  \"status\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "c57e72e7-3bdf-4eb8-9244-95604620aaa6",
+    "name": "Ory Hydra api API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Documentation for all of Ory Hydra's APIs.\n\n\nContact Support:\n Email: hi@ory.sh",
+      "type": "text/plain"
+    }
+  }
+}

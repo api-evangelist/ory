@@ -1,0 +1,51 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Ory Hydra api metadata API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "metadata",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Check HTTP Server Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/health/alive"
+          },
+          "docs": "This endpoint returns a HTTP 200 status code when Ory Hydra is accepting incoming\nHTTP requests. This status does currently not include checks whether the database connection is working.\n\nIf the service supports TLS Edge Termination, this endpoint does not require the\n`X-Forwarded-Proto` header to be set.\n\nBe aware that if you are running multiple nodes of this service, the health status will never\nrefer to the cluster state, only to a single instance."
+        },
+        {
+          "info": {
+            "name": "Check HTTP Server and Database Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/health/ready"
+          },
+          "docs": "This endpoint returns a HTTP 200 status code when Ory Hydra is up running and the environment dependencies (e.g.\nthe database) are responsive as well.\n\nIf the service supports TLS Edge Termination, this endpoint does not require the\n`X-Forwarded-Proto` header to be set.\n\nBe aware that if you are running multiple nodes of Ory Hydra, the health status will never\nrefer to the cluster state, only to a single instance."
+        },
+        {
+          "info": {
+            "name": "Return Running Software Version.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/version"
+          },
+          "docs": "This endpoint returns the version of Ory Hydra.\n\nIf the service supports TLS Edge Termination, this endpoint does not require the\n`X-Forwarded-Proto` header to be set.\n\nBe aware that if you are running multiple nodes of this service, the version will never\nrefer to the cluster state, only to a single instance."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

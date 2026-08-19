@@ -1,0 +1,1276 @@
+{
+  "item": [
+    {
+      "id": "79d6293a-4811-4899-a2bb-3c2e409f0219",
+      "name": "relationship",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "71edb91b-81f9-4ffa-b355-ffba2eda4449",
+          "name": "Delete Relationships",
+          "request": {
+            "name": "Delete Relationships",
+            "description": {
+              "content": "Use this endpoint to delete relationships",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "admin",
+                "relation-tuples"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "namespace",
+                  "value": "<string>",
+                  "description": "Namespace of the Relationship"
+                },
+                {
+                  "disabled": false,
+                  "key": "object",
+                  "value": "<string>",
+                  "description": "Object of the Relationship"
+                },
+                {
+                  "disabled": false,
+                  "key": "relation",
+                  "value": "<string>",
+                  "description": "Relation of the Relationship"
+                },
+                {
+                  "disabled": false,
+                  "key": "subject_id",
+                  "value": "<string>",
+                  "description": "SubjectID of the Relationship"
+                },
+                {
+                  "disabled": false,
+                  "key": "subject_set.namespace",
+                  "value": "<string>",
+                  "description": "Namespace of the Subject Set"
+                },
+                {
+                  "disabled": false,
+                  "key": "subject_set.object",
+                  "value": "<string>",
+                  "description": "Object of the Subject Set"
+                },
+                {
+                  "disabled": false,
+                  "key": "subject_set.relation",
+                  "value": "<string>",
+                  "description": "Relation of the Subject Set"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f547c643-65a1-433a-9f60-47d45598e134",
+              "name": "Empty responses are sent when, for example, resources are deleted. The HTTP status code for empty responses is typically 204.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "relation-tuples"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "namespace",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "object",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "relation",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "subject_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "subject_set.namespace",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "subject_set.object",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "subject_set.relation",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2827699e-8b59-4449-b0be-1fc9b00c3f2b",
+              "name": "errorGeneric",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "relation-tuples"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "namespace",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "object",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "relation",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "subject_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "subject_set.namespace",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "subject_set.object",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "subject_set.relation",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"The resource could not be found\",\n    \"code\": 404,\n    \"debug\": \"SQL field \\\"foo\\\" is not a bool.\",\n    \"details\": {\n      \"key_0\": {},\n      \"key_1\": {}\n    },\n    \"id\": \"string\",\n    \"reason\": \"User with ID 1234 does not exist.\",\n    \"request\": \"d7ef54b1-ec15-46e6-bccb-524b82c035e6\",\n    \"status\": \"Not Found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f23b1406-9ef7-469b-8d0c-f55961833fa8",
+              "name": "errorGeneric",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "relation-tuples"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "namespace",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "object",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "relation",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "subject_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "subject_set.namespace",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "subject_set.object",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "subject_set.relation",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"The resource could not be found\",\n    \"code\": 404,\n    \"debug\": \"SQL field \\\"foo\\\" is not a bool.\",\n    \"details\": {\n      \"key_0\": {},\n      \"key_1\": {}\n    },\n    \"id\": \"string\",\n    \"reason\": \"User with ID 1234 does not exist.\",\n    \"request\": \"d7ef54b1-ec15-46e6-bccb-524b82c035e6\",\n    \"status\": \"Not Found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "94261fb6-853c-48d1-b968-7abec62722d6",
+          "name": "Patch Multiple Relationships",
+          "request": {
+            "name": "Patch Multiple Relationships",
+            "description": {
+              "content": "Use this endpoint to patch one or more relationships.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "admin",
+                "relation-tuples"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  {\n    \"action\": \"<string>\",\n    \"relation_tuple\": {\n      \"namespace\": \"<string>\",\n      \"object\": \"<string>\",\n      \"relation\": \"<string>\",\n      \"subject_id\": \"<string>\",\n      \"subject_set\": {\n        \"namespace\": \"<string>\",\n        \"object\": \"<string>\",\n        \"relation\": \"<string>\"\n      }\n    }\n  },\n  {\n    \"action\": \"<string>\",\n    \"relation_tuple\": {\n      \"namespace\": \"<string>\",\n      \"object\": \"<string>\",\n      \"relation\": \"<string>\",\n      \"subject_id\": \"<string>\",\n      \"subject_set\": {\n        \"namespace\": \"<string>\",\n        \"object\": \"<string>\",\n        \"relation\": \"<string>\"\n      }\n    }\n  }\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "89158bce-36f0-4f8c-aaae-33e1714b3a92",
+              "name": "Empty responses are sent when, for example, resources are deleted. The HTTP status code for empty responses is typically 204.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "relation-tuples"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"action\": \"<string>\",\n    \"relation_tuple\": {\n      \"namespace\": \"<string>\",\n      \"object\": \"<string>\",\n      \"relation\": \"<string>\",\n      \"subject_id\": \"<string>\",\n      \"subject_set\": {\n        \"namespace\": \"<string>\",\n        \"object\": \"<string>\",\n        \"relation\": \"<string>\"\n      }\n    }\n  },\n  {\n    \"action\": \"<string>\",\n    \"relation_tuple\": {\n      \"namespace\": \"<string>\",\n      \"object\": \"<string>\",\n      \"relation\": \"<string>\",\n      \"subject_id\": \"<string>\",\n      \"subject_set\": {\n        \"namespace\": \"<string>\",\n        \"object\": \"<string>\",\n        \"relation\": \"<string>\"\n      }\n    }\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "a80afca9-a052-49d4-9dd9-5667c0233699",
+              "name": "errorGeneric",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "relation-tuples"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"action\": \"<string>\",\n    \"relation_tuple\": {\n      \"namespace\": \"<string>\",\n      \"object\": \"<string>\",\n      \"relation\": \"<string>\",\n      \"subject_id\": \"<string>\",\n      \"subject_set\": {\n        \"namespace\": \"<string>\",\n        \"object\": \"<string>\",\n        \"relation\": \"<string>\"\n      }\n    }\n  },\n  {\n    \"action\": \"<string>\",\n    \"relation_tuple\": {\n      \"namespace\": \"<string>\",\n      \"object\": \"<string>\",\n      \"relation\": \"<string>\",\n      \"subject_id\": \"<string>\",\n      \"subject_set\": {\n        \"namespace\": \"<string>\",\n        \"object\": \"<string>\",\n        \"relation\": \"<string>\"\n      }\n    }\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"The resource could not be found\",\n    \"code\": 404,\n    \"debug\": \"SQL field \\\"foo\\\" is not a bool.\",\n    \"details\": {\n      \"key_0\": {},\n      \"key_1\": {}\n    },\n    \"id\": \"string\",\n    \"reason\": \"User with ID 1234 does not exist.\",\n    \"request\": \"d7ef54b1-ec15-46e6-bccb-524b82c035e6\",\n    \"status\": \"Not Found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d1ba7114-e343-43ba-bc68-1e0180da668a",
+              "name": "errorGeneric",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "relation-tuples"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"action\": \"<string>\",\n    \"relation_tuple\": {\n      \"namespace\": \"<string>\",\n      \"object\": \"<string>\",\n      \"relation\": \"<string>\",\n      \"subject_id\": \"<string>\",\n      \"subject_set\": {\n        \"namespace\": \"<string>\",\n        \"object\": \"<string>\",\n        \"relation\": \"<string>\"\n      }\n    }\n  },\n  {\n    \"action\": \"<string>\",\n    \"relation_tuple\": {\n      \"namespace\": \"<string>\",\n      \"object\": \"<string>\",\n      \"relation\": \"<string>\",\n      \"subject_id\": \"<string>\",\n      \"subject_set\": {\n        \"namespace\": \"<string>\",\n        \"object\": \"<string>\",\n        \"relation\": \"<string>\"\n      }\n    }\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"The resource could not be found\",\n    \"code\": 404,\n    \"debug\": \"SQL field \\\"foo\\\" is not a bool.\",\n    \"details\": {\n      \"key_0\": {},\n      \"key_1\": {}\n    },\n    \"id\": \"string\",\n    \"reason\": \"User with ID 1234 does not exist.\",\n    \"request\": \"d7ef54b1-ec15-46e6-bccb-524b82c035e6\",\n    \"status\": \"Not Found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c0a66569-d2f6-4edb-a7ec-1842a814c9f2",
+              "name": "errorGeneric",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "relation-tuples"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"action\": \"<string>\",\n    \"relation_tuple\": {\n      \"namespace\": \"<string>\",\n      \"object\": \"<string>\",\n      \"relation\": \"<string>\",\n      \"subject_id\": \"<string>\",\n      \"subject_set\": {\n        \"namespace\": \"<string>\",\n        \"object\": \"<string>\",\n        \"relation\": \"<string>\"\n      }\n    }\n  },\n  {\n    \"action\": \"<string>\",\n    \"relation_tuple\": {\n      \"namespace\": \"<string>\",\n      \"object\": \"<string>\",\n      \"relation\": \"<string>\",\n      \"subject_id\": \"<string>\",\n      \"subject_set\": {\n        \"namespace\": \"<string>\",\n        \"object\": \"<string>\",\n        \"relation\": \"<string>\"\n      }\n    }\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"The resource could not be found\",\n    \"code\": 404,\n    \"debug\": \"SQL field \\\"foo\\\" is not a bool.\",\n    \"details\": {\n      \"key_0\": {},\n      \"key_1\": {}\n    },\n    \"id\": \"string\",\n    \"reason\": \"User with ID 1234 does not exist.\",\n    \"request\": \"d7ef54b1-ec15-46e6-bccb-524b82c035e6\",\n    \"status\": \"Not Found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8c1bf8e0-979d-452c-807d-142f35e8f504",
+          "name": "Create a Relationship",
+          "request": {
+            "name": "Create a Relationship",
+            "description": {
+              "content": "Use this endpoint to create a relationship.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "admin",
+                "relation-tuples"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"namespace\": \"<string>\",\n  \"object\": \"<string>\",\n  \"relation\": \"<string>\",\n  \"subject_id\": \"<string>\",\n  \"subject_set\": {\n    \"namespace\": \"<string>\",\n    \"object\": \"<string>\",\n    \"relation\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "3ed253c3-85ca-4376-884f-06915f72361f",
+              "name": "relationship",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "relation-tuples"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"namespace\": \"<string>\",\n  \"object\": \"<string>\",\n  \"relation\": \"<string>\",\n  \"subject_id\": \"<string>\",\n  \"subject_set\": {\n    \"namespace\": \"<string>\",\n    \"object\": \"<string>\",\n    \"relation\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"namespace\": \"<string>\",\n  \"object\": \"<string>\",\n  \"relation\": \"<string>\",\n  \"subject_id\": \"<string>\",\n  \"subject_set\": {\n    \"namespace\": \"<string>\",\n    \"object\": \"<string>\",\n    \"relation\": \"<string>\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "39a591e8-6acc-4bb1-9bdf-93f513c0d2ff",
+              "name": "errorGeneric",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "relation-tuples"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"namespace\": \"<string>\",\n  \"object\": \"<string>\",\n  \"relation\": \"<string>\",\n  \"subject_id\": \"<string>\",\n  \"subject_set\": {\n    \"namespace\": \"<string>\",\n    \"object\": \"<string>\",\n    \"relation\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"The resource could not be found\",\n    \"code\": 404,\n    \"debug\": \"SQL field \\\"foo\\\" is not a bool.\",\n    \"details\": {\n      \"key_0\": {},\n      \"key_1\": {}\n    },\n    \"id\": \"string\",\n    \"reason\": \"User with ID 1234 does not exist.\",\n    \"request\": \"d7ef54b1-ec15-46e6-bccb-524b82c035e6\",\n    \"status\": \"Not Found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9f62034e-00e2-469a-a69c-912df8b33c69",
+              "name": "errorGeneric",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "relation-tuples"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"namespace\": \"<string>\",\n  \"object\": \"<string>\",\n  \"relation\": \"<string>\",\n  \"subject_id\": \"<string>\",\n  \"subject_set\": {\n    \"namespace\": \"<string>\",\n    \"object\": \"<string>\",\n    \"relation\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"The resource could not be found\",\n    \"code\": 404,\n    \"debug\": \"SQL field \\\"foo\\\" is not a bool.\",\n    \"details\": {\n      \"key_0\": {},\n      \"key_1\": {}\n    },\n    \"id\": \"string\",\n    \"reason\": \"User with ID 1234 does not exist.\",\n    \"request\": \"d7ef54b1-ec15-46e6-bccb-524b82c035e6\",\n    \"status\": \"Not Found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9fa1c978-a695-4959-a818-d5c138938b32",
+          "name": "Query namespaces",
+          "request": {
+            "name": "Query namespaces",
+            "description": {
+              "content": "Get all namespaces",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "namespaces"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "914b5b70-bf3b-4675-a61c-6c11f66d05b2",
+              "name": "relationshipNamespaces",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "namespaces"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"namespaces\": [\n    {\n      \"name\": \"string\"\n    },\n    {\n      \"name\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d94dc9e7-9da6-4a0c-be2f-a43ef4f7623e",
+              "name": "errorGeneric",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "namespaces"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"The resource could not be found\",\n    \"code\": 404,\n    \"debug\": \"SQL field \\\"foo\\\" is not a bool.\",\n    \"details\": {\n      \"key_0\": {},\n      \"key_1\": {}\n    },\n    \"id\": \"string\",\n    \"reason\": \"User with ID 1234 does not exist.\",\n    \"request\": \"d7ef54b1-ec15-46e6-bccb-524b82c035e6\",\n    \"status\": \"Not Found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d212b232-e1c2-4aa9-a9ec-7808b9184185",
+          "name": "Check the syntax of an OPL file",
+          "request": {
+            "name": "Check the syntax of an OPL file",
+            "description": {
+              "content": "The OPL file is expected in the body of the request.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "opl",
+                "syntax",
+                "check"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "text/plain"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "<string>"
+            }
+          },
+          "response": [
+            {
+              "id": "1af9092c-ef54-481a-aacc-c4fd581adc74",
+              "name": "checkOplSyntaxResult",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "opl",
+                    "syntax",
+                    "check"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "<string>"
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"end\": {\n        \"Line\": 3924,\n        \"column\": 6192\n      },\n      \"message\": \"string\",\n      \"start\": {\n        \"Line\": 8926,\n        \"column\": 7456\n      }\n    },\n    {\n      \"end\": {\n        \"Line\": 3321,\n        \"column\": 770\n      },\n      \"message\": \"string\",\n      \"start\": {\n        \"Line\": 3155,\n        \"column\": 66\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8f62a81e-008e-40b9-b0f8-b063e40a622b",
+              "name": "errorGeneric",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "opl",
+                    "syntax",
+                    "check"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "<string>"
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"The resource could not be found\",\n    \"code\": 404,\n    \"debug\": \"SQL field \\\"foo\\\" is not a bool.\",\n    \"details\": {\n      \"key_0\": {},\n      \"key_1\": {}\n    },\n    \"id\": \"string\",\n    \"reason\": \"User with ID 1234 does not exist.\",\n    \"request\": \"d7ef54b1-ec15-46e6-bccb-524b82c035e6\",\n    \"status\": \"Not Found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2e358550-518b-437f-a45f-839d622b3c4c",
+              "name": "errorGeneric",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "opl",
+                    "syntax",
+                    "check"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "<string>"
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"The resource could not be found\",\n    \"code\": 404,\n    \"debug\": \"SQL field \\\"foo\\\" is not a bool.\",\n    \"details\": {\n      \"key_0\": {},\n      \"key_1\": {}\n    },\n    \"id\": \"string\",\n    \"reason\": \"User with ID 1234 does not exist.\",\n    \"request\": \"d7ef54b1-ec15-46e6-bccb-524b82c035e6\",\n    \"status\": \"Not Found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4244c001-ddef-422c-929b-c7804911e0ba",
+          "name": "Query relationships",
+          "request": {
+            "name": "Query relationships",
+            "description": {
+              "content": "Get all relationships that match the query. Only the namespace field is required.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "relation-tuples"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page_size",
+                  "value": "250",
+                  "description": "Items per Page\n\nThis is the number of items per page to return.\nFor details on pagination please head over to the [pagination documentation](https://www.ory.com/docs/ecosystem/api-design#pagination)."
+                },
+                {
+                  "disabled": false,
+                  "key": "page_token",
+                  "value": "<string>",
+                  "description": "Next Page Token\n\nThe next page token.\nFor details on pagination please head over to the [pagination documentation](https://www.ory.com/docs/ecosystem/api-design#pagination)."
+                },
+                {
+                  "disabled": false,
+                  "key": "namespace",
+                  "value": "<string>",
+                  "description": "Namespace of the Relationship"
+                },
+                {
+                  "disabled": false,
+                  "key": "object",
+                  "value": "<string>",
+                  "description": "Object of the Relationship"
+                },
+                {
+                  "disabled": false,
+                  "key": "relation",
+                  "value": "<string>",
+                  "description": "Relation of the Relationship"
+                },
+                {
+                  "disabled": false,
+                  "key": "subject_id",
+                  "value": "<string>",
+                  "description": "SubjectID of the Relationship"
+                },
+                {
+                  "disabled": false,
+                  "key": "subject_set.namespace",
+                  "value": "<string>",
+                  "description": "Namespace of the Subject Set"
+                },
+                {
+                  "disabled": false,
+                  "key": "subject_set.object",
+                  "value": "<string>",
+                  "description": "Object of the Subject Set"
+                },
+                {
+                  "disabled": false,
+                  "key": "subject_set.relation",
+                  "value": "<string>",
+                  "description": "Relation of the Subject Set"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "02271751-7000-431b-8c36-160ea89aebbd",
+              "name": "relationships",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "relation-tuples"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page_size",
+                      "value": "250"
+                    },
+                    {
+                      "key": "page_token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "namespace",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "object",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "relation",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "subject_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "subject_set.namespace",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "subject_set.object",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "subject_set.relation",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"next_page_token\": \"string\",\n  \"relation_tuples\": [\n    {\n      \"namespace\": \"<string>\",\n      \"object\": \"<string>\",\n      \"relation\": \"<string>\",\n      \"subject_id\": \"<string>\",\n      \"subject_set\": {\n        \"namespace\": \"<string>\",\n        \"object\": \"<string>\",\n        \"relation\": \"<string>\"\n      }\n    },\n    {\n      \"namespace\": \"<string>\",\n      \"object\": \"<string>\",\n      \"relation\": \"<string>\",\n      \"subject_id\": \"<string>\",\n      \"subject_set\": {\n        \"namespace\": \"<string>\",\n        \"object\": \"<string>\",\n        \"relation\": \"<string>\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "936429fb-2c54-4611-82f8-6d6ca40c806c",
+              "name": "errorGeneric",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "relation-tuples"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page_size",
+                      "value": "250"
+                    },
+                    {
+                      "key": "page_token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "namespace",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "object",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "relation",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "subject_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "subject_set.namespace",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "subject_set.object",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "subject_set.relation",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"The resource could not be found\",\n    \"code\": 404,\n    \"debug\": \"SQL field \\\"foo\\\" is not a bool.\",\n    \"details\": {\n      \"key_0\": {},\n      \"key_1\": {}\n    },\n    \"id\": \"string\",\n    \"reason\": \"User with ID 1234 does not exist.\",\n    \"request\": \"d7ef54b1-ec15-46e6-bccb-524b82c035e6\",\n    \"status\": \"Not Found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1041bd32-b5f2-40eb-b17f-26e18ef767b9",
+              "name": "errorGeneric",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "relation-tuples"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page_size",
+                      "value": "250"
+                    },
+                    {
+                      "key": "page_token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "namespace",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "object",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "relation",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "subject_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "subject_set.namespace",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "subject_set.object",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "subject_set.relation",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"The resource could not be found\",\n    \"code\": 404,\n    \"debug\": \"SQL field \\\"foo\\\" is not a bool.\",\n    \"details\": {\n      \"key_0\": {},\n      \"key_1\": {}\n    },\n    \"id\": \"string\",\n    \"reason\": \"User with ID 1234 does not exist.\",\n    \"request\": \"d7ef54b1-ec15-46e6-bccb-524b82c035e6\",\n    \"status\": \"Not Found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "7802df20-f256-4475-b735-4dd660099a7c",
+    "name": "Ory Hydra api relationship API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Documentation for all of Ory Hydra's APIs.\n\n\nContact Support:\n Email: hi@ory.sh",
+      "type": "text/plain"
+    }
+  }
+}

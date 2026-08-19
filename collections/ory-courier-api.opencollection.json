@@ -1,0 +1,74 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Ory Hydra api courier API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "courier",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Messages",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/admin/courier/messages",
+            "params": [
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Items per Page\n\nThis is the number of items per page to return.\nFor details on pagination please head over to the [pagination documentation](https://www.ory.com/docs/ecosystem/api-design#pagination)."
+              },
+              {
+                "name": "page_token",
+                "value": "",
+                "type": "query",
+                "description": "Next Page Token\n\nThe next page token.\nFor details on pagination please head over to the [pagination documentation](https://www.ory.com/docs/ecosystem/api-design#pagination)."
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Status filters out messages based on status.\nIf no value is provided, it doesn't take effect on filter."
+              },
+              {
+                "name": "recipient",
+                "value": "",
+                "type": "query",
+                "description": "Recipient filters out messages based on recipient.\nIf no value is provided, it doesn't take effect on filter."
+              }
+            ]
+          },
+          "docs": "Lists all messages by given status and recipient."
+        },
+        {
+          "info": {
+            "name": "Get a Message",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/admin/courier/messages/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "MessageID is the ID of the message."
+              }
+            ]
+          },
+          "docs": "Gets a specific messages by the given ID."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

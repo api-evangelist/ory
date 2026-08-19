@@ -1,0 +1,164 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Ory Hydra api oidc API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "oidc",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "OpenID Connect Discovery",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/.well-known/openid-configuration"
+          },
+          "docs": "A mechanism for an OpenID Connect Relying Party to discover the End-User's OpenID Provider and obtain information needed to interact with it, including its OAuth 2.0 endpoint locations.\n\nPopular libraries for OpenID Connect clients include oidc-client-js (JavaScript), go-oidc (Golang), and others.\nFor a full list of clients go here: https://openid.net/developers/certified/"
+        },
+        {
+          "info": {
+            "name": "Issues a Verifiable Credential",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/credentials",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "This endpoint creates a verifiable credential that attests that the user\nauthenticated with the provided access token owns a certain public/private key\npair.\n\nMore information can be found at\nhttps://openid.net/specs/openid-connect-userinfo-vc-1_0.html."
+        },
+        {
+          "info": {
+            "name": "Register OAuth2 Client using OpenID Dynamic Client Registration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/oauth2/register",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "This endpoint behaves like the administrative counterpart (`createOAuth2Client`) but is capable of facing the\npublic internet directly and can be used in self-service. It implements the OpenID Connect\nDynamic Client Registration Protocol. This feature needs to be enabled in the configuration. This endpoint\nis disabled by default. It can be enabled by an administrator.\n\nPlease note that using this endpoint you are not able to choose the `client_secret` nor the `client_id` as those\nvalues will be "
+        },
+        {
+          "info": {
+            "name": "Get OAuth2 Client using OpenID Dynamic Client Registration",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/oauth2/register/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The id of the OAuth 2.0 Client."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This endpoint behaves like the administrative counterpart (`getOAuth2Client`) but is capable of facing the\npublic internet directly and can be used in self-service. It implements the OpenID Connect\nDynamic Client Registration Protocol.\n\nTo use this endpoint, you will need to present the client's authentication credentials. If the OAuth2 Client\nuses the Token Endpoint Authentication Method `client_secret_post`, you need to present the client secret in the URL query.\nIf it uses `client_secret_basi"
+        },
+        {
+          "info": {
+            "name": "Set OAuth2 Client using OpenID Dynamic Client Registration",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/oauth2/register/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "OAuth 2.0 Client ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This endpoint behaves like the administrative counterpart (`setOAuth2Client`) but is capable of facing the\npublic internet directly to be used by third parties. It implements the OpenID Connect\nDynamic Client Registration Protocol.\n\nThis feature is disabled per default. It can be enabled by a system administrator.\n\nIf you pass `client_secret` the secret is used, otherwise the existing secret is used. If set, the secret is echoed in the response.\nIt is not possible to retrieve it later on.\n\nTo us"
+        },
+        {
+          "info": {
+            "name": "Delete OAuth 2.0 Client using the OpenID Dynamic Client Registration Management Protocol",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/oauth2/register/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The id of the OAuth 2.0 Client."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This endpoint behaves like the administrative counterpart (`deleteOAuth2Client`) but is capable of facing the\npublic internet directly and can be used in self-service. It implements the OpenID Connect\nDynamic Client Registration Protocol. This feature needs to be enabled in the configuration. This endpoint\nis disabled by default. It can be enabled by an administrator.\n\nTo use this endpoint, you will need to present the client's authentication credentials. If the OAuth2 Client\nuses the Token Endp"
+        },
+        {
+          "info": {
+            "name": "OpenID Connect Front- and Back-channel Enabled Logout",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/oauth2/sessions/logout"
+          },
+          "docs": "This endpoint initiates and completes user logout at the Ory OAuth2 & OpenID provider and initiates OpenID Connect Front- / Back-channel logout:\n\nhttps://openid.net/specs/openid-connect-frontchannel-1_0.html\nhttps://openid.net/specs/openid-connect-backchannel-1_0.html\n\nBack-channel logout is performed asynchronously and does not affect logout flow."
+        },
+        {
+          "info": {
+            "name": "OpenID Connect Userinfo",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/userinfo",
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://hydra.demo.ory.sh/oauth2/auth",
+              "accessTokenUrl": "https://hydra.demo.ory.sh/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This endpoint returns the payload of the ID Token, including `session.id_token` values, of\nthe provided OAuth 2.0 Access Token's consent request.\n\nIn the case of authentication error, a WWW-Authenticate header might be set in the response\nwith more information about the error. See [the spec](https://datatracker.ietf.org/doc/html/rfc6750#section-3)\nfor more details about header format."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
