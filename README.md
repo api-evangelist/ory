@@ -70,7 +70,7 @@ Ory is an open source identity infrastructure platform providing OAuth2 and Open
 
 Ory Hydra is an OAuth 2.0 and OpenID Connect server. It implements OAuth 2.0 authorization, OpenID Connect Core 1.0, and OpenID Connect Discovery for issuing and managing access tokens, refresh tokens, ID tokens, and OAuth2 clients.
 
-- **Human URL:** [https://www.ory.sh/hydra/](https://www.ory.sh/hydra/)
+- **Human URL:** [https://www.ory.com/hydra/](https://www.ory.com/hydra/)
 
 #### Tags
 
@@ -81,7 +81,7 @@ Ory Hydra is an OAuth 2.0 and OpenID Connect server. It implements OAuth 2.0 aut
 #### Properties
 
 - [OpenAPI](https://raw.githubusercontent.com/api-evangelist/ory/refs/heads/main/openapi/ory-hydra-openapi.json) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Documentation](https://www.ory.sh/docs/hydra/)
+- [Documentation](https://www.ory.com/docs/hydra/)
 - [GitHub Repository](https://github.com/ory/hydra)
 - [Postman Collection](collections/ory-hydra.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
 - [Open Collection](collections/ory-hydra.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
@@ -96,7 +96,7 @@ Ory Hydra is an OAuth 2.0 and OpenID Connect server. It implements OAuth 2.0 aut
 
 Ory Kratos is an identity and user management system. It handles registration, login, multi-factor authentication, account recovery, verification, profile management, and identity schemas with strong security defaults.
 
-- **Human URL:** [https://www.ory.sh/kratos/](https://www.ory.sh/kratos/)
+- **Human URL:** [https://www.ory.com/kratos/](https://www.ory.com/kratos/)
 
 #### Tags
 
@@ -107,7 +107,7 @@ Ory Kratos is an identity and user management system. It handles registration, l
 #### Properties
 
 - [OpenAPI](https://raw.githubusercontent.com/api-evangelist/ory/refs/heads/main/openapi/ory-kratos-openapi.json) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Documentation](https://www.ory.sh/docs/kratos/)
+- [Documentation](https://www.ory.com/docs/kratos/)
 - [GitHub Repository](https://github.com/ory/kratos)
 - [Postman Collection](collections/ory-hydra.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
 - [Open Collection](collections/ory-hydra.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
@@ -122,7 +122,7 @@ Ory Kratos is an identity and user management system. It handles registration, l
 
 Ory Keto is a permission and authorization server inspired by Google Zanzibar. It provides relationship-based access control (ReBAC), role-based access control (RBAC), and access control list (ACL) checks at scale.
 
-- **Human URL:** [https://www.ory.sh/keto/](https://www.ory.sh/keto/)
+- **Human URL:** [https://www.ory.com/keto/](https://www.ory.com/keto/)
 
 #### Tags
 
@@ -133,7 +133,7 @@ Ory Keto is a permission and authorization server inspired by Google Zanzibar. I
 #### Properties
 
 - [OpenAPI](https://raw.githubusercontent.com/api-evangelist/ory/refs/heads/main/openapi/ory-keto-openapi.json) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Documentation](https://www.ory.sh/docs/keto/)
+- [Documentation](https://www.ory.com/docs/keto/)
 - [GitHub Repository](https://github.com/ory/keto)
 - [Postman Collection](collections/ory-hydra.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
 - [Open Collection](collections/ory-hydra.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
@@ -148,7 +148,7 @@ Ory Keto is a permission and authorization server inspired by Google Zanzibar. I
 
 Ory Oathkeeper is an identity and access proxy that authenticates, authorizes, and mutates incoming HTTP(S) requests using configurable access rules backed by Hydra, Kratos, and Keto.
 
-- **Human URL:** [https://www.ory.sh/oathkeeper/](https://www.ory.sh/oathkeeper/)
+- **Human URL:** [https://www.ory.com/oathkeeper/](https://www.ory.com/oathkeeper/)
 
 #### Tags
 
@@ -159,7 +159,7 @@ Ory Oathkeeper is an identity and access proxy that authenticates, authorizes, a
 #### Properties
 
 - [OpenAPI](https://raw.githubusercontent.com/api-evangelist/ory/refs/heads/main/openapi/ory-oathkeeper-openapi.json) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Documentation](https://www.ory.sh/docs/oathkeeper/)
+- [Documentation](https://www.ory.com/docs/oathkeeper/)
 - [GitHub Repository](https://github.com/ory/oathkeeper)
 - [Postman Collection](collections/ory-hydra.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
 - [Open Collection](collections/ory-hydra.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
@@ -173,10 +173,10 @@ Ory Oathkeeper is an identity and access proxy that authenticates, authorizes, a
 ## Common Properties
 
 - [LinkedIn](https://www.linkedin.com/company/ory-corp)
-- [Website](https://www.ory.sh)
-- [Documentation](https://www.ory.sh/docs/)
+- [Website](https://www.ory.com)
+- [Documentation](https://www.ory.com/docs/)
 - [GitHub Organization](https://github.com/ory)
-- [Blog](https://www.ory.sh/blog/)
+- [Blog](https://www.ory.com/blog/)
 - [M C P Server](https://github.com/ory/mcp)
 
 ## Maintainers
