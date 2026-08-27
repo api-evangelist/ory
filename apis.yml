@@ -332,16 +332,16 @@ apis:
     url: https://www.ory.com/docs/oathkeeper/
   - type: GitHubRepository
     url: https://github.com/ory/oathkeeper
-- aid: ory:ory-network-billing-api
+- aid: ory:ory-billing-api
   name: Ory Billing API
   description: Ory Network workspace / project subscriptions.
-  humanURL: https://www.ory.com/docs/kratos/reference/api
+  humanURL: https://www.ory.com/hydra/
   baseURL: https://{project-slug}.projects.oryapis.com
   tags:
   - Billing
   properties:
   - type: OpenAPI
-    url: openapi/ory-network-billing-api-openapi.yml
+    url: openapi/ory-billing-api-openapi.yml
   - type: Documentation
     url: https://www.ory.com/docs/kratos/self-service
   - type: APIReference
@@ -380,76 +380,16 @@ apis:
     url: https://www.ory.com/docs/guides/event-streams/aws-sns
   - type: Documentation
     url: https://www.ory.com/pricing
-  x-merged-from:
-    record: ory-corp
-    date: '2026-08-20'
-    note: Ory Network (hosted) API. The other apis[] entries in this record describe the self-hosted open-source
-      components (Hydra, Keto, Kratos, Oathkeeper).
-- aid: ory:ory-network-courier-api
-  name: Ory Courier API
-  description: Admin access to queued and dispatched courier messages.
-  humanURL: https://www.ory.com/docs/kratos/reference/api
-  baseURL: https://{project-slug}.projects.oryapis.com
-  tags:
-  - Couriers
-  tags_raw:
-  - Courier
-  properties:
-  - type: OpenAPI
-    url: openapi/ory-network-courier-api-openapi.yml
-  - type: Documentation
-    url: https://www.ory.com/docs/kratos/self-service
-  - type: APIReference
-    url: https://www.ory.com/docs/kratos/reference/api
-  - type: PostmanCollection
-    url: collections/ory-network.postman_collection.json
-  - type: OpenCollection
-    url: collections/ory-network.opencollection.json
-  - type: Documentation
-    url: https://www.ory.com/docs/kratos/manage-identities/overview
-  - type: Documentation
-    url: https://www.ory.com/docs/oauth2-openid-connect-do-you-need-use-cases-products
-  - type: APIReference
-    url: https://www.ory.com/docs/hydra/reference/api
-  - type: Documentation
-    url: https://www.ory.com/docs/hydra/guides/oauth2-clients
-  - type: Documentation
-    url: https://www.ory.com/docs/keto/concepts/api-overview
-  - type: APIReference
-    url: https://www.ory.com/docs/keto/reference/rest-api
-  - type: Documentation
-    url: https://www.ory.com/docs/keto/reference/ory-permission-language
-  - type: Documentation
-    url: https://www.ory.com/docs/kratos/self-service/flows/verify-email-account-activation
-  - type: Documentation
-    url: https://www.ory.com/docs/kratos/organizations
-  - type: APIReference
-    url: https://www.ory.com/docs/reference/api
-  - type: Documentation
-    url: https://www.ory.com/docs/guides/manage-project-via-api
-  - type: Documentation
-    url: https://www.ory.com/docs/concepts/personal-access-token
-  - type: APIReference
-    url: https://www.ory.com/docs/guides/manage-project-via-api
-  - type: Documentation
-    url: https://www.ory.com/docs/guides/event-streams/aws-sns
-  - type: Documentation
-    url: https://www.ory.com/pricing
-  x-merged-from:
-    record: ory-corp
-    date: '2026-08-20'
-    note: Ory Network (hosted) API. The other apis[] entries in this record describe the self-hosted open-source
-      components (Hydra, Keto, Kratos, Oathkeeper).
-- aid: ory:ory-network-event-streams-api
+- aid: ory:ory-event-streams-api
   name: Ory Event Streams API
   description: Ory Network event stream configuration.
-  humanURL: https://www.ory.com/docs/kratos/reference/api
+  humanURL: https://www.ory.com/hydra/
   baseURL: https://{project-slug}.projects.oryapis.com
   tags:
   - Event Streams
   properties:
   - type: OpenAPI
-    url: openapi/ory-network-event-streams-api-openapi.yml
+    url: openapi/ory-event-streams-api-openapi.yml
   - type: Documentation
     url: https://www.ory.com/docs/kratos/self-service
   - type: APIReference
@@ -488,21 +428,16 @@ apis:
     url: https://www.ory.com/docs/guides/event-streams/aws-sns
   - type: Documentation
     url: https://www.ory.com/pricing
-  x-merged-from:
-    record: ory-corp
-    date: '2026-08-20'
-    note: Ory Network (hosted) API. The other apis[] entries in this record describe the self-hosted open-source
-      components (Hydra, Keto, Kratos, Oathkeeper).
-- aid: ory:ory-network-identity-admin-api
+- aid: ory:ory-identity-admin-api
   name: Ory Identity (Admin) API
   description: Privileged Kratos identity and session management.
-  humanURL: https://www.ory.com/docs/kratos/reference/api
+  humanURL: https://www.ory.com/hydra/
   baseURL: https://{project-slug}.projects.oryapis.com
   tags:
   - Identity (Admin)
   properties:
   - type: OpenAPI
-    url: openapi/ory-network-identity-admin-api-openapi.yml
+    url: openapi/ory-identity-admin-api-openapi.yml
   - type: Documentation
     url: https://www.ory.com/docs/kratos/self-service
   - type: APIReference
@@ -541,22 +476,17 @@ apis:
     url: https://www.ory.com/docs/guides/event-streams/aws-sns
   - type: Documentation
     url: https://www.ory.com/pricing
-  x-merged-from:
-    record: ory-corp
-    date: '2026-08-20'
-    note: Ory Network (hosted) API. The other apis[] entries in this record describe the self-hosted open-source
-      components (Hydra, Keto, Kratos, Oathkeeper).
-- aid: ory:ory-network-identity-self-service-api
+- aid: ory:ory-identity-self-service-api
   name: Ory Identity (Self-Service) API
-  description: Public Kratos flows for login, registration, recovery, verification, settings, logout,
-    and sessions.
-  humanURL: https://www.ory.com/docs/kratos/reference/api
+  description: >-
+    Public Kratos flows for login, registration, recovery, verification, settings, logout, and sessions.
+  humanURL: https://www.ory.com/hydra/
   baseURL: https://{project-slug}.projects.oryapis.com
   tags:
   - Identity (Self-Service)
   properties:
   - type: OpenAPI
-    url: openapi/ory-network-identity-self-service-api-openapi.yml
+    url: openapi/ory-identity-self-service-api-openapi.yml
   - type: Documentation
     url: https://www.ory.com/docs/kratos/self-service
   - type: APIReference
@@ -595,21 +525,16 @@ apis:
     url: https://www.ory.com/docs/guides/event-streams/aws-sns
   - type: Documentation
     url: https://www.ory.com/pricing
-  x-merged-from:
-    record: ory-corp
-    date: '2026-08-20'
-    note: Ory Network (hosted) API. The other apis[] entries in this record describe the self-hosted open-source
-      components (Hydra, Keto, Kratos, Oathkeeper).
-- aid: ory:ory-network-oauth2-admin-api
+- aid: ory:ory-oauth2-admin-api
   name: Ory OAuth2 (Admin) API
   description: Privileged Hydra client, token, consent, and key management.
-  humanURL: https://www.ory.com/docs/kratos/reference/api
+  humanURL: https://www.ory.com/hydra/
   baseURL: https://{project-slug}.projects.oryapis.com
   tags:
   - OAuth2 (Admin)
   properties:
   - type: OpenAPI
-    url: openapi/ory-network-oauth2-admin-api-openapi.yml
+    url: openapi/ory-oauth2-admin-api-openapi.yml
   - type: Documentation
     url: https://www.ory.com/docs/kratos/self-service
   - type: APIReference
@@ -648,21 +573,16 @@ apis:
     url: https://www.ory.com/docs/guides/event-streams/aws-sns
   - type: Documentation
     url: https://www.ory.com/pricing
-  x-merged-from:
-    record: ory-corp
-    date: '2026-08-20'
-    note: Ory Network (hosted) API. The other apis[] entries in this record describe the self-hosted open-source
-      components (Hydra, Keto, Kratos, Oathkeeper).
-- aid: ory:ory-network-oauth2-public-api
+- aid: ory:ory-oauth2-public-api
   name: Ory OAuth2 (Public) API
   description: Public OAuth2 / OpenID Connect provider endpoints (Hydra).
-  humanURL: https://www.ory.com/docs/kratos/reference/api
+  humanURL: https://www.ory.com/hydra/
   baseURL: https://{project-slug}.projects.oryapis.com
   tags:
   - OAuth2 (Public)
   properties:
   - type: OpenAPI
-    url: openapi/ory-network-oauth2-public-api-openapi.yml
+    url: openapi/ory-oauth2-public-api-openapi.yml
   - type: Documentation
     url: https://www.ory.com/docs/kratos/self-service
   - type: APIReference
@@ -701,23 +621,16 @@ apis:
     url: https://www.ory.com/docs/guides/event-streams/aws-sns
   - type: Documentation
     url: https://www.ory.com/pricing
-  x-merged-from:
-    record: ory-corp
-    date: '2026-08-20'
-    note: Ory Network (hosted) API. The other apis[] entries in this record describe the self-hosted open-source
-      components (Hydra, Keto, Kratos, Oathkeeper).
-- aid: ory:ory-network-organizations-api
+- aid: ory:ory-organizations-api
   name: Ory Organizations API
   description: B2B organization management for SSO.
-  humanURL: https://www.ory.com/docs/kratos/reference/api
+  humanURL: https://www.ory.com/hydra/
   baseURL: https://{project-slug}.projects.oryapis.com
   tags:
-  - Organization
-  tags_raw:
   - Organizations
   properties:
   - type: OpenAPI
-    url: openapi/ory-network-organizations-api-openapi.yml
+    url: openapi/ory-organizations-api-openapi.yml
   - type: Documentation
     url: https://www.ory.com/docs/kratos/self-service
   - type: APIReference
@@ -756,21 +669,16 @@ apis:
     url: https://www.ory.com/docs/guides/event-streams/aws-sns
   - type: Documentation
     url: https://www.ory.com/pricing
-  x-merged-from:
-    record: ory-corp
-    date: '2026-08-20'
-    note: Ory Network (hosted) API. The other apis[] entries in this record describe the self-hosted open-source
-      components (Hydra, Keto, Kratos, Oathkeeper).
-- aid: ory:ory-network-permissions-api
+- aid: ory:ory-permissions-api
   name: Ory Permissions API
   description: Keto permission checks, expand, and namespace reads.
-  humanURL: https://www.ory.com/docs/kratos/reference/api
+  humanURL: https://www.ory.com/hydra/
   baseURL: https://{project-slug}.projects.oryapis.com
   tags:
   - Permissions
   properties:
   - type: OpenAPI
-    url: openapi/ory-network-permissions-api-openapi.yml
+    url: openapi/ory-permissions-api-openapi.yml
   - type: Documentation
     url: https://www.ory.com/docs/kratos/self-service
   - type: APIReference
@@ -809,21 +717,16 @@ apis:
     url: https://www.ory.com/docs/guides/event-streams/aws-sns
   - type: Documentation
     url: https://www.ory.com/pricing
-  x-merged-from:
-    record: ory-corp
-    date: '2026-08-20'
-    note: Ory Network (hosted) API. The other apis[] entries in this record describe the self-hosted open-source
-      components (Hydra, Keto, Kratos, Oathkeeper).
-- aid: ory:ory-network-project-tokens-api
+- aid: ory:ory-project-tokens-api
   name: Ory Project Tokens API
   description: Ory Network project API token management.
-  humanURL: https://www.ory.com/docs/kratos/reference/api
+  humanURL: https://www.ory.com/hydra/
   baseURL: https://{project-slug}.projects.oryapis.com
   tags:
   - Project Tokens
   properties:
   - type: OpenAPI
-    url: openapi/ory-network-project-tokens-api-openapi.yml
+    url: openapi/ory-project-tokens-api-openapi.yml
   - type: Documentation
     url: https://www.ory.com/docs/kratos/self-service
   - type: APIReference
@@ -862,23 +765,16 @@ apis:
     url: https://www.ory.com/docs/guides/event-streams/aws-sns
   - type: Documentation
     url: https://www.ory.com/pricing
-  x-merged-from:
-    record: ory-corp
-    date: '2026-08-20'
-    note: Ory Network (hosted) API. The other apis[] entries in this record describe the self-hosted open-source
-      components (Hydra, Keto, Kratos, Oathkeeper).
-- aid: ory:ory-network-projects-api
+- aid: ory:ory-projects-api
   name: Ory Projects API
   description: Ory Network Console project management.
-  humanURL: https://www.ory.com/docs/kratos/reference/api
+  humanURL: https://www.ory.com/hydra/
   baseURL: https://{project-slug}.projects.oryapis.com
   tags:
-  - Project
-  tags_raw:
   - Projects
   properties:
   - type: OpenAPI
-    url: openapi/ory-network-projects-api-openapi.yml
+    url: openapi/ory-projects-api-openapi.yml
   - type: Documentation
     url: https://www.ory.com/docs/kratos/self-service
   - type: APIReference
@@ -917,21 +813,16 @@ apis:
     url: https://www.ory.com/docs/guides/event-streams/aws-sns
   - type: Documentation
     url: https://www.ory.com/pricing
-  x-merged-from:
-    record: ory-corp
-    date: '2026-08-20'
-    note: Ory Network (hosted) API. The other apis[] entries in this record describe the self-hosted open-source
-      components (Hydra, Keto, Kratos, Oathkeeper).
-- aid: ory:ory-network-relationships-api
+- aid: ory:ory-relationships-api
   name: Ory Relationships API
   description: Keto relationship-tuple writes and OPL syntax checks.
-  humanURL: https://www.ory.com/docs/kratos/reference/api
+  humanURL: https://www.ory.com/hydra/
   baseURL: https://{project-slug}.projects.oryapis.com
   tags:
   - Relationships
   properties:
   - type: OpenAPI
-    url: openapi/ory-network-relationships-api-openapi.yml
+    url: openapi/ory-relationships-api-openapi.yml
   - type: Documentation
     url: https://www.ory.com/docs/kratos/self-service
   - type: APIReference
@@ -970,11 +861,6 @@ apis:
     url: https://www.ory.com/docs/guides/event-streams/aws-sns
   - type: Documentation
     url: https://www.ory.com/pricing
-  x-merged-from:
-    record: ory-corp
-    date: '2026-08-20'
-    note: Ory Network (hosted) API. The other apis[] entries in this record describe the self-hosted open-source
-      components (Hydra, Keto, Kratos, Oathkeeper).
 common:
   - type: License
     name: Apache-2.0
