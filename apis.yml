@@ -4,6 +4,19 @@ description: >-
   Ory is an open source identity infrastructure platform providing OAuth2 and OpenID Connect (Hydra), identity and user
   management (Kratos), permissions and authorization (Keto), and a reverse proxy with policy enforcement (Oathkeeper).
 type: Index
+deliveryModel:
+  model: self-hosted
+  license: Apache-2.0
+  open_source: true
+  commercial: false
+  callable_host: true
+  label: Self-hosted open source · you run it yourself
+  confidence: high
+  source:
+  - license
+  - openapi
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: freemium
   onboarding: self-serve
@@ -862,6 +875,16 @@ apis:
   - type: Documentation
     url: https://www.ory.com/pricing
 common:
+  - type: IssueTracker
+    url: https://github.com/ory/hydra/issues
+  - type: Releases
+    url: https://github.com/ory/hydra/releases
+  - type: SecurityPolicy
+    url: https://github.com/ory/hydra/blob/master/SECURITY.md
+  - type: CodeOfConduct
+    url: https://github.com/ory/hydra/blob/master/CODE_OF_CONDUCT.md
+  - type: ContributionGuide
+    url: https://github.com/ory/hydra/blob/master/CONTRIBUTING.md
   - type: License
     name: Apache-2.0
     url: https://github.com/ory/hydra/blob/master/LICENSE
