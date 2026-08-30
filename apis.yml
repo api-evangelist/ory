@@ -80,7 +80,7 @@ apis:
   description: APIs for managing email and SMS message delivery.
   humanURL: https://www.ory.com/hydra/
   tags:
-  - Couriers
+  - courier
   tags_raw:
   - courier
   properties:
@@ -109,7 +109,7 @@ apis:
     a user's own profile.
   humanURL: https://www.ory.com/hydra/
   tags:
-  - Frontend
+  - frontend
   tags_raw:
   - frontend
   properties:
@@ -215,7 +215,7 @@ apis:
   description: OAuth 2.0
   humanURL: https://www.ory.com/hydra/
   tags:
-  - Authentication
+  - oAuth2
   tags_raw:
   - oAuth2
   properties:
@@ -269,7 +269,7 @@ apis:
   description: The permission API from Ory — 4 operation(s) for permission.
   humanURL: https://www.ory.com/hydra/
   tags:
-  - Permission
+  - permission
   tags_raw:
   - permission
   properties:
@@ -296,7 +296,7 @@ apis:
   description: The relationship API from Ory — 4 operation(s) for relationship.
   humanURL: https://www.ory.com/hydra/
   tags:
-  - Relationship
+  - relationship
   tags_raw:
   - relationship
   properties:
@@ -323,7 +323,7 @@ apis:
   description: Well-Known Endpoints
   humanURL: https://www.ory.com/hydra/
   tags:
-  - .well Known
+  - wellknown
   tags_raw:
   - wellknown
   properties:
@@ -640,6 +640,8 @@ apis:
   humanURL: https://www.ory.com/hydra/
   baseURL: https://{project-slug}.projects.oryapis.com
   tags:
+  - Organization
+  tags_raw:
   - Organizations
   properties:
   - type: OpenAPI
@@ -784,6 +786,8 @@ apis:
   humanURL: https://www.ory.com/hydra/
   baseURL: https://{project-slug}.projects.oryapis.com
   tags:
+  - Project
+  tags_raw:
   - Projects
   properties:
   - type: OpenAPI
