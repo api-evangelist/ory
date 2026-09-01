@@ -80,7 +80,7 @@ apis:
   description: APIs for managing email and SMS message delivery.
   humanURL: https://www.ory.com/hydra/
   tags:
-  - courier
+  - Couriers
   tags_raw:
   - courier
   properties:
@@ -109,7 +109,7 @@ apis:
     a user's own profile.
   humanURL: https://www.ory.com/hydra/
   tags:
-  - frontend
+  - Frontend
   tags_raw:
   - frontend
   properties:
@@ -215,7 +215,7 @@ apis:
   description: OAuth 2.0
   humanURL: https://www.ory.com/hydra/
   tags:
-  - oAuth2
+  - Authentication
   tags_raw:
   - oAuth2
   properties:
@@ -269,7 +269,7 @@ apis:
   description: The permission API from Ory — 4 operation(s) for permission.
   humanURL: https://www.ory.com/hydra/
   tags:
-  - permission
+  - Permission
   tags_raw:
   - permission
   properties:
@@ -296,7 +296,7 @@ apis:
   description: The relationship API from Ory — 4 operation(s) for relationship.
   humanURL: https://www.ory.com/hydra/
   tags:
-  - relationship
+  - Relationship
   tags_raw:
   - relationship
   properties:
@@ -323,7 +323,7 @@ apis:
   description: Well-Known Endpoints
   humanURL: https://www.ory.com/hydra/
   tags:
-  - wellknown
+  - .well Known
   tags_raw:
   - wellknown
   properties:
