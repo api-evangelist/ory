@@ -1,8 +1,8 @@
 aid: ory
 name: Ory
-description: >-
-  Ory is an open source identity infrastructure platform providing OAuth2 and OpenID Connect (Hydra), identity and user
-  management (Kratos), permissions and authorization (Keto), and a reverse proxy with policy enforcement (Oathkeeper).
+description: Ory is an open source identity infrastructure platform providing OAuth2 and OpenID Connect
+  (Hydra), identity and user management (Kratos), permissions and authorization (Keto), and a reverse
+  proxy with policy enforcement (Oathkeeper).
 type: Index
 deliveryModel:
   model: self-hosted
@@ -32,25 +32,25 @@ accessModel:
   method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/ory.png
 tags:
-  - Authentication
-  - Authorization
-  - Identity
-  - OpenID Connect
-  - Open-Source
+- Authentication
+- Authorization
+- Identity
+- OpenID Connect
+- Open-Source
 tags_raw:
-  - Authentication
-  - Authorization
-  - Identity
-  - OAuth2
-  - OpenID Connect
-  - Open Source
+- Authentication
+- Authorization
+- Identity
+- OAuth2
+- OpenID Connect
+- Open Source
 url: https://raw.githubusercontent.com/api-evangelist/ory/refs/heads/main/apis.yml
 created: '2026-03-25'
-modified: '2026-05-19'
+modified: '2026-09-16'
 specificationVersion: '0.23'
 apis:
 - aid: ory:ory-api-api
-  name: Ory api API
+  name: Ory api
   description: The api API from Ory — 4 operation(s) for api.
   humanURL: https://www.ory.com/hydra/
   tags: []
@@ -104,9 +104,8 @@ apis:
     url: https://github.com/ory/oathkeeper
 - aid: ory:ory-frontend-api
   name: Ory frontend API
-  description: >-
-    Endpoints used by frontend applications (e.g. Single-Page-App, Native Apps, Server Apps, ...) to manage
-    a user's own profile.
+  description: Endpoints used by frontend applications (e.g. Single-Page-App, Native Apps, Server Apps,
+    ...) to manage a user's own profile.
   humanURL: https://www.ory.com/hydra/
   tags:
   - Frontend
@@ -491,8 +490,8 @@ apis:
     url: https://www.ory.com/pricing
 - aid: ory:ory-identity-self-service-api
   name: Ory Identity (Self-Service) API
-  description: >-
-    Public Kratos flows for login, registration, recovery, verification, settings, logout, and sessions.
+  description: Public Kratos flows for login, registration, recovery, verification, settings, logout,
+    and sessions.
   humanURL: https://www.ory.com/hydra/
   baseURL: https://{project-slug}.projects.oryapis.com
   tags:
@@ -879,44 +878,44 @@ apis:
   - type: Documentation
     url: https://www.ory.com/pricing
 common:
-  - type: IssueTracker
-    url: https://github.com/ory/hydra/issues
-  - type: Releases
-    url: https://github.com/ory/hydra/releases
-  - type: SecurityPolicy
-    url: https://github.com/ory/hydra/blob/master/SECURITY.md
-  - type: CodeOfConduct
-    url: https://github.com/ory/hydra/blob/master/CODE_OF_CONDUCT.md
-  - type: ContributionGuide
-    url: https://github.com/ory/hydra/blob/master/CONTRIBUTING.md
-  - type: License
-    name: Apache-2.0
-    url: https://github.com/ory/hydra/blob/master/LICENSE
-  - type: AgenticAccess
-    url: agentic-access/ory-agentic-access.yml
-  - type: TrustCenter
-    url: security/ory-trust-center.yml
-  - type: VulnerabilityDisclosure
-    url: security/ory-vulnerability-disclosure.yml
-  - type: DomainSecurity
-    url: security/ory-domain-security.yml
-  - type: Authentication
-    url: authentication/ory-authentication.yml
-  - type: OAuthScopes
-    url: scopes/ory-scopes.yml
-  - type: LinkedIn
-    url: https://www.linkedin.com/company/ory-corp
-  - type: Website
-    url: https://www.ory.com
-  - type: Documentation
-    url: https://www.ory.com/docs/
-  - type: GitHubOrganization
-    url: https://github.com/ory
-  - type: Blog
-    url: https://www.ory.com/blog/
-  - name: MCP Server
-    url: https://github.com/ory/mcp
-    type: MCPServer
+- type: IssueTracker
+  url: https://github.com/ory/hydra/issues
+- type: Releases
+  url: https://github.com/ory/hydra/releases
+- type: SecurityPolicy
+  url: https://github.com/ory/hydra/blob/master/SECURITY.md
+- type: CodeOfConduct
+  url: https://github.com/ory/hydra/blob/master/CODE_OF_CONDUCT.md
+- type: ContributionGuide
+  url: https://github.com/ory/hydra/blob/master/CONTRIBUTING.md
+- type: License
+  name: Apache-2.0
+  url: https://github.com/ory/hydra/blob/master/LICENSE
+- type: AgenticAccess
+  url: agentic-access/ory-agentic-access.yml
+- type: TrustCenter
+  url: security/ory-trust-center.yml
+- type: VulnerabilityDisclosure
+  url: security/ory-vulnerability-disclosure.yml
+- type: DomainSecurity
+  url: security/ory-domain-security.yml
+- type: Authentication
+  url: authentication/ory-authentication.yml
+- type: OAuthScopes
+  url: scopes/ory-scopes.yml
+- type: LinkedIn
+  url: https://www.linkedin.com/company/ory-corp
+- type: Website
+  url: https://www.ory.com
+- type: Documentation
+  url: https://www.ory.com/docs/
+- type: GitHubOrganization
+  url: https://github.com/ory
+- type: Blog
+  url: https://www.ory.com/blog/
+- name: MCP Server
+  url: https://github.com/ory/mcp
+  type: MCPServer
 maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+- FN: Kin Lane
+  email: kin@apievangelist.com
