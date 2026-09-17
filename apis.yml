@@ -104,8 +104,9 @@ apis:
     url: https://github.com/ory/oathkeeper
 - aid: ory:ory-frontend-api
   name: Ory frontend API
-  description: Endpoints used by frontend applications (e.g. Single-Page-App, Native Apps, Server Apps,
-    ...) to manage a user's own profile.
+  description: >-
+    Endpoints used by frontend applications (e.g. Single-Page-App, Native Apps, Server Apps, ...) to manage
+    a user's own profile.
   humanURL: https://www.ory.com/hydra/
   tags:
   - Frontend
@@ -209,33 +210,6 @@ apis:
     url: https://www.ory.com/docs/oathkeeper/
   - type: GitHubRepository
     url: https://github.com/ory/oathkeeper
-- aid: ory:ory-oauth2-api
-  name: Ory oAuth2 API
-  description: OAuth 2.0
-  humanURL: https://www.ory.com/hydra/
-  tags:
-  - Authentication
-  tags_raw:
-  - oAuth2
-  properties:
-  - type: OpenAPI
-    url: openapi/ory-oauth2-api-openapi.yml
-  - type: Documentation
-    url: https://www.ory.com/docs/hydra/
-  - type: GitHubRepository
-    url: https://github.com/ory/hydra
-  - type: Documentation
-    url: https://www.ory.com/docs/kratos/
-  - type: GitHubRepository
-    url: https://github.com/ory/kratos
-  - type: Documentation
-    url: https://www.ory.com/docs/keto/
-  - type: GitHubRepository
-    url: https://github.com/ory/keto
-  - type: Documentation
-    url: https://www.ory.com/docs/oathkeeper/
-  - type: GitHubRepository
-    url: https://github.com/ory/oathkeeper
 - aid: ory:ory-oidc-api
   name: Ory oidc API
   description: OpenID Connect
@@ -301,33 +275,6 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/ory-relationship-api-openapi.yml
-  - type: Documentation
-    url: https://www.ory.com/docs/hydra/
-  - type: GitHubRepository
-    url: https://github.com/ory/hydra
-  - type: Documentation
-    url: https://www.ory.com/docs/kratos/
-  - type: GitHubRepository
-    url: https://github.com/ory/kratos
-  - type: Documentation
-    url: https://www.ory.com/docs/keto/
-  - type: GitHubRepository
-    url: https://github.com/ory/keto
-  - type: Documentation
-    url: https://www.ory.com/docs/oathkeeper/
-  - type: GitHubRepository
-    url: https://github.com/ory/oathkeeper
-- aid: ory:ory-wellknown-api
-  name: Ory wellknown API
-  description: Well-Known Endpoints
-  humanURL: https://www.ory.com/hydra/
-  tags:
-  - .well Known
-  tags_raw:
-  - wellknown
-  properties:
-  - type: OpenAPI
-    url: openapi/ory-wellknown-api-openapi.yml
   - type: Documentation
     url: https://www.ory.com/docs/hydra/
   - type: GitHubRepository
@@ -490,8 +437,8 @@ apis:
     url: https://www.ory.com/pricing
 - aid: ory:ory-identity-self-service-api
   name: Ory Identity (Self-Service) API
-  description: Public Kratos flows for login, registration, recovery, verification, settings, logout,
-    and sessions.
+  description: >-
+    Public Kratos flows for login, registration, recovery, verification, settings, logout, and sessions.
   humanURL: https://www.ory.com/hydra/
   baseURL: https://{project-slug}.projects.oryapis.com
   tags:
@@ -877,6 +824,58 @@ apis:
     url: https://www.ory.com/docs/guides/event-streams/aws-sns
   - type: Documentation
     url: https://www.ory.com/pricing
+- aid: ory:ory-oauth2-api
+  name: Ory O Auth2 API
+  description: OAuth 2.0
+  humanURL: https://www.ory.com/hydra/
+  baseURL: https://{project-slug}.projects.oryapis.com
+  tags:
+  - oAuth2
+  properties:
+  - type: OpenAPI
+    url: openapi/ory-oauth2-api-openapi.yml
+  - type: Documentation
+    url: https://www.ory.com/docs/hydra/
+  - type: GitHubRepository
+    url: https://github.com/ory/hydra
+  - type: Documentation
+    url: https://www.ory.com/docs/kratos/
+  - type: GitHubRepository
+    url: https://github.com/ory/kratos
+  - type: Documentation
+    url: https://www.ory.com/docs/keto/
+  - type: GitHubRepository
+    url: https://github.com/ory/keto
+  - type: Documentation
+    url: https://www.ory.com/docs/oathkeeper/
+  - type: GitHubRepository
+    url: https://github.com/ory/oathkeeper
+- aid: ory:ory-well-known-api
+  name: Ory .well Known API
+  description: Well-Known Endpoints
+  humanURL: https://www.ory.com/hydra/
+  baseURL: https://{project-slug}.projects.oryapis.com
+  tags:
+  - .well Known
+  properties:
+  - type: OpenAPI
+    url: openapi/ory-well-known-api-openapi.yml
+  - type: Documentation
+    url: https://www.ory.com/docs/hydra/
+  - type: GitHubRepository
+    url: https://github.com/ory/hydra
+  - type: Documentation
+    url: https://www.ory.com/docs/kratos/
+  - type: GitHubRepository
+    url: https://github.com/ory/kratos
+  - type: Documentation
+    url: https://www.ory.com/docs/keto/
+  - type: GitHubRepository
+    url: https://github.com/ory/keto
+  - type: Documentation
+    url: https://www.ory.com/docs/oathkeeper/
+  - type: GitHubRepository
+    url: https://github.com/ory/oathkeeper
 common:
 - type: IssueTracker
   url: https://github.com/ory/hydra/issues
