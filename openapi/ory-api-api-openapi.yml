@@ -1,14 +1,12 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   contact:
     email: hi@ory.sh
-  description: 'Documentation for all of Ory Hydra''s APIs.
-
-    '
+  description: Documentation for all of Ory Oathkeeper's APIs.
   license:
     name: Apache 2.0
-  title: Ory Hydra api API
-  version: "1.0"
+  title: Ory Oathkeeper API
+  version: ''
 tags:
 - name: api
 paths:
@@ -133,72 +131,65 @@ paths:
       tags:
       - api
 components:
+  responses:
+    rule:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/rule'
+      description: A rule
+    emptyResponse:
+      description: An empty response
+    rules:
+      content:
+        application/json:
+          schema:
+            items:
+              $ref: '#/components/schemas/rule'
+            type: array
+      description: A list of rules
   schemas:
-    jsonWebKeySet:
+    rule:
       properties:
-        keys:
-          description: 'The value of the "keys" parameter is an array of JWK values.  By
+        authenticators:
+          description: 'Authenticators is a list of authentication handlers that will try and authenticate the provided credentials.
 
-            default, the order of the JWK values within the array does not imply
+            Authenticators are checked iteratively from index 0 to n and if the first authenticator to return a positive
 
-            an order of preference among them, although applications of JWK Sets
+            result will be the one used.
 
-            can choose to assign a meaning to the order for their purposes, if
 
-            desired.'
+            If you want the rule to first check a specific authenticator  before "falling back" to others, have that authenticator
+
+            as the first item in the array.'
           items:
-            $ref: '#/components/schemas/jsonWebKey'
+            $ref: '#/components/schemas/ruleHandler'
           type: array
-      type: object
-    ruleMatch:
-      properties:
-        methods:
-          description: 'An array of HTTP methods (e.g. GET, POST, PUT, DELETE, ...). When ORY Oathkeeper searches for rules
+        authorizer:
+          $ref: '#/components/schemas/ruleHandler'
+        description:
+          description: Description is a human readable description of this rule.
+          type: string
+        id:
+          description: 'ID is the unique id of the rule. It can be at most 190 characters long, but the layout of the ID is up to you.
 
-            to decide what to do with an incoming request to the proxy server, it compares the HTTP method of the incoming
+            You will need this ID later on to update or delete the rule.'
+          type: string
+        match:
+          $ref: '#/components/schemas/ruleMatch'
+        mutators:
+          description: 'Mutators is a list of mutation handlers that transform the HTTP request. A common use case is generating a new set
 
-            request with the HTTP methods of each rules. If a match is found, the rule is considered a partial match.
+            of credentials (e.g. JWT) which then will be forwarded to the upstream server.
 
-            If the matchesUrl field is satisfied as well, the rule is considered a full match.'
+
+            Mutations are performed iteratively from index 0 to n and should all succeed in order for the HTTP request to be forwarded.'
           items:
-            type: string
+            $ref: '#/components/schemas/ruleHandler'
           type: array
-        url:
-          description: 'This field represents the URL pattern this rule matches. When ORY Oathkeeper searches for rules
-
-            to decide what to do with an incoming request to the proxy server, it compares the full request URL
-
-            (e.g. https://mydomain.com/api/resource) without query parameters of the incoming
-
-            request with this field. If a match is found, the rule is considered a partial match.
-
-            If the matchesMethods field is satisfied as well, the rule is considered a full match.
-
-
-            You can use regular expressions in this field to match more than one url. Regular expressions are encapsulated in
-
-            brackets < and >. The following example matches all paths of the domain `mydomain.com`: `https://mydomain.com/<.*>`.'
-          type: string
-      type: object
-    genericError:
-      description: The standard error format
-      properties:
-        code:
-          format: int64
-          type: integer
-        details:
-          items:
-            additionalProperties: {}
-            type: object
-          type: array
-        message:
-          type: string
-        reason:
-          type: string
-        request:
-          type: string
-        status:
-          type: string
+        upstream:
+          $ref: '#/components/schemas/Upstream'
+      title: swaggerRule is a single rule that will get checked on every HTTP request.
       type: object
     jsonWebKey:
       properties:
@@ -294,48 +285,6 @@ components:
         y:
           type: string
       type: object
-    rule:
-      properties:
-        authenticators:
-          description: 'Authenticators is a list of authentication handlers that will try and authenticate the provided credentials.
-
-            Authenticators are checked iteratively from index 0 to n and if the first authenticator to return a positive
-
-            result will be the one used.
-
-
-            If you want the rule to first check a specific authenticator  before "falling back" to others, have that authenticator
-
-            as the first item in the array.'
-          items:
-            $ref: '#/components/schemas/ruleHandler'
-          type: array
-        authorizer:
-          $ref: '#/components/schemas/ruleHandler'
-        description:
-          description: Description is a human readable description of this rule.
-          type: string
-        id:
-          description: 'ID is the unique id of the rule. It can be at most 190 characters long, but the layout of the ID is up to you.
-
-            You will need this ID later on to update or delete the rule.'
-          type: string
-        match:
-          $ref: '#/components/schemas/ruleMatch'
-        mutators:
-          description: 'Mutators is a list of mutation handlers that transform the HTTP request. A common use case is generating a new set
-
-            of credentials (e.g. JWT) which then will be forwarded to the upstream server.
-
-
-            Mutations are performed iteratively from index 0 to n and should all succeed in order for the HTTP request to be forwarded.'
-          items:
-            $ref: '#/components/schemas/ruleHandler'
-          type: array
-        upstream:
-          $ref: '#/components/schemas/Upstream'
-      title: swaggerRule is a single rule that will get checked on every HTTP request.
-      type: object
     Upstream:
       properties:
         preserve_host:
@@ -350,6 +299,56 @@ components:
           description: URL is the URL the request will be proxied to.
           type: string
       type: object
+    genericError:
+      description: The standard error format
+      properties:
+        code:
+          format: int64
+          type: integer
+        details:
+          items:
+            additionalProperties: {}
+            type: object
+          type: array
+        message:
+          type: string
+        reason:
+          type: string
+        request:
+          type: string
+        status:
+          type: string
+      type: object
+    ruleMatch:
+      properties:
+        methods:
+          description: 'An array of HTTP methods (e.g. GET, POST, PUT, DELETE, ...). When ORY Oathkeeper searches for rules
+
+            to decide what to do with an incoming request to the proxy server, it compares the HTTP method of the incoming
+
+            request with the HTTP methods of each rules. If a match is found, the rule is considered a partial match.
+
+            If the matchesUrl field is satisfied as well, the rule is considered a full match.'
+          items:
+            type: string
+          type: array
+        url:
+          description: 'This field represents the URL pattern this rule matches. When ORY Oathkeeper searches for rules
+
+            to decide what to do with an incoming request to the proxy server, it compares the full request URL
+
+            (e.g. https://mydomain.com/api/resource) without query parameters of the incoming
+
+            request with this field. If a match is found, the rule is considered a partial match.
+
+            If the matchesMethods field is satisfied as well, the rule is considered a full match.
+
+
+            You can use regular expressions in this field to match more than one url. Regular expressions are encapsulated in
+
+            brackets < and >. The following example matches all paths of the domain `mydomain.com`: `https://mydomain.com/<.*>`.'
+          type: string
+      type: object
     ruleHandler:
       properties:
         config:
@@ -362,39 +361,21 @@ components:
             guide for a complete list of available handlers.'
           type: string
       type: object
-  responses:
-    rule:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/rule'
-      description: A rule
-    rules:
-      content:
-        application/json:
-          schema:
-            items:
-              $ref: '#/components/schemas/rule'
-            type: array
-      description: A list of rules
-    emptyResponse:
-      description: An empty response
-  securitySchemes:
-    basic:
-      scheme: basic
-      type: http
-    bearer:
-      scheme: bearer
-      type: http
-    oauth2:
-      flows:
-        authorizationCode:
-          authorizationUrl: https://hydra.demo.ory.sh/oauth2/auth
-          scopes:
-            offline: A scope required when requesting refresh tokens (alias for `offline_access`)
-            offline_access: A scope required when requesting refresh tokens
-            openid: Request an OpenID Connect ID Token
-          tokenUrl: https://hydra.demo.ory.sh/oauth2/token
-      type: oauth2
+    jsonWebKeySet:
+      properties:
+        keys:
+          description: 'The value of the "keys" parameter is an array of JWK values.  By
+
+            default, the order of the JWK values within the array does not imply
+
+            an order of preference among them, although applications of JWK Sets
+
+            can choose to assign a meaning to the order for their purposes, if
+
+            desired.'
+          items:
+            $ref: '#/components/schemas/jsonWebKey'
+          type: array
+      type: object
 x-forwarded-proto: string
 x-request-id: string

@@ -1,17 +1,15 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   contact:
     email: hi@ory.sh
-  description: 'Documentation for all of Ory Hydra''s APIs.
-
-    '
+  description: Documentation for all of Ory Hydra's APIs.
   license:
     name: Apache 2.0
-  title: Ory Hydra api oAuth2 API
-  version: "1.0"
+  title: Ory Hydra O Auth2 API
+  version: ''
 tags:
 - description: OAuth 2.0
-  name: oAuth2
+  name: OAuth2
 paths:
   /admin/clients:
     get:
@@ -61,7 +59,7 @@ paths:
           $ref: '#/components/responses/errorOAuth2Default'
       summary: List OAuth 2.0 Clients
       tags:
-      - oAuth2
+      - OAuth2
       x-ory-ratelimit-bucket: hydra-admin-medium
     post:
       description: 'Create a new OAuth 2.0 client. If you pass `client_secret` the secret is used, otherwise a random secret
@@ -89,7 +87,7 @@ paths:
           $ref: '#/components/responses/errorOAuth2Default'
       summary: Create OAuth 2.0 Client
       tags:
-      - oAuth2
+      - OAuth2
       x-ory-ratelimit-bucket: hydra-admin-low
   /admin/clients/{id}:
     delete:
@@ -121,7 +119,7 @@ paths:
           description: genericError
       summary: Delete OAuth 2.0 Client
       tags:
-      - oAuth2
+      - OAuth2
       x-ory-ratelimit-bucket: hydra-admin-low
     get:
       description: 'Get an OAuth 2.0 client by its ID. This endpoint never returns the client secret.
@@ -149,7 +147,7 @@ paths:
           $ref: '#/components/responses/errorOAuth2Default'
       summary: Get an OAuth 2.0 Client
       tags:
-      - oAuth2
+      - OAuth2
       x-ory-ratelimit-bucket: hydra-admin-high
     patch:
       description: 'Patch an existing OAuth 2.0 Client using JSON Patch. If you pass `client_secret`
@@ -191,7 +189,7 @@ paths:
           $ref: '#/components/responses/errorOAuth2Default'
       summary: Patch OAuth 2.0 Client
       tags:
-      - oAuth2
+      - OAuth2
       x-ory-ratelimit-bucket: hydra-admin-low
     put:
       description: 'Replaces an existing OAuth 2.0 Client with the payload you send. If you pass `client_secret` the secret is used,
@@ -236,7 +234,7 @@ paths:
           $ref: '#/components/responses/errorOAuth2Default'
       summary: Set OAuth 2.0 Client
       tags:
-      - oAuth2
+      - OAuth2
       x-ory-ratelimit-bucket: hydra-admin-low
   /admin/clients/{id}/lifespans:
     put:
@@ -270,7 +268,7 @@ paths:
           description: genericError
       summary: Set OAuth2 Client Token Lifespans
       tags:
-      - oAuth2
+      - OAuth2
       x-ory-ratelimit-bucket: hydra-admin-low
   /admin/oauth2/auth/requests/consent:
     get:
@@ -320,7 +318,7 @@ paths:
           description: errorOAuth2
       summary: Get OAuth 2.0 Consent Request
       tags:
-      - oAuth2
+      - OAuth2
       x-ory-ratelimit-bucket: hydra-admin-high
   /admin/oauth2/auth/requests/consent/accept:
     put:
@@ -380,7 +378,7 @@ paths:
           description: errorOAuth2
       summary: Accept OAuth 2.0 Consent Request
       tags:
-      - oAuth2
+      - OAuth2
       x-ory-ratelimit-bucket: hydra-admin-high
   /admin/oauth2/auth/requests/consent/reject:
     put:
@@ -438,11 +436,10 @@ paths:
           description: errorOAuth2
       summary: Reject OAuth 2.0 Consent Request
       tags:
-      - oAuth2
+      - OAuth2
       x-ory-ratelimit-bucket: hydra-admin-high
   /admin/oauth2/auth/requests/device/accept:
     put:
-      description: Accepts a device grant user_code request
       operationId: acceptUserCodeRequest
       parameters:
       - in: query
@@ -471,7 +468,7 @@ paths:
           description: errorOAuth2
       summary: Accepts a device grant user_code request
       tags:
-      - oAuth2
+      - OAuth2
       x-ory-ratelimit-bucket: hydra-admin-high
   /admin/oauth2/auth/requests/login:
     get:
@@ -519,7 +516,7 @@ paths:
           description: errorOAuth2
       summary: Get OAuth 2.0 Login Request
       tags:
-      - oAuth2
+      - OAuth2
       x-ory-ratelimit-bucket: hydra-admin-high
   /admin/oauth2/auth/requests/login/accept:
     put:
@@ -570,7 +567,7 @@ paths:
           description: errorOAuth2
       summary: Accept OAuth 2.0 Login Request
       tags:
-      - oAuth2
+      - OAuth2
       x-ory-ratelimit-bucket: hydra-admin-high
   /admin/oauth2/auth/requests/login/reject:
     put:
@@ -619,7 +616,7 @@ paths:
           description: errorOAuth2
       summary: Reject OAuth 2.0 Login Request
       tags:
-      - oAuth2
+      - OAuth2
       x-ory-ratelimit-bucket: hydra-admin-high
   /admin/oauth2/auth/requests/logout:
     get:
@@ -652,7 +649,7 @@ paths:
           description: errorOAuth2
       summary: Get OAuth 2.0 Session Logout Request
       tags:
-      - oAuth2
+      - OAuth2
       x-ory-ratelimit-bucket: hydra-admin-high
   /admin/oauth2/auth/requests/logout/accept:
     put:
@@ -683,7 +680,7 @@ paths:
           description: errorOAuth2
       summary: Accept OAuth 2.0 Session Logout Request
       tags:
-      - oAuth2
+      - OAuth2
       x-ory-ratelimit-bucket: hydra-admin-high
   /admin/oauth2/auth/requests/logout/reject:
     put:
@@ -711,7 +708,7 @@ paths:
           description: errorOAuth2
       summary: Reject OAuth 2.0 Session Logout Request
       tags:
-      - oAuth2
+      - OAuth2
       x-ory-ratelimit-bucket: hydra-admin-high
   /admin/oauth2/auth/sessions/consent:
     delete:
@@ -763,7 +760,7 @@ paths:
           description: errorOAuth2
       summary: Revoke OAuth 2.0 Consent Sessions of a Subject
       tags:
-      - oAuth2
+      - OAuth2
       x-ory-ratelimit-bucket: hydra-admin-low
     get:
       description: 'This endpoint lists all subject''s granted consent sessions, including client and granted scope.
@@ -823,7 +820,7 @@ paths:
           description: errorOAuth2
       summary: List OAuth 2.0 Consent Sessions of a Subject
       tags:
-      - oAuth2
+      - OAuth2
       x-ory-ratelimit-bucket: hydra-admin-high
   /admin/oauth2/auth/sessions/login:
     delete:
@@ -872,7 +869,7 @@ paths:
           description: errorOAuth2
       summary: Revokes OAuth 2.0 Login Sessions by either a Subject or a SessionID
       tags:
-      - oAuth2
+      - OAuth2
       x-ory-ratelimit-bucket: hydra-admin-low
   /admin/oauth2/introspect:
     post:
@@ -923,7 +920,7 @@ paths:
           description: errorOAuth2
       summary: Introspect OAuth2 Access and Refresh Tokens
       tags:
-      - oAuth2
+      - OAuth2
       x-ory-ratelimit-bucket: hydra-admin-high
   /admin/oauth2/tokens:
     delete:
@@ -947,7 +944,7 @@ paths:
           description: errorOAuth2
       summary: Delete OAuth 2.0 Access Tokens from specific OAuth 2.0 Client
       tags:
-      - oAuth2
+      - OAuth2
       x-ory-ratelimit-bucket: hydra-admin-low
   /admin/trust/grants/jwt-bearer/issuers:
     get:
@@ -998,14 +995,14 @@ paths:
           description: genericError
       summary: List Trusted OAuth2 JWT Bearer Grant Type Issuers
       tags:
-      - oAuth2
+      - OAuth2
       x-ory-ratelimit-bucket: hydra-admin-medium
     post:
       description: 'Use this endpoint to establish a trust relationship for a JWT issuer
 
         to perform JSON Web Token (JWT) Profile for OAuth 2.0 Client Authentication
 
-        and Authorization Grants [RFC7523](https://datatracker.ietf.org/doc/html/rfc7523).'
+        and Authorization Grants RFC7523.'
       operationId: trustOAuth2JwtGrantIssuer
       requestBody:
         content:
@@ -1028,7 +1025,7 @@ paths:
           description: genericError
       summary: Trust OAuth2 JWT Bearer Grant Type Issuer
       tags:
-      - oAuth2
+      - OAuth2
       x-ory-ratelimit-bucket: hydra-admin-low
   /admin/trust/grants/jwt-bearer/issuers/{id}:
     delete:
@@ -1059,7 +1056,7 @@ paths:
           description: genericError
       summary: Delete Trusted OAuth2 JWT Bearer Grant Type Issuer
       tags:
-      - oAuth2
+      - OAuth2
       x-ory-ratelimit-bucket: hydra-admin-low
     get:
       description: 'Use this endpoint to get a trusted JWT Bearer Grant Type Issuer. The ID is the one returned when you
@@ -1088,7 +1085,7 @@ paths:
           description: genericError
       summary: Get Trusted OAuth2 JWT Bearer Grant Type Issuer
       tags:
-      - oAuth2
+      - OAuth2
       x-ory-ratelimit-bucket: hydra-admin-medium
   /oauth2/auth:
     get:
@@ -1112,7 +1109,7 @@ paths:
           description: errorOAuth2
       summary: OAuth 2.0 Authorize Endpoint
       tags:
-      - oAuth2
+      - OAuth2
       x-ory-ratelimit-bucket: hydra-public-medium
   /oauth2/device/auth:
     post:
@@ -1138,7 +1135,7 @@ paths:
           description: errorOAuth2
       summary: The OAuth 2.0 Device Authorize Endpoint
       tags:
-      - oAuth2
+      - OAuth2
       x-ory-ratelimit-bucket: hydra-public-high
   /oauth2/device/verify:
     get:
@@ -1155,7 +1152,7 @@ paths:
           description: errorOAuth2
       summary: OAuth 2.0 Device Verification Endpoint
       tags:
-      - oAuth2
+      - OAuth2
       x-ory-ratelimit-bucket: hydra-admin-high
   /oauth2/revoke:
     post:
@@ -1200,7 +1197,7 @@ paths:
       - oauth2: []
       summary: Revoke OAuth 2.0 Access or Refresh Token
       tags:
-      - oAuth2
+      - OAuth2
       x-ory-ratelimit-bucket: hydra-public-medium
   /oauth2/token:
     post:
@@ -1256,10 +1253,733 @@ paths:
       - oauth2: []
       summary: The OAuth 2.0 Token Endpoint
       tags:
-      - oAuth2
+      - OAuth2
       x-ory-ratelimit-bucket: hydra-public-medium
 components:
+  responses:
+    errorOAuth2BadRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/errorOAuth2'
+      description: Bad Request Error Response
+    errorOAuth2Default:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/errorOAuth2'
+      description: Default Error Response
+    emptyResponse:
+      description: 'Empty responses are sent when, for example, resources are deleted. The HTTP status code for empty responses is
+
+        typically 204.'
+    errorOAuth2NotFound:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/errorOAuth2'
+      description: Not Found Error Response
+    listOAuth2Clients:
+      content:
+        application/json:
+          schema:
+            items:
+              $ref: '#/components/schemas/oAuth2Client'
+            type: array
+      description: Paginated OAuth2 Client List Response
   schemas:
+    trustOAuth2JwtGrantIssuer:
+      description: Trust OAuth2 JWT Bearer Grant Type Issuer Request Body
+      properties:
+        allow_any_subject:
+          description: The "allow_any_subject" indicates that the issuer is allowed to have any principal as the subject of the JWT.
+          type: boolean
+        expires_at:
+          description: The "expires_at" indicates, when grant will expire, so we will reject assertion from "issuer" targeting "subject".
+          format: date-time
+          type: string
+        issuer:
+          description: The "issuer" identifies the principal that issued the JWT assertion (same as "iss" claim in JWT).
+          example: https://jwt-idp.example.com
+          type: string
+        jwk:
+          $ref: '#/components/schemas/jsonWebKey'
+        scope:
+          description: The "scope" contains list of scope values (as described in Section 3.3 of OAuth 2.0 [RFC6749])
+          example:
+          - openid
+          - offline
+          items:
+            type: string
+          type: array
+        subject:
+          description: The "subject" identifies the principal that is the subject of the JWT.
+          example: mike@example.com
+          type: string
+      required:
+      - issuer
+      - scope
+      - jwk
+      - expires_at
+      type: object
+    acceptOAuth2LoginRequest:
+      properties:
+        acr:
+          description: 'ACR sets the Authentication AuthorizationContext Class Reference value for this authentication session. You can use it
+
+            to express that, for example, a user authenticated using two-factor authentication.'
+          type: string
+        amr:
+          description: 'AMR sets the Authentication Methods References value for this
+
+            authentication session. You can use it to specify the method a user used to
+
+            authenticate. For example, if the acr indicates a user used two-factor
+
+            authentication, the amr can express they used a software-secured key.'
+          items:
+            type: string
+          type: array
+        context:
+          $ref: '#/components/schemas/JSONRawMessage'
+        extend_session_lifespan:
+          description: 'Extend OAuth2 authentication session lifespan
+
+
+            If set to `true`, the OAuth2 authentication cookie lifespan is extended. This is for example useful if you want the user to be able to use `prompt=none` continuously.
+
+
+            This value can only be set to `true` if the user has an authentication, which is the case if the `skip` value is `true`.'
+          type: boolean
+        force_subject_identifier:
+          description: 'ForceSubjectIdentifier forces the "pairwise" user ID of the end-user that authenticated. The "pairwise" user ID refers to the
+
+            (Pairwise Identifier Algorithm)[http://openid.net/specs/openid-connect-core-1_0.html#PairwiseAlg] of the OpenID
+
+            Connect specification. It allows you to set an obfuscated subject ("user") identifier that is unique to the client.
+
+
+            Please note that this changes the user ID on endpoint /userinfo and sub claim of the ID Token. It does not change the
+
+            sub claim in the OAuth 2.0 Introspection.
+
+
+            Per default, ORY Hydra handles this value with its own algorithm. In case you want to set this yourself
+
+            you can use this field. Please note that setting this field has no effect if `pairwise` is not configured in
+
+            ORY Hydra or the OAuth 2.0 Client does not expect a pairwise identifier (set via `subject_type` key in the client''s
+
+            configuration).
+
+
+            Please also be aware that ORY Hydra is unable to properly compute this value during authentication. This implies
+
+            that you have to compute this value on every authentication process (probably depending on the client ID or some
+
+            other unique value).
+
+
+            If you fail to compute the proper value, then authentication processes which have id_token_hint set might fail.'
+          type: string
+        identity_provider_session_id:
+          description: 'IdentityProviderSessionID is the session ID of the end-user that authenticated.
+
+            If specified, we will use this value to propagate the logout.'
+          type: string
+        remember:
+          description: 'Remember, if set to true, tells Ory Hydra to remember this user by telling the user agent (browser) to store
+
+            a cookie with authentication data. If the same user performs another OAuth 2.0 Authorization Request, they
+
+            will not be asked to log in again.'
+          type: boolean
+        remember_for:
+          description: 'RememberFor sets how long the authentication should be remembered for in seconds. If set to `0`, the
+
+            authorization will be remembered for the duration of the browser session (using a session cookie).'
+          format: int64
+          type: integer
+        subject:
+          description: Subject is the user ID of the end-user that authenticated.
+          type: string
+      required:
+      - subject
+      title: HandledLoginRequest is the request payload used to accept a login request.
+      type: object
+    acceptOAuth2ConsentRequestSession:
+      properties:
+        access_token:
+          description: 'AccessToken sets session data for the access and refresh token, as well as any future tokens issued by the
+
+            refresh grant. Keep in mind that this data will be available to anyone performing OAuth 2.0 Challenge Introspection.
+
+            If only your services can perform OAuth 2.0 Challenge Introspection, this is usually fine. But if third parties
+
+            can access that endpoint as well, sensitive data from the session might be exposed to them. Use with care!'
+        id_token:
+          description: 'IDToken sets session data for the OpenID Connect ID token. Keep in mind that the session''id payloads are readable
+
+            by anyone that has access to the ID Challenge. Use with care!'
+      title: Pass session data to a consent request.
+      type: object
+    deviceAuthorization:
+      description: '# Ory''s OAuth 2.0 Device Authorization API'
+      properties:
+        device_code:
+          description: The device verification code.
+          example: ory_dc_smldfksmdfkl.mslkmlkmlk
+          type: string
+        expires_in:
+          description: The lifetime in seconds of the "device_code" and "user_code".
+          example: 16830
+          format: int64
+          type: integer
+        interval:
+          description: 'The minimum amount of time in seconds that the client
+
+            SHOULD wait between polling requests to the token endpoint.  If no
+
+            value is provided, clients MUST use 5 as the default.'
+          example: 5
+          format: int64
+          type: integer
+        user_code:
+          description: The end-user verification code.
+          example: AAAAAA
+          type: string
+        verification_uri:
+          description: 'The end-user verification URI on the authorization
+
+            server.  The URI should be short and easy to remember as end users
+
+            will be asked to manually type it into their user agent.'
+          example: https://auth.ory.sh/tv
+          type: string
+        verification_uri_complete:
+          description: 'A verification URI that includes the "user_code" (or
+
+            other information with the same function as the "user_code"),
+
+            which is designed for non-textual transmission.'
+          example: https://auth.ory.sh/tv?user_code=AAAAAA
+          type: string
+      title: OAuth2 Device Flow
+      type: object
+    oAuth2ConsentSession:
+      description: A completed OAuth 2.0 Consent Session.
+      properties:
+        consent_request:
+          $ref: '#/components/schemas/oAuth2ConsentRequest'
+        consent_request_id:
+          description: ConsentRequestID is the identifier of the consent request that initiated this consent session.
+          type: string
+        context:
+          $ref: '#/components/schemas/JSONRawMessage'
+        grant_access_token_audience:
+          description: 'Audience Granted
+
+
+            GrantedAudience sets the audience the user authorized the client to use. Should be a subset of `requested_access_token_audience`.'
+          items:
+            type: string
+          type: array
+        grant_scope:
+          description: 'Scope Granted
+
+
+            GrantScope sets the scope the user authorized the client to use. Should be a subset of `requested_scope`.'
+          items:
+            type: string
+          type: array
+        handled_at:
+          $ref: '#/components/schemas/nullTime'
+        remember:
+          description: 'Remember Consent
+
+
+            Remember, if set to true, tells ORY Hydra to remember this consent authorization and reuse it if the same
+
+            client asks the same user for the same, or a subset of, scope.'
+          type: boolean
+        remember_for:
+          description: 'Remember Consent For
+
+
+            RememberFor sets how long the consent authorization should be remembered for in seconds. If set to `0`, the
+
+            authorization will be remembered indefinitely.'
+          format: int64
+          type: integer
+        session:
+          $ref: '#/components/schemas/acceptOAuth2ConsentRequestSession'
+      title: OAuth 2.0 Consent Session
+      type: object
+    acceptDeviceUserCodeRequest:
+      description: Contains information on an device verification
+      properties:
+        user_code:
+          type: string
+      type: object
+    oAuth2TokenExchange:
+      description: OAuth2 Token Exchange Result
+      properties:
+        access_token:
+          description: The access token issued by the authorization server.
+          type: string
+        expires_in:
+          description: 'The lifetime in seconds of the access token. For
+
+            example, the value "3600" denotes that the access token will
+
+            expire in one hour from the time the response was generated.'
+          format: int64
+          type: integer
+        id_token:
+          description: To retrieve a refresh token request the id_token scope.
+          type: string
+        refresh_token:
+          description: 'The refresh token, which can be used to obtain new
+
+            access tokens. To retrieve it add the scope "offline" to your access token request.'
+          type: string
+        scope:
+          description: The scope of the access token
+          type: string
+        token_type:
+          description: The type of the token issued
+          type: string
+      type: object
+    rejectOAuth2Request:
+      properties:
+        error:
+          description: 'The error should follow the OAuth2 error format (e.g. `invalid_request`, `login_required`).
+
+
+            Defaults to `request_denied`.'
+          type: string
+        error_debug:
+          description: 'Debug contains information to help resolve the problem as a developer. Usually not exposed
+
+            to the public but only in the server logs.'
+          type: string
+        error_description:
+          description: Description of the error in a human readable format.
+          type: string
+        error_hint:
+          description: Hint to help resolve the error.
+          type: string
+        status_code:
+          description: 'Represents the HTTP status code of the error (e.g. 401 or 403)
+
+
+            Defaults to 400'
+          format: int64
+          type: integer
+      title: The request payload used to accept a login or consent request.
+      type: object
+    errorOAuth2:
+      description: Error
+      properties:
+        error:
+          description: Error
+          type: string
+        error_debug:
+          description: 'Error Debug Information
+
+
+            Only available in dev mode.'
+          type: string
+        error_description:
+          description: Error Description
+          type: string
+        error_hint:
+          description: 'Error Hint
+
+
+            Helps the user identify the error cause.'
+          example: The redirect URL is not allowed.
+          type: string
+        status_code:
+          description: HTTP Status Code
+          example: 401
+          format: int64
+          type: integer
+      type: object
+    introspectedOAuth2Token:
+      description: 'Introspection contains an access token''s session data as specified by
+
+        [IETF RFC 7662](https://tools.ietf.org/html/rfc7662)'
+      properties:
+        active:
+          description: 'Active is a boolean indicator of whether or not the presented token
+
+            is currently active.  The specifics of a token''s "active" state
+
+            will vary depending on the implementation of the authorization
+
+            server and the information it keeps about its tokens, but a "true"
+
+            value return for the "active" property will generally indicate
+
+            that a given token has been issued by this authorization server,
+
+            has not been revoked by the resource owner, and is within its
+
+            given time window of validity (e.g., after its issuance time and
+
+            before its expiration time).'
+          type: boolean
+        aud:
+          description: Audience contains a list of the token's intended audiences.
+          items:
+            type: string
+          type: array
+        client_id:
+          description: 'ID is a client identifier for the OAuth 2.0 client that
+
+            requested this token.'
+          type: string
+        exp:
+          description: 'Expires at is an integer timestamp, measured in the number of seconds
+
+            since January 1 1970 UTC, indicating when this token will expire.'
+          format: int64
+          type: integer
+        ext:
+          additionalProperties: {}
+          description: Extra is arbitrary data set by the session.
+          type: object
+        iat:
+          description: 'Issued at is an integer timestamp, measured in the number of seconds
+
+            since January 1 1970 UTC, indicating when this token was
+
+            originally issued.'
+          format: int64
+          type: integer
+        iss:
+          description: IssuerURL is a string representing the issuer of this token
+          type: string
+        nbf:
+          description: 'NotBefore is an integer timestamp, measured in the number of seconds
+
+            since January 1 1970 UTC, indicating when this token is not to be
+
+            used before.'
+          format: int64
+          type: integer
+        obfuscated_subject:
+          description: 'ObfuscatedSubject is set when the subject identifier algorithm was set to "pairwise" during authorization.
+
+            It is the `sub` value of the ID Token that was issued.'
+          type: string
+        scope:
+          description: 'Scope is a JSON string containing a space-separated list of
+
+            scopes associated with this token.'
+          type: string
+        sub:
+          description: 'Subject of the token, as defined in JWT [RFC7519].
+
+            Usually a machine-readable identifier of the resource owner who
+
+            authorized this token.'
+          type: string
+        token_type:
+          description: TokenType is the introspected token's type, typically `Bearer`.
+          type: string
+        token_use:
+          description: TokenUse is the introspected token's use, for example `access_token` or `refresh_token`.
+          type: string
+        username:
+          description: 'Username is a human-readable identifier for the resource owner who
+
+            authorized this token.'
+          type: string
+      required:
+      - active
+      type: object
+    oAuth2RedirectTo:
+      description: Contains a redirect URL used to complete a login, consent, or logout request.
+      properties:
+        redirect_to:
+          description: RedirectURL is the URL which you should redirect the user's browser to once the authentication process is completed.
+          type: string
+      required:
+      - redirect_to
+      title: OAuth 2.0 Redirect Browser To
+      type: object
+    JSONRawMessage:
+      title: JSONRawMessage represents a json.RawMessage that works well with JSON, SQL, and Swagger.
+    oAuth2ConsentSessions:
+      description: List of OAuth 2.0 Consent Sessions
+      items:
+        $ref: '#/components/schemas/oAuth2ConsentSession'
+      type: array
+    oAuth2ConsentRequest:
+      properties:
+        acr:
+          description: 'ACR represents the Authentication AuthorizationContext Class Reference value for this authentication session. You can use it
+
+            to express that, for example, a user authenticated using two factor authentication.'
+          type: string
+        amr:
+          description: 'AMR is the Authentication Methods References value for this
+
+            authentication session. You can use it to specify the method a user used to
+
+            authenticate. For example, if the acr indicates a user used two factor
+
+            authentication, the amr can express they used a software-secured key.'
+          items:
+            type: string
+          type: array
+        challenge:
+          description: Challenge is used to retrieve/accept/deny the consent request.
+          type: string
+        client:
+          $ref: '#/components/schemas/oAuth2Client'
+        consent_request_id:
+          description: ConsentRequestID is the ID of the consent request.
+          type: string
+        context:
+          $ref: '#/components/schemas/JSONRawMessage'
+        login_challenge:
+          description: 'LoginChallenge is the login challenge this consent challenge belongs to. It can be used to associate
+
+            a login and consent request in the login & consent app.'
+          type: string
+        login_session_id:
+          description: 'LoginSessionID is the login session ID. If the user-agent reuses a login session (via cookie / remember flag)
+
+            this ID will remain the same. If the user-agent did not have an existing authentication session (e.g. remember is false)
+
+            this will be a new random value. This value is used as the "sid" parameter in the ID Token and in OIDC Front-/Back-
+
+            channel logout. It''s value can generally be used to associate consecutive login requests by a certain user.'
+          type: string
+        oidc_context:
+          $ref: '#/components/schemas/oAuth2ConsentRequestOpenIDConnectContext'
+        request_url:
+          description: 'RequestURL is the original OAuth 2.0 Authorization URL requested by the OAuth 2.0 client. It is the URL which
+
+            initiates the OAuth 2.0 Authorization Code or OAuth 2.0 Implicit flow. This URL is typically not needed, but
+
+            might come in handy if you want to deal with additional request parameters.'
+          type: string
+        requested_access_token_audience:
+          description: RequestedAudience contains the access token audience as requested by the OAuth 2.0 Client.
+          items:
+            type: string
+          type: array
+        requested_scope:
+          description: RequestedScope contains the OAuth 2.0 Scope requested by the OAuth 2.0 Client.
+          items:
+            type: string
+          type: array
+        skip:
+          description: 'Skip, if true, implies that the client has requested the same scopes from the same user previously.
+
+            If true, you must not ask the user to grant the requested scopes. You must however either allow or deny the
+
+            consent request using the usual API call.'
+          type: boolean
+        subject:
+          description: 'Subject is the user ID of the end-user that authenticated. Now, that end user needs to grant or deny the scope
+
+            requested by the OAuth 2.0 client.'
+          type: string
+      required:
+      - challenge
+      title: Contains information on an ongoing consent request.
+      type: object
+    acceptOAuth2ConsentRequest:
+      properties:
+        context:
+          $ref: '#/components/schemas/JSONRawMessage'
+        grant_access_token_audience:
+          description: GrantedAudience sets the audience the user authorized the client to use. Should be a subset of `requested_access_token_audience`.
+          items:
+            type: string
+          type: array
+        grant_scope:
+          description: GrantScope sets the scope the user authorized the client to use. Should be a subset of `requested_scope`.
+          items:
+            type: string
+          type: array
+        remember:
+          description: 'Remember, if set to true, tells ORY Hydra to remember this consent authorization and reuse it if the same
+
+            client asks the same user for the same, or a subset of, scope.'
+          type: boolean
+        remember_for:
+          description: 'RememberFor sets how long the consent authorization should be remembered for in seconds. If set to `0`, the
+
+            authorization will be remembered indefinitely.'
+          format: int64
+          type: integer
+        session:
+          $ref: '#/components/schemas/acceptOAuth2ConsentRequestSession'
+      title: The request payload used to accept a consent request.
+      type: object
+    jsonPatch:
+      description: A JSONPatch document as defined by RFC 6902
+      properties:
+        from:
+          description: 'This field is used together with operation "move" and uses JSON Pointer notation.
+
+
+            Learn more [about JSON Pointers](https://datatracker.ietf.org/doc/html/rfc6901#section-5).'
+          example: /name
+          type: string
+        op:
+          description: The operation to be performed. One of "add", "remove", "replace", "move", "copy", or "test".
+          example: replace
+          type: string
+        path:
+          description: 'The path to the target path. Uses JSON pointer notation.
+
+
+            Learn more [about JSON Pointers](https://datatracker.ietf.org/doc/html/rfc6901#section-5).'
+          example: /name
+          type: string
+        value:
+          description: 'The value to be used within the operations.
+
+
+            Learn more [about JSON Pointers](https://datatracker.ietf.org/doc/html/rfc6901#section-5).'
+          example: foobar
+      required:
+      - op
+      - path
+      type: object
+    trustedOAuth2JwtGrantJsonWebKey:
+      description: OAuth2 JWT Bearer Grant Type Issuer Trusted JSON Web Key
+      properties:
+        kid:
+          description: The "key_id" is key unique identifier (same as kid header in jws/jwt).
+          example: 123e4567-e89b-12d3-a456-426655440000
+          type: string
+        set:
+          description: The "set" is basically a name for a group(set) of keys. Will be the same as "issuer" in grant.
+          example: https://jwt-idp.example.com
+          type: string
+      type: object
+    trustedOAuth2JwtGrantIssuers:
+      description: OAuth2 JWT Bearer Grant Type Issuer Trust Relationships
+      items:
+        $ref: '#/components/schemas/trustedOAuth2JwtGrantIssuer'
+      type: array
+    oAuth2LoginRequest:
+      properties:
+        challenge:
+          description: ID is the identifier of the login request.
+          type: string
+        client:
+          $ref: '#/components/schemas/oAuth2Client'
+        oidc_context:
+          $ref: '#/components/schemas/oAuth2ConsentRequestOpenIDConnectContext'
+        request_url:
+          description: 'RequestURL is the original OAuth 2.0 Authorization URL requested by the OAuth 2.0 client. It is the URL which
+
+            initiates the OAuth 2.0 Authorization Code or OAuth 2.0 Implicit flow. This URL is typically not needed, but
+
+            might come in handy if you want to deal with additional request parameters.'
+          type: string
+        requested_access_token_audience:
+          description: RequestedAudience contains the access token audience as requested by the OAuth 2.0 Client.
+          items:
+            type: string
+          type: array
+        requested_scope:
+          description: RequestedScope contains the OAuth 2.0 Scope requested by the OAuth 2.0 Client.
+          items:
+            type: string
+          type: array
+        session_id:
+          description: 'SessionID is the login session ID. If the user-agent reuses a login session (via cookie / remember flag)
+
+            this ID will remain the same. If the user-agent did not have an existing authentication session (e.g. remember is false)
+
+            this will be a new random value. This value is used as the "sid" parameter in the ID Token and in OIDC Front-/Back-
+
+            channel logout. It''s value can generally be used to associate consecutive login requests by a certain user.'
+          type: string
+        skip:
+          description: 'Skip, if true, implies that the client has requested the same scopes from the same user previously.
+
+            If true, you can skip asking the user to grant the requested scopes, and simply forward the user to the redirect URL.
+
+
+            This feature allows you to update / set session information.'
+          type: boolean
+        subject:
+          description: 'Subject is the user ID of the end-user that authenticated. Now, that end user needs to grant or deny the scope
+
+            requested by the OAuth 2.0 client. If this value is set and `skip` is true, you MUST include this subject type
+
+            when accepting the login request, or the request will fail.'
+          type: string
+      required:
+      - challenge
+      - skip
+      - subject
+      - client
+      - request_url
+      title: Contains information on an ongoing login request.
+      type: object
+    genericError:
+      properties:
+        code:
+          description: The status code
+          example: 404
+          format: int64
+          type: integer
+        debug:
+          description: 'Debug information
+
+
+            This field is often not exposed to protect against leaking
+
+            sensitive information.'
+          example: SQL field "foo" is not a bool.
+          type: string
+        details:
+          description: Further error details
+        id:
+          description: 'The error ID
+
+
+            Useful when trying to identify various errors in application logic.'
+          type: string
+        message:
+          description: 'Error message
+
+
+            The error''s message.'
+          example: The resource could not be found
+          type: string
+        reason:
+          description: A human-readable reason for the error
+          example: User with ID 1234 does not exist.
+          type: string
+        request:
+          description: 'The request ID
+
+
+            The request ID is often exposed internally in order to trace
+
+            errors across service architectures. This is often a UUID.'
+          example: d7ef54b1-ec15-46e6-bccb-524b82c035e6
+          type: string
+        status:
+          description: The status description
+          example: Not Found
+          type: string
+      required:
+      - message
+      type: object
     oAuth2Client:
       description: 'OAuth 2.0 Clients are used to perform OAuth 2.0 and OpenID Connect flows. Usually, OAuth 2.0 clients are
 
@@ -1656,40 +2376,40 @@ components:
           type: string
       title: OAuth 2.0 Client
       type: object
-    trustOAuth2JwtGrantIssuer:
-      description: Trust OAuth2 JWT Bearer Grant Type Issuer Request Body
+    oAuth2LogoutRequest:
       properties:
-        allow_any_subject:
-          description: The "allow_any_subject" indicates that the issuer is allowed to have any principal as the subject of the JWT.
-          type: boolean
+        challenge:
+          description: Challenge is the identifier of the logout authentication request.
+          type: string
+        client:
+          $ref: '#/components/schemas/oAuth2Client'
         expires_at:
-          description: The "expires_at" indicates, when grant will expire, so we will reject assertion from "issuer" targeting "subject".
-          format: date-time
+          $ref: '#/components/schemas/nullTime'
+        request_url:
+          description: RequestURL is the original Logout URL requested.
           type: string
-        issuer:
-          description: The "issuer" identifies the principal that issued the JWT assertion (same as "iss" claim in JWT).
-          example: https://jwt-idp.example.com
+        requested_at:
+          $ref: '#/components/schemas/nullTime'
+        rp_initiated:
+          description: RPInitiated is set to true if the request was initiated by a Relying Party (RP), also known as an OAuth 2.0 Client.
+          type: boolean
+        sid:
+          description: SessionID is the login session ID that was requested to log out.
           type: string
-        jwk:
-          $ref: '#/components/schemas/jsonWebKey'
-        scope:
-          description: The "scope" contains list of scope values (as described in Section 3.3 of OAuth 2.0 [RFC6749])
-          example:
-          - openid
-          - offline
-          items:
-            type: string
-          type: array
         subject:
-          description: The "subject" identifies the principal that is the subject of the JWT.
-          example: mike@example.com
+          description: Subject is the user for whom the logout was request.
           type: string
-      required:
-      - issuer
-      - scope
-      - jwk
-      - expires_at
+      title: Contains information about an ongoing logout request.
       type: object
+    nullTime:
+      format: date-time
+      title: NullTime implements sql.NullTime functionality.
+      type: string
+    jsonPatchDocument:
+      description: A JSONPatchDocument request
+      items:
+        $ref: '#/components/schemas/jsonPatch'
+      type: array
     oAuth2ConsentRequestOpenIDConnectContext:
       properties:
         acr_values:
@@ -1757,667 +2477,6 @@ components:
             type: string
           type: array
       title: Contains optional information about the OpenID Connect request.
-      type: object
-    jsonPatchDocument:
-      description: A JSONPatchDocument request
-      items:
-        $ref: '#/components/schemas/jsonPatch'
-      type: array
-    genericError:
-      properties:
-        code:
-          description: The status code
-          example: 404
-          format: int64
-          type: integer
-        debug:
-          description: 'Debug information
-
-
-            This field is often not exposed to protect against leaking
-
-            sensitive information.'
-          example: SQL field "foo" is not a bool.
-          type: string
-        details:
-          description: Further error details
-        id:
-          description: 'The error ID
-
-
-            Useful when trying to identify various errors in application logic.'
-          type: string
-        message:
-          description: 'Error message
-
-
-            The error''s message.'
-          example: The resource could not be found
-          type: string
-        reason:
-          description: A human-readable reason for the error
-          example: User with ID 1234 does not exist.
-          type: string
-        request:
-          description: 'The request ID
-
-
-            The request ID is often exposed internally in order to trace
-
-            errors across service architectures. This is often a UUID.'
-          example: d7ef54b1-ec15-46e6-bccb-524b82c035e6
-          type: string
-        status:
-          description: The status description
-          example: Not Found
-          type: string
-      required:
-      - message
-      type: object
-    acceptOAuth2ConsentRequestSession:
-      properties:
-        access_token:
-          description: 'AccessToken sets session data for the access and refresh token, as well as any future tokens issued by the
-
-            refresh grant. Keep in mind that this data will be available to anyone performing OAuth 2.0 Challenge Introspection.
-
-            If only your services can perform OAuth 2.0 Challenge Introspection, this is usually fine. But if third parties
-
-            can access that endpoint as well, sensitive data from the session might be exposed to them. Use with care!'
-        id_token:
-          description: 'IDToken sets session data for the OpenID Connect ID token. Keep in mind that the session''id payloads are readable
-
-            by anyone that has access to the ID Challenge. Use with care!'
-      title: Pass session data to a consent request.
-      type: object
-    oAuth2ConsentSession:
-      description: A completed OAuth 2.0 Consent Session.
-      properties:
-        consent_request:
-          $ref: '#/components/schemas/oAuth2ConsentRequest'
-        consent_request_id:
-          description: ConsentRequestID is the identifier of the consent request that initiated this consent session.
-          type: string
-        context:
-          $ref: '#/components/schemas/JSONRawMessage'
-        grant_access_token_audience:
-          description: 'Audience Granted
-
-
-            GrantedAudience sets the audience the user authorized the client to use. Should be a subset of `requested_access_token_audience`.'
-          items:
-            type: string
-          type: array
-        grant_scope:
-          description: 'Scope Granted
-
-
-            GrantScope sets the scope the user authorized the client to use. Should be a subset of `requested_scope`.'
-          items:
-            type: string
-          type: array
-        handled_at:
-          $ref: '#/components/schemas/nullTime'
-        remember:
-          description: 'Remember Consent
-
-
-            Remember, if set to true, tells ORY Hydra to remember this consent authorization and reuse it if the same
-
-            client asks the same user for the same, or a subset of, scope.'
-          type: boolean
-        remember_for:
-          description: 'Remember Consent For
-
-
-            RememberFor sets how long the consent authorization should be remembered for in seconds. If set to `0`, the
-
-            authorization will be remembered indefinitely.'
-          format: int64
-          type: integer
-        session:
-          $ref: '#/components/schemas/acceptOAuth2ConsentRequestSession'
-      title: OAuth 2.0 Consent Session
-      type: object
-    rejectOAuth2Request:
-      properties:
-        error:
-          description: 'The error should follow the OAuth2 error format (e.g. `invalid_request`, `login_required`).
-
-
-            Defaults to `request_denied`.'
-          type: string
-        error_debug:
-          description: 'Debug contains information to help resolve the problem as a developer. Usually not exposed
-
-            to the public but only in the server logs.'
-          type: string
-        error_description:
-          description: Description of the error in a human readable format.
-          type: string
-        error_hint:
-          description: Hint to help resolve the error.
-          type: string
-        status_code:
-          description: 'Represents the HTTP status code of the error (e.g. 401 or 403)
-
-
-            Defaults to 400'
-          format: int64
-          type: integer
-      title: The request payload used to accept a login or consent request.
-      type: object
-    oAuth2RedirectTo:
-      description: Contains a redirect URL used to complete a login, consent, or logout request.
-      properties:
-        redirect_to:
-          description: RedirectURL is the URL which you should redirect the user's browser to once the authentication process is completed.
-          type: string
-      required:
-      - redirect_to
-      title: OAuth 2.0 Redirect Browser To
-      type: object
-    errorOAuth2:
-      description: Error
-      properties:
-        error:
-          description: Error
-          type: string
-        error_debug:
-          description: 'Error Debug Information
-
-
-            Only available in dev mode.'
-          type: string
-        error_description:
-          description: Error Description
-          type: string
-        error_hint:
-          description: 'Error Hint
-
-
-            Helps the user identify the error cause.'
-          example: The redirect URL is not allowed.
-          type: string
-        status_code:
-          description: HTTP Status Code
-          example: 401
-          format: int64
-          type: integer
-      type: object
-    acceptDeviceUserCodeRequest:
-      description: Contains information on an device verification
-      properties:
-        user_code:
-          type: string
-      type: object
-    jsonWebKeySet:
-      description: JSON Web Key Set
-      properties:
-        keys:
-          description: 'List of JSON Web Keys
-
-
-            The value of the "keys" parameter is an array of JSON Web Key (JWK)
-
-            values. By default, the order of the JWK values within the array does
-
-            not imply an order of preference among them, although applications
-
-            of JWK Sets can choose to assign a meaning to the order for their
-
-            purposes, if desired.'
-          items:
-            $ref: '#/components/schemas/jsonWebKey'
-          type: array
-      type: object
-    oAuth2ConsentRequest:
-      properties:
-        acr:
-          description: 'ACR represents the Authentication AuthorizationContext Class Reference value for this authentication session. You can use it
-
-            to express that, for example, a user authenticated using two factor authentication.'
-          type: string
-        amr:
-          description: 'AMR is the Authentication Methods References value for this
-
-            authentication session. You can use it to specify the method a user used to
-
-            authenticate. For example, if the acr indicates a user used two factor
-
-            authentication, the amr can express they used a software-secured key.'
-          items:
-            type: string
-          type: array
-        challenge:
-          description: Challenge is used to retrieve/accept/deny the consent request.
-          type: string
-        client:
-          $ref: '#/components/schemas/oAuth2Client'
-        consent_request_id:
-          description: ConsentRequestID is the ID of the consent request.
-          type: string
-        context:
-          $ref: '#/components/schemas/JSONRawMessage'
-        login_challenge:
-          description: 'LoginChallenge is the login challenge this consent challenge belongs to. It can be used to associate
-
-            a login and consent request in the login & consent app.'
-          type: string
-        login_session_id:
-          description: 'LoginSessionID is the login session ID. If the user-agent reuses a login session (via cookie / remember flag)
-
-            this ID will remain the same. If the user-agent did not have an existing authentication session (e.g. remember is false)
-
-            this will be a new random value. This value is used as the "sid" parameter in the ID Token and in OIDC Front-/Back-
-
-            channel logout. It''s value can generally be used to associate consecutive login requests by a certain user.'
-          type: string
-        oidc_context:
-          $ref: '#/components/schemas/oAuth2ConsentRequestOpenIDConnectContext'
-        request_url:
-          description: 'RequestURL is the original OAuth 2.0 Authorization URL requested by the OAuth 2.0 client. It is the URL which
-
-            initiates the OAuth 2.0 Authorization Code or OAuth 2.0 Implicit flow. This URL is typically not needed, but
-
-            might come in handy if you want to deal with additional request parameters.'
-          type: string
-        requested_access_token_audience:
-          description: RequestedAudience contains the access token audience as requested by the OAuth 2.0 Client.
-          items:
-            type: string
-          type: array
-        requested_scope:
-          description: RequestedScope contains the OAuth 2.0 Scope requested by the OAuth 2.0 Client.
-          items:
-            type: string
-          type: array
-        skip:
-          description: 'Skip, if true, implies that the client has requested the same scopes from the same user previously.
-
-            If true, you must not ask the user to grant the requested scopes. You must however either allow or deny the
-
-            consent request using the usual API call.'
-          type: boolean
-        subject:
-          description: 'Subject is the user ID of the end-user that authenticated. Now, that end user needs to grant or deny the scope
-
-            requested by the OAuth 2.0 client.'
-          type: string
-      required:
-      - challenge
-      title: Contains information on an ongoing consent request.
-      type: object
-    acceptOAuth2ConsentRequest:
-      properties:
-        context:
-          $ref: '#/components/schemas/JSONRawMessage'
-        grant_access_token_audience:
-          description: GrantedAudience sets the audience the user authorized the client to use. Should be a subset of `requested_access_token_audience`.
-          items:
-            type: string
-          type: array
-        grant_scope:
-          description: GrantScope sets the scope the user authorized the client to use. Should be a subset of `requested_scope`.
-          items:
-            type: string
-          type: array
-        remember:
-          description: 'Remember, if set to true, tells ORY Hydra to remember this consent authorization and reuse it if the same
-
-            client asks the same user for the same, or a subset of, scope.'
-          type: boolean
-        remember_for:
-          description: 'RememberFor sets how long the consent authorization should be remembered for in seconds. If set to `0`, the
-
-            authorization will be remembered indefinitely.'
-          format: int64
-          type: integer
-        session:
-          $ref: '#/components/schemas/acceptOAuth2ConsentRequestSession'
-      title: The request payload used to accept a consent request.
-      type: object
-    oAuth2LoginRequest:
-      properties:
-        challenge:
-          description: ID is the identifier of the login request.
-          type: string
-        client:
-          $ref: '#/components/schemas/oAuth2Client'
-        oidc_context:
-          $ref: '#/components/schemas/oAuth2ConsentRequestOpenIDConnectContext'
-        request_url:
-          description: 'RequestURL is the original OAuth 2.0 Authorization URL requested by the OAuth 2.0 client. It is the URL which
-
-            initiates the OAuth 2.0 Authorization Code or OAuth 2.0 Implicit flow. This URL is typically not needed, but
-
-            might come in handy if you want to deal with additional request parameters.'
-          type: string
-        requested_access_token_audience:
-          description: RequestedAudience contains the access token audience as requested by the OAuth 2.0 Client.
-          items:
-            type: string
-          type: array
-        requested_scope:
-          description: RequestedScope contains the OAuth 2.0 Scope requested by the OAuth 2.0 Client.
-          items:
-            type: string
-          type: array
-        session_id:
-          description: 'SessionID is the login session ID. If the user-agent reuses a login session (via cookie / remember flag)
-
-            this ID will remain the same. If the user-agent did not have an existing authentication session (e.g. remember is false)
-
-            this will be a new random value. This value is used as the "sid" parameter in the ID Token and in OIDC Front-/Back-
-
-            channel logout. It''s value can generally be used to associate consecutive login requests by a certain user.'
-          type: string
-        skip:
-          description: 'Skip, if true, implies that the client has requested the same scopes from the same user previously.
-
-            If true, you can skip asking the user to grant the requested scopes, and simply forward the user to the redirect URL.
-
-
-            This feature allows you to update / set session information.'
-          type: boolean
-        subject:
-          description: 'Subject is the user ID of the end-user that authenticated. Now, that end user needs to grant or deny the scope
-
-            requested by the OAuth 2.0 client. If this value is set and `skip` is true, you MUST include this subject type
-
-            when accepting the login request, or the request will fail.'
-          type: string
-      required:
-      - challenge
-      - skip
-      - subject
-      - client
-      - request_url
-      title: Contains information on an ongoing login request.
-      type: object
-    deviceAuthorization:
-      description: '# Ory''s OAuth 2.0 Device Authorization API'
-      properties:
-        device_code:
-          description: The device verification code.
-          example: ory_dc_smldfksmdfkl.mslkmlkmlk
-          type: string
-        expires_in:
-          description: The lifetime in seconds of the "device_code" and "user_code".
-          example: 16830
-          format: int64
-          type: integer
-        interval:
-          description: 'The minimum amount of time in seconds that the client
-
-            SHOULD wait between polling requests to the token endpoint.  If no
-
-            value is provided, clients MUST use 5 as the default.'
-          example: 5
-          format: int64
-          type: integer
-        user_code:
-          description: The end-user verification code.
-          example: AAAAAA
-          type: string
-        verification_uri:
-          description: 'The end-user verification URI on the authorization
-
-            server.  The URI should be short and easy to remember as end users
-
-            will be asked to manually type it into their user agent.'
-          example: https://auth.ory.sh/tv
-          type: string
-        verification_uri_complete:
-          description: 'A verification URI that includes the "user_code" (or
-
-            other information with the same function as the "user_code"),
-
-            which is designed for non-textual transmission.'
-          example: https://auth.ory.sh/tv?user_code=AAAAAA
-          type: string
-      title: OAuth2 Device Flow
-      type: object
-    oAuth2ClientTokenLifespans:
-      description: Lifespans of different token types issued for this OAuth 2.0 Client.
-      properties:
-        authorization_code_grant_access_token_lifespan:
-          $ref: '#/components/schemas/NullDuration'
-        authorization_code_grant_id_token_lifespan:
-          $ref: '#/components/schemas/NullDuration'
-        authorization_code_grant_refresh_token_lifespan:
-          $ref: '#/components/schemas/NullDuration'
-        client_credentials_grant_access_token_lifespan:
-          $ref: '#/components/schemas/NullDuration'
-        device_authorization_grant_access_token_lifespan:
-          $ref: '#/components/schemas/NullDuration'
-        device_authorization_grant_id_token_lifespan:
-          $ref: '#/components/schemas/NullDuration'
-        device_authorization_grant_refresh_token_lifespan:
-          $ref: '#/components/schemas/NullDuration'
-        implicit_grant_access_token_lifespan:
-          $ref: '#/components/schemas/NullDuration'
-        implicit_grant_id_token_lifespan:
-          $ref: '#/components/schemas/NullDuration'
-        jwt_bearer_grant_access_token_lifespan:
-          $ref: '#/components/schemas/NullDuration'
-        refresh_token_grant_access_token_lifespan:
-          $ref: '#/components/schemas/NullDuration'
-        refresh_token_grant_id_token_lifespan:
-          $ref: '#/components/schemas/NullDuration'
-        refresh_token_grant_refresh_token_lifespan:
-          $ref: '#/components/schemas/NullDuration'
-      title: OAuth 2.0 Client Token Lifespans
-      type: object
-    trustedOAuth2JwtGrantIssuers:
-      description: OAuth2 JWT Bearer Grant Type Issuer Trust Relationships
-      items:
-        $ref: '#/components/schemas/trustedOAuth2JwtGrantIssuer'
-      type: array
-    oAuth2LogoutRequest:
-      properties:
-        challenge:
-          description: Challenge is the identifier of the logout authentication request.
-          type: string
-        client:
-          $ref: '#/components/schemas/oAuth2Client'
-        expires_at:
-          $ref: '#/components/schemas/nullTime'
-        request_url:
-          description: RequestURL is the original Logout URL requested.
-          type: string
-        requested_at:
-          $ref: '#/components/schemas/nullTime'
-        rp_initiated:
-          description: RPInitiated is set to true if the request was initiated by a Relying Party (RP), also known as an OAuth 2.0 Client.
-          type: boolean
-        sid:
-          description: SessionID is the login session ID that was requested to log out.
-          type: string
-        subject:
-          description: Subject is the user for whom the logout was request.
-          type: string
-      title: Contains information about an ongoing logout request.
-      type: object
-    trustedOAuth2JwtGrantJsonWebKey:
-      description: OAuth2 JWT Bearer Grant Type Issuer Trusted JSON Web Key
-      properties:
-        kid:
-          description: The "key_id" is key unique identifier (same as kid header in jws/jwt).
-          example: 123e4567-e89b-12d3-a456-426655440000
-          type: string
-        set:
-          description: The "set" is basically a name for a group(set) of keys. Will be the same as "issuer" in grant.
-          example: https://jwt-idp.example.com
-          type: string
-      type: object
-    NullDuration:
-      description: Specify a time duration in milliseconds, seconds, minutes, hours.
-      pattern: ^([0-9]+(ns|us|ms|s|m|h))*$
-      title: Time duration
-      type: string
-    nullTime:
-      format: date-time
-      title: NullTime implements sql.NullTime functionality.
-      type: string
-    oAuth2TokenExchange:
-      description: OAuth2 Token Exchange Result
-      properties:
-        access_token:
-          description: The access token issued by the authorization server.
-          type: string
-        expires_in:
-          description: 'The lifetime in seconds of the access token. For
-
-            example, the value "3600" denotes that the access token will
-
-            expire in one hour from the time the response was generated.'
-          format: int64
-          type: integer
-        id_token:
-          description: To retrieve a refresh token request the id_token scope.
-          type: string
-        refresh_token:
-          description: 'The refresh token, which can be used to obtain new
-
-            access tokens. To retrieve it add the scope "offline" to your access token request.'
-          type: string
-        scope:
-          description: The scope of the access token
-          type: string
-        token_type:
-          description: The type of the token issued
-          type: string
-      type: object
-    trustedOAuth2JwtGrantIssuer:
-      description: OAuth2 JWT Bearer Grant Type Issuer Trust Relationship
-      properties:
-        allow_any_subject:
-          description: The "allow_any_subject" indicates that the issuer is allowed to have any principal as the subject of the JWT.
-          type: boolean
-        created_at:
-          description: The "created_at" indicates, when grant was created.
-          format: date-time
-          type: string
-        expires_at:
-          description: The "expires_at" indicates, when grant will expire, so we will reject assertion from "issuer" targeting "subject".
-          format: date-time
-          type: string
-        id:
-          example: 9edc811f-4e28-453c-9b46-4de65f00217f
-          type: string
-        issuer:
-          description: The "issuer" identifies the principal that issued the JWT assertion (same as "iss" claim in JWT).
-          example: https://jwt-idp.example.com
-          type: string
-        public_key:
-          $ref: '#/components/schemas/trustedOAuth2JwtGrantJsonWebKey'
-        scope:
-          description: The "scope" contains list of scope values (as described in Section 3.3 of OAuth 2.0 [RFC6749])
-          example:
-          - openid
-          - offline
-          items:
-            type: string
-          type: array
-        subject:
-          description: The "subject" identifies the principal that is the subject of the JWT.
-          example: mike@example.com
-          type: string
-      type: object
-    introspectedOAuth2Token:
-      description: 'Introspection contains an access token''s session data as specified by
-
-        [IETF RFC 7662](https://tools.ietf.org/html/rfc7662)'
-      properties:
-        active:
-          description: 'Active is a boolean indicator of whether or not the presented token
-
-            is currently active.  The specifics of a token''s "active" state
-
-            will vary depending on the implementation of the authorization
-
-            server and the information it keeps about its tokens, but a "true"
-
-            value return for the "active" property will generally indicate
-
-            that a given token has been issued by this authorization server,
-
-            has not been revoked by the resource owner, and is within its
-
-            given time window of validity (e.g., after its issuance time and
-
-            before its expiration time).'
-          type: boolean
-        aud:
-          description: Audience contains a list of the token's intended audiences.
-          items:
-            type: string
-          type: array
-        client_id:
-          description: 'ID is a client identifier for the OAuth 2.0 client that
-
-            requested this token.'
-          type: string
-        exp:
-          description: 'Expires at is an integer timestamp, measured in the number of seconds
-
-            since January 1 1970 UTC, indicating when this token will expire.'
-          format: int64
-          type: integer
-        ext:
-          additionalProperties: {}
-          description: Extra is arbitrary data set by the session.
-          type: object
-        iat:
-          description: 'Issued at is an integer timestamp, measured in the number of seconds
-
-            since January 1 1970 UTC, indicating when this token was
-
-            originally issued.'
-          format: int64
-          type: integer
-        iss:
-          description: IssuerURL is a string representing the issuer of this token
-          type: string
-        nbf:
-          description: 'NotBefore is an integer timestamp, measured in the number of seconds
-
-            since January 1 1970 UTC, indicating when this token is not to be
-
-            used before.'
-          format: int64
-          type: integer
-        obfuscated_subject:
-          description: 'ObfuscatedSubject is set when the subject identifier algorithm was set to "pairwise" during authorization.
-
-            It is the `sub` value of the ID Token that was issued.'
-          type: string
-        scope:
-          description: 'Scope is a JSON string containing a space-separated list of
-
-            scopes associated with this token.'
-          type: string
-        sub:
-          description: 'Subject of the token, as defined in JWT [RFC7519].
-
-            Usually a machine-readable identifier of the resource owner who
-
-            authorized this token.'
-          type: string
-        token_type:
-          description: TokenType is the introspected token's type, typically `Bearer`.
-          type: string
-        token_use:
-          description: TokenUse is the introspected token's use, for example `access_token` or `refresh_token`.
-          type: string
-        username:
-          description: 'Username is a human-readable identifier for the resource owner who
-
-            authorized this token.'
-          type: string
-      required:
-      - active
       type: object
     jsonWebKey:
       properties:
@@ -2534,160 +2593,98 @@ components:
       - kid
       - alg
       type: object
-    jsonPatch:
-      description: A JSONPatch document as defined by RFC 6902
+    NullDuration:
+      description: Specify a time duration in milliseconds, seconds, minutes, hours.
+      pattern: ^([0-9]+(ns|us|ms|s|m|h))*$
+      title: Time duration
+      type: string
+    oAuth2ClientTokenLifespans:
+      description: Lifespans of different token types issued for this OAuth 2.0 Client.
       properties:
-        from:
-          description: 'This field is used together with operation "move" and uses JSON Pointer notation.
-
-
-            Learn more [about JSON Pointers](https://datatracker.ietf.org/doc/html/rfc6901#section-5).'
-          example: /name
-          type: string
-        op:
-          description: The operation to be performed. One of "add", "remove", "replace", "move", "copy", or "test".
-          example: replace
-          type: string
-        path:
-          description: 'The path to the target path. Uses JSON pointer notation.
-
-
-            Learn more [about JSON Pointers](https://datatracker.ietf.org/doc/html/rfc6901#section-5).'
-          example: /name
-          type: string
-        value:
-          description: 'The value to be used within the operations.
-
-
-            Learn more [about JSON Pointers](https://datatracker.ietf.org/doc/html/rfc6901#section-5).'
-          example: foobar
-      required:
-      - op
-      - path
+        authorization_code_grant_access_token_lifespan:
+          $ref: '#/components/schemas/NullDuration'
+        authorization_code_grant_id_token_lifespan:
+          $ref: '#/components/schemas/NullDuration'
+        authorization_code_grant_refresh_token_lifespan:
+          $ref: '#/components/schemas/NullDuration'
+        client_credentials_grant_access_token_lifespan:
+          $ref: '#/components/schemas/NullDuration'
+        device_authorization_grant_access_token_lifespan:
+          $ref: '#/components/schemas/NullDuration'
+        device_authorization_grant_id_token_lifespan:
+          $ref: '#/components/schemas/NullDuration'
+        device_authorization_grant_refresh_token_lifespan:
+          $ref: '#/components/schemas/NullDuration'
+        implicit_grant_access_token_lifespan:
+          $ref: '#/components/schemas/NullDuration'
+        implicit_grant_id_token_lifespan:
+          $ref: '#/components/schemas/NullDuration'
+        jwt_bearer_grant_access_token_lifespan:
+          $ref: '#/components/schemas/NullDuration'
+        refresh_token_grant_access_token_lifespan:
+          $ref: '#/components/schemas/NullDuration'
+        refresh_token_grant_id_token_lifespan:
+          $ref: '#/components/schemas/NullDuration'
+        refresh_token_grant_refresh_token_lifespan:
+          $ref: '#/components/schemas/NullDuration'
+      title: OAuth 2.0 Client Token Lifespans
       type: object
-    acceptOAuth2LoginRequest:
+    trustedOAuth2JwtGrantIssuer:
+      description: OAuth2 JWT Bearer Grant Type Issuer Trust Relationship
       properties:
-        acr:
-          description: 'ACR sets the Authentication AuthorizationContext Class Reference value for this authentication session. You can use it
-
-            to express that, for example, a user authenticated using two-factor authentication.'
+        allow_any_subject:
+          description: The "allow_any_subject" indicates that the issuer is allowed to have any principal as the subject of the JWT.
+          type: boolean
+        created_at:
+          description: The "created_at" indicates, when grant was created.
+          format: date-time
           type: string
-        amr:
-          description: 'AMR sets the Authentication Methods References value for this
-
-            authentication session. You can use it to specify the method a user used to
-
-            authenticate. For example, if the acr indicates a user used two-factor
-
-            authentication, the amr can express they used a software-secured key.'
+        expires_at:
+          description: The "expires_at" indicates, when grant will expire, so we will reject assertion from "issuer" targeting "subject".
+          format: date-time
+          type: string
+        id:
+          example: 9edc811f-4e28-453c-9b46-4de65f00217f
+          type: string
+        issuer:
+          description: The "issuer" identifies the principal that issued the JWT assertion (same as "iss" claim in JWT).
+          example: https://jwt-idp.example.com
+          type: string
+        public_key:
+          $ref: '#/components/schemas/trustedOAuth2JwtGrantJsonWebKey'
+        scope:
+          description: The "scope" contains list of scope values (as described in Section 3.3 of OAuth 2.0 [RFC6749])
+          example:
+          - openid
+          - offline
           items:
             type: string
           type: array
-        context:
-          $ref: '#/components/schemas/JSONRawMessage'
-        extend_session_lifespan:
-          description: 'Extend OAuth2 authentication session lifespan
-
-
-            If set to `true`, the OAuth2 authentication cookie lifespan is extended. This is for example useful if you want the user to be able to use `prompt=none` continuously.
-
-
-            This value can only be set to `true` if the user has an authentication, which is the case if the `skip` value is `true`.'
-          type: boolean
-        force_subject_identifier:
-          description: 'ForceSubjectIdentifier forces the "pairwise" user ID of the end-user that authenticated. The "pairwise" user ID refers to the
-
-            (Pairwise Identifier Algorithm)[http://openid.net/specs/openid-connect-core-1_0.html#PairwiseAlg] of the OpenID
-
-            Connect specification. It allows you to set an obfuscated subject ("user") identifier that is unique to the client.
-
-
-            Please note that this changes the user ID on endpoint /userinfo and sub claim of the ID Token. It does not change the
-
-            sub claim in the OAuth 2.0 Introspection.
-
-
-            Per default, ORY Hydra handles this value with its own algorithm. In case you want to set this yourself
-
-            you can use this field. Please note that setting this field has no effect if `pairwise` is not configured in
-
-            ORY Hydra or the OAuth 2.0 Client does not expect a pairwise identifier (set via `subject_type` key in the client''s
-
-            configuration).
-
-
-            Please also be aware that ORY Hydra is unable to properly compute this value during authentication. This implies
-
-            that you have to compute this value on every authentication process (probably depending on the client ID or some
-
-            other unique value).
-
-
-            If you fail to compute the proper value, then authentication processes which have id_token_hint set might fail.'
-          type: string
-        identity_provider_session_id:
-          description: 'IdentityProviderSessionID is the session ID of the end-user that authenticated.
-
-            If specified, we will use this value to propagate the logout.'
-          type: string
-        remember:
-          description: 'Remember, if set to true, tells Ory Hydra to remember this user by telling the user agent (browser) to store
-
-            a cookie with authentication data. If the same user performs another OAuth 2.0 Authorization Request, they
-
-            will not be asked to log in again.'
-          type: boolean
-        remember_for:
-          description: 'RememberFor sets how long the authentication should be remembered for in seconds. If set to `0`, the
-
-            authorization will be remembered for the duration of the browser session (using a session cookie).'
-          format: int64
-          type: integer
         subject:
-          description: Subject is the user ID of the end-user that authenticated.
+          description: The "subject" identifies the principal that is the subject of the JWT.
+          example: mike@example.com
           type: string
-      required:
-      - subject
-      title: HandledLoginRequest is the request payload used to accept a login request.
       type: object
-    JSONRawMessage:
-      title: JSONRawMessage represents a json.RawMessage that works well with JSON, SQL, and Swagger.
-    oAuth2ConsentSessions:
-      description: List of OAuth 2.0 Consent Sessions
-      items:
-        $ref: '#/components/schemas/oAuth2ConsentSession'
-      type: array
-  responses:
-    errorOAuth2Default:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/errorOAuth2'
-      description: Default Error Response
-    listOAuth2Clients:
-      content:
-        application/json:
-          schema:
-            items:
-              $ref: '#/components/schemas/oAuth2Client'
-            type: array
-      description: Paginated OAuth2 Client List Response
-    emptyResponse:
-      description: 'Empty responses are sent when, for example, resources are deleted. The HTTP status code for empty responses is
+    jsonWebKeySet:
+      description: JSON Web Key Set
+      properties:
+        keys:
+          description: 'List of JSON Web Keys
 
-        typically 204.'
-    errorOAuth2BadRequest:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/errorOAuth2'
-      description: Bad Request Error Response
-    errorOAuth2NotFound:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/errorOAuth2'
-      description: Not Found Error Response
+
+            The value of the "keys" parameter is an array of JSON Web Key (JWK)
+
+            values. By default, the order of the JWK values within the array does
+
+            not imply an order of preference among them, although applications
+
+            of JWK Sets can choose to assign a meaning to the order for their
+
+            purposes, if desired.'
+          items:
+            $ref: '#/components/schemas/jsonWebKey'
+          type: array
+      type: object
   securitySchemes:
     basic:
       scheme: basic

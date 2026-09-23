@@ -1,17 +1,15 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   contact:
     email: hi@ory.sh
-  description: 'Documentation for all of Ory Hydra''s APIs.
-
-    '
+  description: Documentation for all of Ory Hydra's APIs.
   license:
     name: Apache 2.0
-  title: Ory Hydra api wellknown API
-  version: "1.0"
+  title: Ory Hydra Wellknown API
+  version: ''
 tags:
 - description: Well-Known Endpoints
-  name: wellknown
+  name: .well Known
 paths:
   /.well-known/jwks.json:
     get:
@@ -19,7 +17,7 @@ paths:
 
         if enabled, OAuth 2.0 JWT Access Tokens. This endpoint can be used with client libraries like
 
-        [node-jwks-rsa](https://github.com/auth0/node-jwks-rsa) among others.
+        node-jwks-rsa among others.
 
 
         Adding custom keys requires first creating a keyset via the createJsonWebKeySet operation,
@@ -41,10 +39,58 @@ paths:
           description: errorOAuth2
       summary: Discover Well-Known JSON Web Keys
       tags:
-      - wellknown
+      - .well Known
       x-ory-ratelimit-bucket: hydra-public-high
 components:
   schemas:
+    errorOAuth2:
+      description: Error
+      properties:
+        error:
+          description: Error
+          type: string
+        error_debug:
+          description: 'Error Debug Information
+
+
+            Only available in dev mode.'
+          type: string
+        error_description:
+          description: Error Description
+          type: string
+        error_hint:
+          description: 'Error Hint
+
+
+            Helps the user identify the error cause.'
+          example: The redirect URL is not allowed.
+          type: string
+        status_code:
+          description: HTTP Status Code
+          example: 401
+          format: int64
+          type: integer
+      type: object
+    jsonWebKeySet:
+      description: JSON Web Key Set
+      properties:
+        keys:
+          description: 'List of JSON Web Keys
+
+
+            The value of the "keys" parameter is an array of JSON Web Key (JWK)
+
+            values. By default, the order of the JWK values within the array does
+
+            not imply an order of preference among them, although applications
+
+            of JWK Sets can choose to assign a meaning to the order for their
+
+            purposes, if desired.'
+          items:
+            $ref: '#/components/schemas/jsonWebKey'
+          type: array
+      type: object
     jsonWebKey:
       properties:
         alg:
@@ -159,54 +205,6 @@ components:
       - kty
       - kid
       - alg
-      type: object
-    jsonWebKeySet:
-      description: JSON Web Key Set
-      properties:
-        keys:
-          description: 'List of JSON Web Keys
-
-
-            The value of the "keys" parameter is an array of JSON Web Key (JWK)
-
-            values. By default, the order of the JWK values within the array does
-
-            not imply an order of preference among them, although applications
-
-            of JWK Sets can choose to assign a meaning to the order for their
-
-            purposes, if desired.'
-          items:
-            $ref: '#/components/schemas/jsonWebKey'
-          type: array
-      type: object
-    errorOAuth2:
-      description: Error
-      properties:
-        error:
-          description: Error
-          type: string
-        error_debug:
-          description: 'Error Debug Information
-
-
-            Only available in dev mode.'
-          type: string
-        error_description:
-          description: Error Description
-          type: string
-        error_hint:
-          description: 'Error Hint
-
-
-            Helps the user identify the error cause.'
-          example: The redirect URL is not allowed.
-          type: string
-        status_code:
-          description: HTTP Status Code
-          example: 401
-          format: int64
-          type: integer
       type: object
   securitySchemes:
     basic:

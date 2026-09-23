@@ -1,17 +1,13 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  contact:
-    email: hi@ory.sh
-  description: 'Documentation for all of Ory Hydra''s APIs.
-
-    '
+  title: Ory Metadata API
+  version: ''
   license:
     name: Apache 2.0
-  title: Ory Hydra api metadata API
-  version: "1.0"
+  description: 'Operations tagged metadata across 4 of this provider''s published API definitions: ory-hydra-openapi.json, ory-keto-openapi.json, ory-kratos-openapi.json, ory-oathkeeper-openapi.json. Each path carries the servers of the definition it was published in.'
 tags:
 - description: Service Metadata
-  name: metadata
+  name: Metadata
 paths:
   /health/alive:
     get:
@@ -44,7 +40,7 @@ paths:
           description: genericError
       summary: Check HTTP Server Status
       tags:
-      - metadata
+      - Metadata
   /health/ready:
     get:
       description: 'This endpoint returns a HTTP 200 status code when Ory Hydra is up running and the environment dependencies (e.g.
@@ -86,7 +82,7 @@ paths:
           description: Ory Kratos is not yet ready to accept requests.
       summary: Check HTTP Server and Database Status
       tags:
-      - metadata
+      - Metadata
   /version:
     get:
       description: 'This endpoint returns the version of Ory Hydra.
@@ -112,18 +108,11 @@ paths:
                     type: string
                 type: object
           description: Returns the Ory Hydra version.
-      summary: Return Running Software Version.
+      summary: Return Running Software Version
       tags:
-      - metadata
+      - Metadata
 components:
   schemas:
-    healthStatus:
-      properties:
-        status:
-          description: Status always contains "ok".
-          type: string
-      title: The health status of the service.
-      type: object
     genericError:
       properties:
         code:
@@ -175,6 +164,13 @@ components:
       required:
       - message
       type: object
+    healthStatus:
+      properties:
+        status:
+          description: Status always contains "ok".
+          type: string
+      title: The health status of the service.
+      type: object
   securitySchemes:
     basic:
       scheme: basic
@@ -192,5 +188,14 @@ components:
             openid: Request an OpenID Connect ID Token
           tokenUrl: https://hydra.demo.ory.sh/oauth2/token
       type: oauth2
+    oryAccessToken:
+      in: header
+      name: Authorization
+      type: apiKey
+x-refined-from:
+- ory-hydra-openapi.json
+- ory-keto-openapi.json
+- ory-kratos-openapi.json
+- ory-oathkeeper-openapi.json
 x-forwarded-proto: string
 x-request-id: string

@@ -1,17 +1,15 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   contact:
     email: hi@ory.sh
-  description: 'Documentation for all of Ory Hydra''s APIs.
-
-    '
+  description: Documentation for all of Ory Hydra's APIs.
   license:
     name: Apache 2.0
-  title: Ory Hydra api oidc API
-  version: "1.0"
+  title: Ory Hydra Oidc API
+  version: ''
 tags:
 - description: OpenID Connect
-  name: oidc
+  name: OIDC
 paths:
   /.well-known/openid-configuration:
     get:
@@ -37,7 +35,7 @@ paths:
           description: errorOAuth2
       summary: OpenID Connect Discovery
       tags:
-      - oidc
+      - OIDC
       x-ory-ratelimit-bucket: hydra-public-high
   /credentials:
     post:
@@ -79,7 +77,7 @@ paths:
           description: errorOAuth2
       summary: Issues a Verifiable Credential
       tags:
-      - oidc
+      - OIDC
       x-ory-ratelimit-bucket: hydra-admin-medium
   /oauth2/register:
     post:
@@ -124,7 +122,7 @@ paths:
           $ref: '#/components/responses/errorOAuth2Default'
       summary: Register OAuth2 Client using OpenID Dynamic Client Registration
       tags:
-      - oidc
+      - OIDC
       x-ory-ratelimit-bucket: hydra-public-low
   /oauth2/register/{id}:
     delete:
@@ -166,9 +164,9 @@ paths:
           description: genericError
       security:
       - bearer: []
-      summary: Delete OAuth 2.0 Client using the OpenID Dynamic Client Registration Management Protocol
+      summary: Delete OAuth 2.0 Client using the OpenID Dynamic Client Registration Management…
       tags:
-      - oidc
+      - OIDC
       x-ory-ratelimit-bucket: hydra-public-low
     get:
       description: 'This endpoint behaves like the administrative counterpart (`getOAuth2Client`) but is capable of facing the
@@ -204,7 +202,7 @@ paths:
       - bearer: []
       summary: Get OAuth2 Client using OpenID Dynamic Client Registration
       tags:
-      - oidc
+      - OIDC
       x-ory-ratelimit-bucket: hydra-admin-high
     put:
       description: 'This endpoint behaves like the administrative counterpart (`setOAuth2Client`) but is capable of facing the
@@ -263,7 +261,7 @@ paths:
       - bearer: []
       summary: Set OAuth2 Client using OpenID Dynamic Client Registration
       tags:
-      - oidc
+      - OIDC
       x-ory-ratelimit-bucket: hydra-public-low
   /oauth2/sessions/logout:
     get:
@@ -282,7 +280,7 @@ paths:
           $ref: '#/components/responses/emptyResponse'
       summary: OpenID Connect Front- and Back-channel Enabled Logout
       tags:
-      - oidc
+      - OIDC
       x-ory-ratelimit-bucket: hydra-public-medium
   /userinfo:
     get:
@@ -293,7 +291,7 @@ paths:
 
         In the case of authentication error, a WWW-Authenticate header might be set in the response
 
-        with more information about the error. See [the spec](https://datatracker.ietf.org/doc/html/rfc6750#section-3)
+        with more information about the error. See the spec
 
         for more details about header format.'
       operationId: getOidcUserInfo
@@ -314,71 +312,207 @@ paths:
       - oauth2: []
       summary: OpenID Connect Userinfo
       tags:
-      - oidc
+      - OIDC
       x-ory-ratelimit-bucket: hydra-public-medium
 components:
   schemas:
-    oidcUserInfo:
-      description: OpenID Connect Userinfo
+    errorOAuth2:
+      description: Error
       properties:
-        birthdate:
-          description: End-User's birthday, represented as an ISO 8601:2004 [ISO8601‑2004] YYYY-MM-DD format. The year MAY be 0000, indicating that it is omitted. To represent only the year, YYYY format is allowed. Note that depending on the underlying platform's date related function, providing just year can result in varying month and day, so the implementers need to take this factor into account to correctly process the dates.
+        error:
+          description: Error
           type: string
-        email:
-          description: End-User's preferred e-mail address. Its value MUST conform to the RFC 5322 [RFC5322] addr-spec syntax. The RP MUST NOT rely upon this value being unique, as discussed in Section 5.7.
+        error_debug:
+          description: 'Error Debug Information
+
+
+            Only available in dev mode.'
           type: string
-        email_verified:
-          description: True if the End-User's e-mail address has been verified; otherwise false. When this Claim Value is true, this means that the OP took affirmative steps to ensure that this e-mail address was controlled by the End-User at the time the verification was performed. The means by which an e-mail address is verified is context-specific, and dependent upon the trust framework or contractual agreements within which the parties are operating.
-          type: boolean
-        family_name:
-          description: Surname(s) or last name(s) of the End-User. Note that in some cultures, people can have multiple family names or no family name; all can be present, with the names being separated by space characters.
+        error_description:
+          description: Error Description
           type: string
-        gender:
-          description: End-User's gender. Values defined by this specification are female and male. Other values MAY be used when neither of the defined values are applicable.
+        error_hint:
+          description: 'Error Hint
+
+
+            Helps the user identify the error cause.'
+          example: The redirect URL is not allowed.
           type: string
-        given_name:
-          description: Given name(s) or first name(s) of the End-User. Note that in some cultures, people can have multiple given names; all can be present, with the names being separated by space characters.
-          type: string
-        locale:
-          description: End-User's locale, represented as a BCP47 [RFC5646] language tag. This is typically an ISO 639-1 Alpha-2 [ISO639‑1] language code in lowercase and an ISO 3166-1 Alpha-2 [ISO3166‑1] country code in uppercase, separated by a dash. For example, en-US or fr-CA. As a compatibility note, some implementations have used an underscore as the separator rather than a dash, for example, en_US; Relying Parties MAY choose to accept this locale syntax as well.
-          type: string
-        middle_name:
-          description: Middle name(s) of the End-User. Note that in some cultures, people can have multiple middle names; all can be present, with the names being separated by space characters. Also note that in some cultures, middle names are not used.
-          type: string
-        name:
-          description: End-User's full name in displayable form including all name parts, possibly including titles and suffixes, ordered according to the End-User's locale and preferences.
-          type: string
-        nickname:
-          description: Casual name of the End-User that may or may not be the same as the given_name. For instance, a nickname value of Mike might be returned alongside a given_name value of Michael.
-          type: string
-        phone_number:
-          description: End-User's preferred telephone number. E.164 [E.164] is RECOMMENDED as the format of this Claim, for example, +1 (425) 555-1212 or +56 (2) 687 2400. If the phone number contains an extension, it is RECOMMENDED that the extension be represented using the RFC 3966 [RFC3966] extension syntax, for example, +1 (604) 555-1234;ext=5678.
-          type: string
-        phone_number_verified:
-          description: True if the End-User's phone number has been verified; otherwise false. When this Claim Value is true, this means that the OP took affirmative steps to ensure that this phone number was controlled by the End-User at the time the verification was performed. The means by which a phone number is verified is context-specific, and dependent upon the trust framework or contractual agreements within which the parties are operating. When true, the phone_number Claim MUST be in E.164 format and any extensions MUST be represented in RFC 3966 format.
-          type: boolean
-        picture:
-          description: URL of the End-User's profile picture. This URL MUST refer to an image file (for example, a PNG, JPEG, or GIF image file), rather than to a Web page containing an image. Note that this URL SHOULD specifically reference a profile photo of the End-User suitable for displaying when describing the End-User, rather than an arbitrary photo taken by the End-User.
-          type: string
-        preferred_username:
-          description: Non-unique shorthand name by which the End-User wishes to be referred to at the RP, such as janedoe or j.doe. This value MAY be any valid JSON string including special characters such as @, /, or whitespace.
-          type: string
-        profile:
-          description: URL of the End-User's profile page. The contents of this Web page SHOULD be about the End-User.
-          type: string
-        sub:
-          description: Subject - Identifier for the End-User at the IssuerURL.
-          type: string
-        updated_at:
-          description: Time the End-User's information was last updated. Its value is a JSON number representing the number of seconds from 1970-01-01T0:0:0Z as measured in UTC until the date/time.
+        status_code:
+          description: HTTP Status Code
+          example: 401
           format: int64
           type: integer
-        website:
-          description: URL of the End-User's Web page or blog. This Web page SHOULD contain information published by the End-User or an organization that the End-User is affiliated with.
+      type: object
+    jsonWebKeySet:
+      description: JSON Web Key Set
+      properties:
+        keys:
+          description: 'List of JSON Web Keys
+
+
+            The value of the "keys" parameter is an array of JSON Web Key (JWK)
+
+            values. By default, the order of the JWK values within the array does
+
+            not imply an order of preference among them, although applications
+
+            of JWK Sets can choose to assign a meaning to the order for their
+
+            purposes, if desired.'
+          items:
+            $ref: '#/components/schemas/jsonWebKey'
+          type: array
+      type: object
+    jsonWebKey:
+      properties:
+        alg:
+          description: 'The "alg" (algorithm) parameter identifies the algorithm intended for
+
+            use with the key.  The values used should either be registered in the
+
+            IANA "JSON Web Signature and Encryption Algorithms" registry
+
+            established by [JWA] or be a value that contains a Collision-
+
+            Resistant Name.'
+          example: RS256
           type: string
-        zoneinfo:
-          description: String from zoneinfo [zoneinfo] time zone database representing the End-User's time zone. For example, Europe/Paris or America/Los_Angeles.
+        crv:
+          example: P-256
           type: string
+        d:
+          example: T_N8I-6He3M8a7X1vWt6TGIx4xB_GP3Mb4SsZSA4v-orvJzzRiQhLlRR81naWYxfQAYt5isDI6_C2L9bdWo4FFPjGQFvNoRX-_sBJyBI_rl-TBgsZYoUlAj3J92WmY2inbA-PwyJfsaIIDceYBC-eX-xiCu6qMqkZi3MwQAFL6bMdPEM0z4JBcwFT3VdiWAIRUuACWQwrXMq672x7fMuaIaHi7XDGgt1ith23CLfaREmJku9PQcchbt_uEY-hqrFY6ntTtS4paWWQj86xLL94S-Tf6v6xkL918PfLSOTq6XCzxvlFwzBJqApnAhbwqLjpPhgUG04EDRrqrSBc5Y1BLevn6Ip5h1AhessBp3wLkQgz_roeckt-ybvzKTjESMuagnpqLvOT7Y9veIug2MwPJZI2VjczRc1vzMs25XrFQ8DpUy-bNdp89TmvAXwctUMiJdgHloJw23Cv03gIUAkDnsTqZmkpbIf-crpgNKFmQP_EDKoe8p_PXZZgfbRri3NoEVGP7Mk6yEu8LjJhClhZaBNjuWw2-KlBfOA3g79mhfBnkInee5KO9mGR50qPk1V-MorUYNTFMZIm0kFE6eYVWFBwJHLKYhHU34DoiK1VP-svZpC2uAMFNA_UJEwM9CQ2b8qe4-5e9aywMvwcuArRkAB5mBIfOaOJao3mfukKAE
+          type: string
+        dp:
+          example: G4sPXkc6Ya9y8oJW9_ILj4xuppu0lzi_H7VTkS8xj5SdX3coE0oimYwxIi2emTAue0UOa5dpgFGyBJ4c8tQ2VF402XRugKDTP8akYhFo5tAA77Qe_NmtuYZc3C3m3I24G2GvR5sSDxUyAN2zq8Lfn9EUms6rY3Ob8YeiKkTiBj0
+          type: string
+        dq:
+          example: s9lAH9fggBsoFR8Oac2R_E2gw282rT2kGOAhvIllETE1efrA6huUUvMfBcMpn8lqeW6vzznYY5SSQF7pMdC_agI3nG8Ibp1BUb0JUiraRNqUfLhcQb_d9GF4Dh7e74WbRsobRonujTYN1xCaP6TO61jvWrX-L18txXw494Q_cgk
+          type: string
+        e:
+          example: AQAB
+          type: string
+        k:
+          example: GawgguFyGrWKav7AX4VKUg
+          type: string
+        kid:
+          description: 'The "kid" (key ID) parameter is used to match a specific key.  This
+
+            is used, for instance, to choose among a set of keys within a JWK Set
+
+            during key rollover.  The structure of the "kid" value is
+
+            unspecified.  When "kid" values are used within a JWK Set, different
+
+            keys within the JWK Set SHOULD use distinct "kid" values.  (One
+
+            example in which different keys might use the same "kid" value is if
+
+            they have different "kty" (key type) values but are considered to be
+
+            equivalent alternatives by the application using them.)  The "kid"
+
+            value is a case-sensitive string.'
+          example: 1603dfe0af8f4596
+          type: string
+        kty:
+          description: 'The "kty" (key type) parameter identifies the cryptographic algorithm
+
+            family used with the key, such as "RSA" or "EC". "kty" values should
+
+            either be registered in the IANA "JSON Web Key Types" registry
+
+            established by [JWA] or be a value that contains a Collision-
+
+            Resistant Name.  The "kty" value is a case-sensitive string.'
+          example: RSA
+          type: string
+        n:
+          example: vTqrxUyQPl_20aqf5kXHwDZrel-KovIp8s7ewJod2EXHl8tWlRB3_Rem34KwBfqlKQGp1nqah-51H4Jzruqe0cFP58hPEIt6WqrvnmJCXxnNuIB53iX_uUUXXHDHBeaPCSRoNJzNysjoJ30TIUsKBiirhBa7f235PXbKiHducLevV6PcKxJ5cY8zO286qJLBWSPm-OIevwqsIsSIH44Qtm9sioFikhkbLwoqwWORGAY0nl6XvVOlhADdLjBSqSAeT1FPuCDCnXwzCDR8N9IFB_IjdStFkC-rVt2K5BYfPd0c3yFp_vHR15eRd0zJ8XQ7woBC8Vnsac6Et1pKS59pX6256DPWu8UDdEOolKAPgcd_g2NpA76cAaF_jcT80j9KrEzw8Tv0nJBGesuCjPNjGs_KzdkWTUXt23Hn9QJsdc1MZuaW0iqXBepHYfYoqNelzVte117t4BwVp0kUM6we0IqyXClaZgOI8S-WDBw2_Ovdm8e5NmhYAblEVoygcX8Y46oH6bKiaCQfKCFDMcRgChme7AoE1yZZYsPbaG_3IjPrC4LBMHQw8rM9dWjJ8ImjicvZ1pAm0dx-KHCP3y5PVKrxBDf1zSOsBRkOSjB8TPODnJMz6-jd5hTtZxpZPwPoIdCanTZ3ZD6uRBpTmDwtpRGm63UQs1m5FWPwb0T2IF0
+          type: string
+        p:
+          example: 6NbkXwDWUhi-eR55Cgbf27FkQDDWIamOaDr0rj1q0f1fFEz1W5A_09YvG09Fiv1AO2-D8Rl8gS1Vkz2i0zCSqnyy8A025XOcRviOMK7nIxE4OH_PEsko8dtIrb3TmE2hUXvCkmzw9EsTF1LQBOGC6iusLTXepIC1x9ukCKFZQvdgtEObQ5kzd9Nhq-cdqmSeMVLoxPLd1blviVT9Vm8-y12CtYpeJHOaIDtVPLlBhJiBoPKWg3vxSm4XxIliNOefqegIlsmTIa3MpS6WWlCK3yHhat0Q-rRxDxdyiVdG_wzJvp0Iw_2wms7pe-PgNPYvUWH9JphWP5K38YqEBiJFXQ
+          type: string
+        q:
+          example: 0A1FmpOWR91_RAWpqreWSavNaZb9nXeKiBo0DQGBz32DbqKqQ8S4aBJmbRhJcctjCLjain-ivut477tAUMmzJwVJDDq2MZFwC9Q-4VYZmFU4HJityQuSzHYe64RjN-E_NQ02TWhG3QGW6roq6c57c99rrUsETwJJiwS8M5p15Miuz53DaOjv-uqqFAFfywN5WkxHbraBcjHtMiQuyQbQqkCFh-oanHkwYNeytsNhTu2mQmwR5DR2roZ2nPiFjC6nsdk-A7E3S3wMzYYFw7jvbWWoYWo9vB40_MY2Y0FYQSqcDzcBIcq_0tnnasf3VW4Fdx6m80RzOb2Fsnln7vKXAQ
+          type: string
+        qi:
+          example: GyM_p6JrXySiz1toFgKbWV-JdI3jQ4ypu9rbMWx3rQJBfmt0FoYzgUIZEVFEcOqwemRN81zoDAaa-Bk0KWNGDjJHZDdDmFhW3AN7lI-puxk_mHZGJ11rxyR8O55XLSe3SPmRfKwZI6yU24ZxvQKFYItdldUKGzO6Ia6zTKhAVRU
+          type: string
+        use:
+          description: 'Use ("public key use") identifies the intended use of
+
+            the public key. The "use" parameter is employed to indicate whether
+
+            a public key is used for encrypting data or verifying the signature
+
+            on data. Values are commonly "sig" (signature) or "enc" (encryption).'
+          example: sig
+          type: string
+        x:
+          example: f83OJ3D2xF1Bg8vub9tLe1gHMzV76e8Tus9uPHvRVEU
+          type: string
+        x5c:
+          description: 'The "x5c" (X.509 certificate chain) parameter contains a chain of one
+
+            or more PKIX certificates [RFC5280].  The certificate chain is
+
+            represented as a JSON array of certificate value strings.  Each
+
+            string in the array is a base64-encoded (Section 4 of [RFC4648] --
+
+            not base64url-encoded) DER [ITU.X690.1994] PKIX certificate value.
+
+            The PKIX certificate containing the key value MUST be the first
+
+            certificate.'
+          items:
+            type: string
+          type: array
+        y:
+          example: x_FEzRu9m36HLN_tue659LNpXW6pCyStikYjKIWI5a0
+          type: string
+      required:
+      - use
+      - kty
+      - kid
+      - alg
+      type: object
+    credentialSupportedDraft00:
+      description: Includes information about the supported verifiable credentials.
+      properties:
+        cryptographic_binding_methods_supported:
+          description: 'OpenID Connect Verifiable Credentials Cryptographic Binding Methods Supported
+
+
+            Contains a list of cryptographic binding methods supported for signing the proof.'
+          items:
+            type: string
+          type: array
+        cryptographic_suites_supported:
+          description: 'OpenID Connect Verifiable Credentials Cryptographic Suites Supported
+
+
+            Contains a list of cryptographic suites methods supported for signing the proof.'
+          items:
+            type: string
+          type: array
+        format:
+          description: 'OpenID Connect Verifiable Credentials Format
+
+
+            Contains the format that is supported by this authorization server.'
+          type: string
+        types:
+          description: 'OpenID Connect Verifiable Credentials Types
+
+
+            Contains the types of verifiable credentials supported.'
+          items:
+            type: string
+          type: array
+      title: Verifiable Credentials Metadata (Draft 00)
       type: object
     oAuth2Client:
       description: 'OAuth 2.0 Clients are used to perform OAuth 2.0 and OpenID Connect flows. Usually, OAuth 2.0 clients are
@@ -776,25 +910,82 @@ components:
           type: string
       title: OAuth 2.0 Client
       type: object
-    jsonWebKeySet:
-      description: JSON Web Key Set
+    VerifiableCredentialProof:
       properties:
-        keys:
-          description: 'List of JSON Web Keys
-
-
-            The value of the "keys" parameter is an array of JSON Web Key (JWK)
-
-            values. By default, the order of the JWK values within the array does
-
-            not imply an order of preference among them, although applications
-
-            of JWK Sets can choose to assign a meaning to the order for their
-
-            purposes, if desired.'
-          items:
-            $ref: '#/components/schemas/jsonWebKey'
-          type: array
+        jwt:
+          type: string
+        proof_type:
+          type: string
+      title: VerifiableCredentialProof contains the proof of a verifiable credential.
+      type: object
+    NullDuration:
+      description: Specify a time duration in milliseconds, seconds, minutes, hours.
+      pattern: ^([0-9]+(ns|us|ms|s|m|h))*$
+      title: Time duration
+      type: string
+    JSONRawMessage:
+      title: JSONRawMessage represents a json.RawMessage that works well with JSON, SQL, and Swagger.
+    oidcUserInfo:
+      description: OpenID Connect Userinfo
+      properties:
+        birthdate:
+          description: End-User's birthday, represented as an ISO 8601:2004 [ISO8601‑2004] YYYY-MM-DD format. The year MAY be 0000, indicating that it is omitted. To represent only the year, YYYY format is allowed. Note that depending on the underlying platform's date related function, providing just year can result in varying month and day, so the implementers need to take this factor into account to correctly process the dates.
+          type: string
+        email:
+          description: End-User's preferred e-mail address. Its value MUST conform to the RFC 5322 [RFC5322] addr-spec syntax. The RP MUST NOT rely upon this value being unique, as discussed in Section 5.7.
+          type: string
+        email_verified:
+          description: True if the End-User's e-mail address has been verified; otherwise false. When this Claim Value is true, this means that the OP took affirmative steps to ensure that this e-mail address was controlled by the End-User at the time the verification was performed. The means by which an e-mail address is verified is context-specific, and dependent upon the trust framework or contractual agreements within which the parties are operating.
+          type: boolean
+        family_name:
+          description: Surname(s) or last name(s) of the End-User. Note that in some cultures, people can have multiple family names or no family name; all can be present, with the names being separated by space characters.
+          type: string
+        gender:
+          description: End-User's gender. Values defined by this specification are female and male. Other values MAY be used when neither of the defined values are applicable.
+          type: string
+        given_name:
+          description: Given name(s) or first name(s) of the End-User. Note that in some cultures, people can have multiple given names; all can be present, with the names being separated by space characters.
+          type: string
+        locale:
+          description: End-User's locale, represented as a BCP47 [RFC5646] language tag. This is typically an ISO 639-1 Alpha-2 [ISO639‑1] language code in lowercase and an ISO 3166-1 Alpha-2 [ISO3166‑1] country code in uppercase, separated by a dash. For example, en-US or fr-CA. As a compatibility note, some implementations have used an underscore as the separator rather than a dash, for example, en_US; Relying Parties MAY choose to accept this locale syntax as well.
+          type: string
+        middle_name:
+          description: Middle name(s) of the End-User. Note that in some cultures, people can have multiple middle names; all can be present, with the names being separated by space characters. Also note that in some cultures, middle names are not used.
+          type: string
+        name:
+          description: End-User's full name in displayable form including all name parts, possibly including titles and suffixes, ordered according to the End-User's locale and preferences.
+          type: string
+        nickname:
+          description: Casual name of the End-User that may or may not be the same as the given_name. For instance, a nickname value of Mike might be returned alongside a given_name value of Michael.
+          type: string
+        phone_number:
+          description: End-User's preferred telephone number. E.164 [E.164] is RECOMMENDED as the format of this Claim, for example, +1 (425) 555-1212 or +56 (2) 687 2400. If the phone number contains an extension, it is RECOMMENDED that the extension be represented using the RFC 3966 [RFC3966] extension syntax, for example, +1 (604) 555-1234;ext=5678.
+          type: string
+        phone_number_verified:
+          description: True if the End-User's phone number has been verified; otherwise false. When this Claim Value is true, this means that the OP took affirmative steps to ensure that this phone number was controlled by the End-User at the time the verification was performed. The means by which a phone number is verified is context-specific, and dependent upon the trust framework or contractual agreements within which the parties are operating. When true, the phone_number Claim MUST be in E.164 format and any extensions MUST be represented in RFC 3966 format.
+          type: boolean
+        picture:
+          description: URL of the End-User's profile picture. This URL MUST refer to an image file (for example, a PNG, JPEG, or GIF image file), rather than to a Web page containing an image. Note that this URL SHOULD specifically reference a profile photo of the End-User suitable for displaying when describing the End-User, rather than an arbitrary photo taken by the End-User.
+          type: string
+        preferred_username:
+          description: Non-unique shorthand name by which the End-User wishes to be referred to at the RP, such as janedoe or j.doe. This value MAY be any valid JSON string including special characters such as @, /, or whitespace.
+          type: string
+        profile:
+          description: URL of the End-User's profile page. The contents of this Web page SHOULD be about the End-User.
+          type: string
+        sub:
+          description: Subject - Identifier for the End-User at the IssuerURL.
+          type: string
+        updated_at:
+          description: Time the End-User's information was last updated. Its value is a JSON number representing the number of seconds from 1970-01-01T0:0:0Z as measured in UTC until the date/time.
+          format: int64
+          type: integer
+        website:
+          description: URL of the End-User's Web page or blog. This Web page SHOULD contain information published by the End-User or an organization that the End-User is affiliated with.
+          type: string
+        zoneinfo:
+          description: String from zoneinfo [zoneinfo] time zone database representing the End-User's time zone. For example, Europe/Paris or America/Los_Angeles.
+          type: string
       type: object
     genericError:
       properties:
@@ -847,160 +1038,35 @@ components:
       required:
       - message
       type: object
-    jsonWebKey:
+    verifiableCredentialPrimingResponse:
       properties:
-        alg:
-          description: 'The "alg" (algorithm) parameter identifies the algorithm intended for
-
-            use with the key.  The values used should either be registered in the
-
-            IANA "JSON Web Signature and Encryption Algorithms" registry
-
-            established by [JWA] or be a value that contains a Collision-
-
-            Resistant Name.'
-          example: RS256
+        c_nonce:
           type: string
-        crv:
-          example: P-256
+        c_nonce_expires_in:
+          format: int64
+          type: integer
+        error:
           type: string
-        d:
-          example: T_N8I-6He3M8a7X1vWt6TGIx4xB_GP3Mb4SsZSA4v-orvJzzRiQhLlRR81naWYxfQAYt5isDI6_C2L9bdWo4FFPjGQFvNoRX-_sBJyBI_rl-TBgsZYoUlAj3J92WmY2inbA-PwyJfsaIIDceYBC-eX-xiCu6qMqkZi3MwQAFL6bMdPEM0z4JBcwFT3VdiWAIRUuACWQwrXMq672x7fMuaIaHi7XDGgt1ith23CLfaREmJku9PQcchbt_uEY-hqrFY6ntTtS4paWWQj86xLL94S-Tf6v6xkL918PfLSOTq6XCzxvlFwzBJqApnAhbwqLjpPhgUG04EDRrqrSBc5Y1BLevn6Ip5h1AhessBp3wLkQgz_roeckt-ybvzKTjESMuagnpqLvOT7Y9veIug2MwPJZI2VjczRc1vzMs25XrFQ8DpUy-bNdp89TmvAXwctUMiJdgHloJw23Cv03gIUAkDnsTqZmkpbIf-crpgNKFmQP_EDKoe8p_PXZZgfbRri3NoEVGP7Mk6yEu8LjJhClhZaBNjuWw2-KlBfOA3g79mhfBnkInee5KO9mGR50qPk1V-MorUYNTFMZIm0kFE6eYVWFBwJHLKYhHU34DoiK1VP-svZpC2uAMFNA_UJEwM9CQ2b8qe4-5e9aywMvwcuArRkAB5mBIfOaOJao3mfukKAE
+        error_debug:
           type: string
-        dp:
-          example: G4sPXkc6Ya9y8oJW9_ILj4xuppu0lzi_H7VTkS8xj5SdX3coE0oimYwxIi2emTAue0UOa5dpgFGyBJ4c8tQ2VF402XRugKDTP8akYhFo5tAA77Qe_NmtuYZc3C3m3I24G2GvR5sSDxUyAN2zq8Lfn9EUms6rY3Ob8YeiKkTiBj0
+        error_description:
           type: string
-        dq:
-          example: s9lAH9fggBsoFR8Oac2R_E2gw282rT2kGOAhvIllETE1efrA6huUUvMfBcMpn8lqeW6vzznYY5SSQF7pMdC_agI3nG8Ibp1BUb0JUiraRNqUfLhcQb_d9GF4Dh7e74WbRsobRonujTYN1xCaP6TO61jvWrX-L18txXw494Q_cgk
+        error_hint:
           type: string
-        e:
-          example: AQAB
-          type: string
-        k:
-          example: GawgguFyGrWKav7AX4VKUg
-          type: string
-        kid:
-          description: 'The "kid" (key ID) parameter is used to match a specific key.  This
-
-            is used, for instance, to choose among a set of keys within a JWK Set
-
-            during key rollover.  The structure of the "kid" value is
-
-            unspecified.  When "kid" values are used within a JWK Set, different
-
-            keys within the JWK Set SHOULD use distinct "kid" values.  (One
-
-            example in which different keys might use the same "kid" value is if
-
-            they have different "kty" (key type) values but are considered to be
-
-            equivalent alternatives by the application using them.)  The "kid"
-
-            value is a case-sensitive string.'
-          example: 1603dfe0af8f4596
-          type: string
-        kty:
-          description: 'The "kty" (key type) parameter identifies the cryptographic algorithm
-
-            family used with the key, such as "RSA" or "EC". "kty" values should
-
-            either be registered in the IANA "JSON Web Key Types" registry
-
-            established by [JWA] or be a value that contains a Collision-
-
-            Resistant Name.  The "kty" value is a case-sensitive string.'
-          example: RSA
-          type: string
-        n:
-          example: vTqrxUyQPl_20aqf5kXHwDZrel-KovIp8s7ewJod2EXHl8tWlRB3_Rem34KwBfqlKQGp1nqah-51H4Jzruqe0cFP58hPEIt6WqrvnmJCXxnNuIB53iX_uUUXXHDHBeaPCSRoNJzNysjoJ30TIUsKBiirhBa7f235PXbKiHducLevV6PcKxJ5cY8zO286qJLBWSPm-OIevwqsIsSIH44Qtm9sioFikhkbLwoqwWORGAY0nl6XvVOlhADdLjBSqSAeT1FPuCDCnXwzCDR8N9IFB_IjdStFkC-rVt2K5BYfPd0c3yFp_vHR15eRd0zJ8XQ7woBC8Vnsac6Et1pKS59pX6256DPWu8UDdEOolKAPgcd_g2NpA76cAaF_jcT80j9KrEzw8Tv0nJBGesuCjPNjGs_KzdkWTUXt23Hn9QJsdc1MZuaW0iqXBepHYfYoqNelzVte117t4BwVp0kUM6we0IqyXClaZgOI8S-WDBw2_Ovdm8e5NmhYAblEVoygcX8Y46oH6bKiaCQfKCFDMcRgChme7AoE1yZZYsPbaG_3IjPrC4LBMHQw8rM9dWjJ8ImjicvZ1pAm0dx-KHCP3y5PVKrxBDf1zSOsBRkOSjB8TPODnJMz6-jd5hTtZxpZPwPoIdCanTZ3ZD6uRBpTmDwtpRGm63UQs1m5FWPwb0T2IF0
-          type: string
-        p:
-          example: 6NbkXwDWUhi-eR55Cgbf27FkQDDWIamOaDr0rj1q0f1fFEz1W5A_09YvG09Fiv1AO2-D8Rl8gS1Vkz2i0zCSqnyy8A025XOcRviOMK7nIxE4OH_PEsko8dtIrb3TmE2hUXvCkmzw9EsTF1LQBOGC6iusLTXepIC1x9ukCKFZQvdgtEObQ5kzd9Nhq-cdqmSeMVLoxPLd1blviVT9Vm8-y12CtYpeJHOaIDtVPLlBhJiBoPKWg3vxSm4XxIliNOefqegIlsmTIa3MpS6WWlCK3yHhat0Q-rRxDxdyiVdG_wzJvp0Iw_2wms7pe-PgNPYvUWH9JphWP5K38YqEBiJFXQ
-          type: string
-        q:
-          example: 0A1FmpOWR91_RAWpqreWSavNaZb9nXeKiBo0DQGBz32DbqKqQ8S4aBJmbRhJcctjCLjain-ivut477tAUMmzJwVJDDq2MZFwC9Q-4VYZmFU4HJityQuSzHYe64RjN-E_NQ02TWhG3QGW6roq6c57c99rrUsETwJJiwS8M5p15Miuz53DaOjv-uqqFAFfywN5WkxHbraBcjHtMiQuyQbQqkCFh-oanHkwYNeytsNhTu2mQmwR5DR2roZ2nPiFjC6nsdk-A7E3S3wMzYYFw7jvbWWoYWo9vB40_MY2Y0FYQSqcDzcBIcq_0tnnasf3VW4Fdx6m80RzOb2Fsnln7vKXAQ
-          type: string
-        qi:
-          example: GyM_p6JrXySiz1toFgKbWV-JdI3jQ4ypu9rbMWx3rQJBfmt0FoYzgUIZEVFEcOqwemRN81zoDAaa-Bk0KWNGDjJHZDdDmFhW3AN7lI-puxk_mHZGJ11rxyR8O55XLSe3SPmRfKwZI6yU24ZxvQKFYItdldUKGzO6Ia6zTKhAVRU
-          type: string
-        use:
-          description: 'Use ("public key use") identifies the intended use of
-
-            the public key. The "use" parameter is employed to indicate whether
-
-            a public key is used for encrypting data or verifying the signature
-
-            on data. Values are commonly "sig" (signature) or "enc" (encryption).'
-          example: sig
-          type: string
-        x:
-          example: f83OJ3D2xF1Bg8vub9tLe1gHMzV76e8Tus9uPHvRVEU
-          type: string
-        x5c:
-          description: 'The "x5c" (X.509 certificate chain) parameter contains a chain of one
-
-            or more PKIX certificates [RFC5280].  The certificate chain is
-
-            represented as a JSON array of certificate value strings.  Each
-
-            string in the array is a base64-encoded (Section 4 of [RFC4648] --
-
-            not base64url-encoded) DER [ITU.X690.1994] PKIX certificate value.
-
-            The PKIX certificate containing the key value MUST be the first
-
-            certificate.'
-          items:
-            type: string
-          type: array
-        y:
-          example: x_FEzRu9m36HLN_tue659LNpXW6pCyStikYjKIWI5a0
-          type: string
-      required:
-      - use
-      - kty
-      - kid
-      - alg
-      type: object
-    NullDuration:
-      description: Specify a time duration in milliseconds, seconds, minutes, hours.
-      pattern: ^([0-9]+(ns|us|ms|s|m|h))*$
-      title: Time duration
-      type: string
-    credentialSupportedDraft00:
-      description: Includes information about the supported verifiable credentials.
-      properties:
-        cryptographic_binding_methods_supported:
-          description: 'OpenID Connect Verifiable Credentials Cryptographic Binding Methods Supported
-
-
-            Contains a list of cryptographic binding methods supported for signing the proof.'
-          items:
-            type: string
-          type: array
-        cryptographic_suites_supported:
-          description: 'OpenID Connect Verifiable Credentials Cryptographic Suites Supported
-
-
-            Contains a list of cryptographic suites methods supported for signing the proof.'
-          items:
-            type: string
-          type: array
         format:
-          description: 'OpenID Connect Verifiable Credentials Format
-
-
-            Contains the format that is supported by this authorization server.'
           type: string
-        types:
-          description: 'OpenID Connect Verifiable Credentials Types
-
-
-            Contains the types of verifiable credentials supported.'
-          items:
-            type: string
-          type: array
-      title: Verifiable Credentials Metadata (Draft 00)
+        status_code:
+          format: int64
+          type: integer
+      title: VerifiableCredentialPrimingResponse contains the nonce to include in the proof-of-possession JWT.
+      type: object
+    verifiableCredentialResponse:
+      properties:
+        credential_draft_00:
+          type: string
+        format:
+          type: string
+      title: VerifiableCredentialResponse contains the verifiable credential.
       type: object
     CreateVerifiableCredentialRequestBody:
       properties:
@@ -1013,50 +1079,6 @@ components:
             type: string
           type: array
       title: CreateVerifiableCredentialRequestBody contains the request body to request a verifiable credential.
-      type: object
-    verifiableCredentialResponse:
-      properties:
-        credential_draft_00:
-          type: string
-        format:
-          type: string
-      title: VerifiableCredentialResponse contains the verifiable credential.
-      type: object
-    errorOAuth2:
-      description: Error
-      properties:
-        error:
-          description: Error
-          type: string
-        error_debug:
-          description: 'Error Debug Information
-
-
-            Only available in dev mode.'
-          type: string
-        error_description:
-          description: Error Description
-          type: string
-        error_hint:
-          description: 'Error Hint
-
-
-            Helps the user identify the error cause.'
-          example: The redirect URL is not allowed.
-          type: string
-        status_code:
-          description: HTTP Status Code
-          example: 401
-          format: int64
-          type: integer
-      type: object
-    VerifiableCredentialProof:
-      properties:
-        jwt:
-          type: string
-        proof_type:
-          type: string
-      title: VerifiableCredentialProof contains the proof of a verifiable credential.
       type: object
     oidcConfiguration:
       description: 'Includes links to several endpoints (for example `/oauth2/token`) and exposes information on supported signature algorithms
@@ -1334,30 +1356,6 @@ components:
       - userinfo_signed_response_alg
       title: OpenID Connect Discovery Metadata
       type: object
-    JSONRawMessage:
-      title: JSONRawMessage represents a json.RawMessage that works well with JSON, SQL, and Swagger.
-    verifiableCredentialPrimingResponse:
-      properties:
-        c_nonce:
-          type: string
-        c_nonce_expires_in:
-          format: int64
-          type: integer
-        error:
-          type: string
-        error_debug:
-          type: string
-        error_description:
-          type: string
-        error_hint:
-          type: string
-        format:
-          type: string
-        status_code:
-          format: int64
-          type: integer
-      title: VerifiableCredentialPrimingResponse contains the nonce to include in the proof-of-possession JWT.
-      type: object
   responses:
     errorOAuth2BadRequest:
       content:
@@ -1365,6 +1363,10 @@ components:
           schema:
             $ref: '#/components/schemas/errorOAuth2'
       description: Bad Request Error Response
+    emptyResponse:
+      description: 'Empty responses are sent when, for example, resources are deleted. The HTTP status code for empty responses is
+
+        typically 204.'
     errorOAuth2Default:
       content:
         application/json:
@@ -1377,10 +1379,6 @@ components:
           schema:
             $ref: '#/components/schemas/errorOAuth2'
       description: Not Found Error Response
-    emptyResponse:
-      description: 'Empty responses are sent when, for example, resources are deleted. The HTTP status code for empty responses is
-
-        typically 204.'
   securitySchemes:
     basic:
       scheme: basic

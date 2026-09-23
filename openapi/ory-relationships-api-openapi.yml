@@ -1,11 +1,7 @@
 openapi: 3.2.0
 info:
-  title: Ory Network Billing Relationships API
-  description: 'Ory is open-source identity and access infrastructure, delivered as the Ory Network managed cloud. This document models the primary public and admin REST surfaces of an Ory Network project and the Ory Network Console (control plane).
-
-    Two base URLs are in play. Project data-plane endpoints - Ory Kratos (identities, sessions, self-service flows), Ory Hydra (OAuth2 / OIDC), Ory Keto (permissions and relationship tuples), and courier messages - are served on the project-scoped host https://{project-slug}.projects.oryapis.com. The Ory Network Console API (workspaces, projects, project tokens, event streams, subscriptions) is served on https://api.console.ory.sh.
-
-    Public self-service and OAuth2/OIDC endpoints are unauthenticated or use the end-user session; admin, Keto write, courier, and Console endpoints require an Ory API key / project or workspace API token passed as a Bearer token. Ory SDKs are auto-generated from these OpenAPI specifications. Endpoint set is representative and grounded in Ory''s published specs; consult the live reference for the exhaustive parameter and schema detail.'
+  title: Ory Network Relationships API
+  description: Ory is open-source identity and access infrastructure, delivered as the Ory Network managed cloud.
   version: '1.0'
   contact:
     name: Ory

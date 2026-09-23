@@ -1,16 +1,14 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   contact:
     email: hi@ory.sh
-  description: 'Documentation for all of Ory Hydra''s APIs.
-
-    '
+  description: Documentation for all of Ory Keto's REST APIs. gRPC is documented separately.
   license:
     name: Apache 2.0
-  title: Ory Hydra api relationship API
-  version: "1.0"
+  title: Ory Keto Relationship API
+  version: ''
 tags:
-- name: relationship
+- name: Relationship
 paths:
   /admin/relation-tuples:
     delete:
@@ -69,7 +67,7 @@ paths:
           description: errorGeneric
       summary: Delete Relationships
       tags:
-      - relationship
+      - Relationship
       x-ory-ratelimit-bucket: keto-admin-low
     patch:
       description: Use this endpoint to patch one or more relationships.
@@ -105,7 +103,7 @@ paths:
           description: errorGeneric
       summary: Patch Multiple Relationships
       tags:
-      - relationship
+      - Relationship
       x-ory-ratelimit-bucket: keto-admin-low
     put:
       description: Use this endpoint to create a relationship.
@@ -137,7 +135,7 @@ paths:
           description: errorGeneric
       summary: Create a Relationship
       tags:
-      - relationship
+      - Relationship
       x-ory-ratelimit-bucket: keto-admin-low
   /namespaces:
     get:
@@ -158,7 +156,7 @@ paths:
           description: errorGeneric
       summary: Query namespaces
       tags:
-      - relationship
+      - Relationship
       x-ory-ratelimit-bucket: keto-admin-low
   /opl/syntax/check:
     post:
@@ -191,7 +189,7 @@ paths:
           description: errorGeneric
       summary: Check the syntax of an OPL file
       tags:
-      - relationship
+      - Relationship
       x-ory-ratelimit-bucket: keto-admin-medium
   /relation-tuples:
     get:
@@ -278,38 +276,19 @@ paths:
           description: errorGeneric
       summary: Query relationships
       tags:
-      - relationship
+      - Relationship
       x-ory-ratelimit-bucket: keto-admin-medium
 components:
   schemas:
-    relationship:
-      description: Relationship
+    SourcePosition:
       properties:
-        namespace:
-          description: Namespace of the Relation Tuple
-          type: string
-        object:
-          description: Object of the Relation Tuple
-          type: string
-        relation:
-          description: Relation of the Relation Tuple
-          type: string
-        subject_id:
-          description: 'SubjectID of the Relation Tuple
-
-
-            Either SubjectSet or SubjectID can be provided.'
-          type: string
-        subject_set:
-          $ref: '#/components/schemas/subjectSet'
-      required:
-      - namespace
-      - object
-      - relation
+        Line:
+          format: int64
+          type: integer
+        column:
+          format: int64
+          type: integer
       type: object
-    checkOplSyntaxBody:
-      description: Ory Permission Language Document
-      type: string
     relationshipPatch:
       description: Payload for patching a relationship
       properties:
@@ -340,20 +319,77 @@ components:
       - object
       - relation
       type: object
-    SourcePosition:
+    checkOplSyntaxResult:
       properties:
-        Line:
-          format: int64
-          type: integer
-        column:
-          format: int64
-          type: integer
+        errors:
+          description: The list of syntax errors
+          items:
+            $ref: '#/components/schemas/ParseError'
+          type: array
+      title: CheckOPLSyntaxResponse represents the response for an OPL syntax check request.
+      type: object
+    relationshipNamespaces:
+      description: Relationship Namespace List
+      properties:
+        namespaces:
+          items:
+            $ref: '#/components/schemas/namespace'
+          type: array
+      type: object
+    relationship:
+      description: Relationship
+      properties:
+        namespace:
+          description: Namespace of the Relation Tuple
+          type: string
+        object:
+          description: Object of the Relation Tuple
+          type: string
+        relation:
+          description: Relation of the Relation Tuple
+          type: string
+        subject_id:
+          description: 'SubjectID of the Relation Tuple
+
+
+            Either SubjectSet or SubjectID can be provided.'
+          type: string
+        subject_set:
+          $ref: '#/components/schemas/subjectSet'
+      required:
+      - namespace
+      - object
+      - relation
+      type: object
+    ParseError:
+      properties:
+        end:
+          $ref: '#/components/schemas/SourcePosition'
+        message:
+          type: string
+        start:
+          $ref: '#/components/schemas/SourcePosition'
       type: object
     namespace:
       properties:
         name:
           description: Name of the namespace.
           type: string
+      type: object
+    relationships:
+      description: Paginated Relationship List
+      properties:
+        next_page_token:
+          description: 'The opaque token to provide in a subsequent request
+
+            to get the next page. It is the empty string iff this is
+
+            the last page.'
+          type: string
+        relation_tuples:
+          items:
+            $ref: '#/components/schemas/relationship'
+          type: array
       type: object
     genericError:
       properties:
@@ -408,21 +444,9 @@ components:
       required:
       - message
       type: object
-    relationships:
-      description: Paginated Relationship List
-      properties:
-        next_page_token:
-          description: 'The opaque token to provide in a subsequent request
-
-            to get the next page. It is the empty string iff this is
-
-            the last page.'
-          type: string
-        relation_tuples:
-          items:
-            $ref: '#/components/schemas/relationship'
-          type: array
-      type: object
+    checkOplSyntaxBody:
+      description: Ory Permission Language Document
+      type: string
     errorGeneric:
       description: The standard Ory JSON API error format.
       properties:
@@ -431,32 +455,6 @@ components:
       required:
       - error
       title: JSON API Error Response
-      type: object
-    relationshipNamespaces:
-      description: Relationship Namespace List
-      properties:
-        namespaces:
-          items:
-            $ref: '#/components/schemas/namespace'
-          type: array
-      type: object
-    ParseError:
-      properties:
-        end:
-          $ref: '#/components/schemas/SourcePosition'
-        message:
-          type: string
-        start:
-          $ref: '#/components/schemas/SourcePosition'
-      type: object
-    checkOplSyntaxResult:
-      properties:
-        errors:
-          description: The list of syntax errors
-          items:
-            $ref: '#/components/schemas/ParseError'
-          type: array
-      title: CheckOPLSyntaxResponse represents the response for an OPL syntax check request.
       type: object
     createRelationshipBody:
       description: Create Relationship Request Body
@@ -482,22 +480,3 @@ components:
   responses:
     emptyResponse:
       description: Empty responses are sent when, for example, resources are deleted. The HTTP status code for empty responses is typically 204.
-  securitySchemes:
-    basic:
-      scheme: basic
-      type: http
-    bearer:
-      scheme: bearer
-      type: http
-    oauth2:
-      flows:
-        authorizationCode:
-          authorizationUrl: https://hydra.demo.ory.sh/oauth2/auth
-          scopes:
-            offline: A scope required when requesting refresh tokens (alias for `offline_access`)
-            offline_access: A scope required when requesting refresh tokens
-            openid: Request an OpenID Connect ID Token
-          tokenUrl: https://hydra.demo.ory.sh/oauth2/token
-      type: oauth2
-x-forwarded-proto: string
-x-request-id: string

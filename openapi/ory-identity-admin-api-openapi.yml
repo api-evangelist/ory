@@ -1,11 +1,7 @@
 openapi: 3.2.0
 info:
-  title: Ory Network Billing Identity (Admin) Identity (Admin) API
-  description: 'Ory is open-source identity and access infrastructure, delivered as the Ory Network managed cloud. This document models the primary public and admin REST surfaces of an Ory Network project and the Ory Network Console (control plane).
-
-    Two base URLs are in play. Project data-plane endpoints - Ory Kratos (identities, sessions, self-service flows), Ory Hydra (OAuth2 / OIDC), Ory Keto (permissions and relationship tuples), and courier messages - are served on the project-scoped host https://{project-slug}.projects.oryapis.com. The Ory Network Console API (workspaces, projects, project tokens, event streams, subscriptions) is served on https://api.console.ory.sh.
-
-    Public self-service and OAuth2/OIDC endpoints are unauthenticated or use the end-user session; admin, Keto write, courier, and Console endpoints require an Ory API key / project or workspace API token passed as a Bearer token. Ory SDKs are auto-generated from these OpenAPI specifications. Endpoint set is representative and grounded in Ory''s published specs; consult the live reference for the exhaustive parameter and schema detail.'
+  title: Ory Network Identity (Admin) API
+  description: Ory is open-source identity and access infrastructure, delivered as the Ory Network managed cloud.
   version: '1.0'
   contact:
     name: Ory
@@ -328,7 +324,34 @@ paths:
         '200':
           description: The recovery link.
 components:
+  responses:
+    Unauthorized:
+      description: Missing or invalid credentials.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+            status:
+              type: string
+            message:
+              type: string
+            reason:
+              type: string
     Identity:
       type: object
       properties:
@@ -356,36 +379,6 @@ components:
         updated_at:
           type: string
           format: date-time
-    Session:
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-        active:
-          type: boolean
-        expires_at:
-          type: string
-          format: date-time
-        authenticated_at:
-          type: string
-          format: date-time
-        identity:
-          $ref: '#/components/schemas/Identity'
-    Error:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: integer
-            status:
-              type: string
-            message:
-              type: string
-            reason:
-              type: string
     IdentityInput:
       type: object
       required:
@@ -405,19 +398,22 @@ components:
         credentials:
           type: object
           additionalProperties: true
-  responses:
-    Unauthorized:
-      description: Missing or invalid credentials.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+    Session:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        active:
+          type: boolean
+        expires_at:
+          type: string
+          format: date-time
+        authenticated_at:
+          type: string
+          format: date-time
+        identity:
+          $ref: '#/components/schemas/Identity'
   securitySchemes:
     oryApiKey:
       type: http
