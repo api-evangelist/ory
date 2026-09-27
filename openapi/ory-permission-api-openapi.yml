@@ -332,30 +332,6 @@ paths:
       x-ory-ratelimit-bucket: keto-admin-medium
 components:
   schemas:
-    batchCheckPermissionBody:
-      description: Batch Check Permission Body
-      properties:
-        tuples:
-          items:
-            $ref: '#/components/schemas/relationship'
-          type: array
-      type: object
-    subjectSet:
-      properties:
-        namespace:
-          description: Namespace of the Subject Set
-          type: string
-        object:
-          description: Object of the Subject Set
-          type: string
-        relation:
-          description: Relation of the Subject Set
-          type: string
-      required:
-      - namespace
-      - object
-      - relation
-      type: object
     postCheckPermissionOrErrorBody:
       description: Post Check Permission Or Error Body
       properties:
@@ -377,26 +353,23 @@ components:
         subject_set:
           $ref: '#/components/schemas/subjectSet'
       type: object
-    postCheckPermissionBody:
-      description: Check Permission using Post Request Body
+    batchCheckPermissionBody:
+      description: Batch Check Permission Body
       properties:
-        namespace:
-          description: Namespace to query
-          type: string
-        object:
-          description: Object to query
-          type: string
-        relation:
-          description: Relation to query
-          type: string
-        subject_id:
-          description: 'SubjectID to query
-
-
-            Either SubjectSet or SubjectID can be provided.'
-          type: string
-        subject_set:
-          $ref: '#/components/schemas/subjectSet'
+        tuples:
+          items:
+            $ref: '#/components/schemas/relationship'
+          type: array
+      type: object
+    checkPermissionResult:
+      description: The content of the allowed field is mirrored in the HTTP status code.
+      properties:
+        allowed:
+          description: whether the relation tuple is allowed
+          type: boolean
+      required:
+      - allowed
+      title: Check Permission Result
       type: object
     relationship:
       description: Relationship
@@ -422,6 +395,101 @@ components:
       - namespace
       - object
       - relation
+      type: object
+    checkPermissionResultWithError:
+      description: Check Permission Result With Error
+      properties:
+        allowed:
+          description: whether the relation tuple is allowed
+          type: boolean
+        error:
+          description: any error generated while checking the relation tuple
+          type: string
+      required:
+      - allowed
+      type: object
+    genericError:
+      properties:
+        code:
+          description: The status code
+          example: 404
+          format: int64
+          type: integer
+        debug:
+          description: 'Debug information
+
+
+            This field is often not exposed to protect against leaking
+
+            sensitive information.'
+          example: SQL field "foo" is not a bool.
+          type: string
+        details:
+          additionalProperties: {}
+          description: Further error details
+          type: object
+        id:
+          description: 'The error ID
+
+
+            Useful when trying to identify various errors in application logic.'
+          type: string
+        message:
+          description: 'Error message
+
+
+            The error''s message.'
+          example: The resource could not be found
+          type: string
+        reason:
+          description: A human-readable reason for the error
+          example: User with ID 1234 does not exist.
+          type: string
+        request:
+          description: 'The request ID
+
+
+            The request ID is often exposed internally in order to trace
+
+            errors across service architectures. This is often a UUID.'
+          example: d7ef54b1-ec15-46e6-bccb-524b82c035e6
+          type: string
+        status:
+          description: The status description
+          example: Not Found
+          type: string
+      required:
+      - message
+      type: object
+    postCheckPermissionBody:
+      description: Check Permission using Post Request Body
+      properties:
+        namespace:
+          description: Namespace to query
+          type: string
+        object:
+          description: Object to query
+          type: string
+        relation:
+          description: Relation to query
+          type: string
+        subject_id:
+          description: 'SubjectID to query
+
+
+            Either SubjectSet or SubjectID can be provided.'
+          type: string
+        subject_set:
+          $ref: '#/components/schemas/subjectSet'
+      type: object
+    errorGeneric:
+      description: The standard Ory JSON API error format.
+      properties:
+        error:
+          $ref: '#/components/schemas/genericError'
+      required:
+      - error
+      title: JSON API Error Response
       type: object
     expandedPermissionTree:
       properties:
@@ -478,80 +546,6 @@ components:
       required:
       - type
       type: object
-    genericError:
-      properties:
-        code:
-          description: The status code
-          example: 404
-          format: int64
-          type: integer
-        debug:
-          description: 'Debug information
-
-
-            This field is often not exposed to protect against leaking
-
-            sensitive information.'
-          example: SQL field "foo" is not a bool.
-          type: string
-        details:
-          additionalProperties: {}
-          description: Further error details
-          type: object
-        id:
-          description: 'The error ID
-
-
-            Useful when trying to identify various errors in application logic.'
-          type: string
-        message:
-          description: 'Error message
-
-
-            The error''s message.'
-          example: The resource could not be found
-          type: string
-        reason:
-          description: A human-readable reason for the error
-          example: User with ID 1234 does not exist.
-          type: string
-        request:
-          description: 'The request ID
-
-
-            The request ID is often exposed internally in order to trace
-
-            errors across service architectures. This is often a UUID.'
-          example: d7ef54b1-ec15-46e6-bccb-524b82c035e6
-          type: string
-        status:
-          description: The status description
-          example: Not Found
-          type: string
-      required:
-      - message
-      type: object
-    errorGeneric:
-      description: The standard Ory JSON API error format.
-      properties:
-        error:
-          $ref: '#/components/schemas/genericError'
-      required:
-      - error
-      title: JSON API Error Response
-      type: object
-    checkPermissionResultWithError:
-      description: Check Permission Result With Error
-      properties:
-        allowed:
-          description: whether the relation tuple is allowed
-          type: boolean
-        error:
-          description: any error generated while checking the relation tuple
-          type: string
-      required:
-      - allowed
-      type: object
     batchCheckPermissionResult:
       description: Batch Check Permission Result
       properties:
@@ -563,13 +557,19 @@ components:
       required:
       - results
       type: object
-    checkPermissionResult:
-      description: The content of the allowed field is mirrored in the HTTP status code.
+    subjectSet:
       properties:
-        allowed:
-          description: whether the relation tuple is allowed
-          type: boolean
+        namespace:
+          description: Namespace of the Subject Set
+          type: string
+        object:
+          description: Object of the Subject Set
+          type: string
+        relation:
+          description: Relation of the Subject Set
+          type: string
       required:
-      - allowed
-      title: Check Permission Result
+      - namespace
+      - object
+      - relation
       type: object

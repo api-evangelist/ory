@@ -278,30 +278,7 @@ paths:
         '204':
           description: Session revoked.
 components:
-  responses:
-    Unauthorized:
-      description: Missing or invalid credentials.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
-    Session:
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-        active:
-          type: boolean
-        expires_at:
-          type: string
-          format: date-time
-        authenticated_at:
-          type: string
-          format: date-time
-        identity:
-          $ref: '#/components/schemas/Identity'
     Error:
       type: object
       properties:
@@ -343,6 +320,29 @@ components:
         updated_at:
           type: string
           format: date-time
+    Session:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        active:
+          type: boolean
+        expires_at:
+          type: string
+          format: date-time
+        authenticated_at:
+          type: string
+          format: date-time
+        identity:
+          $ref: '#/components/schemas/Identity'
+  responses:
+    Unauthorized:
+      description: Missing or invalid credentials.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     oryApiKey:
       type: http

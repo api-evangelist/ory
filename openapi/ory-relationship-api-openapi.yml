@@ -280,14 +280,14 @@ paths:
       x-ory-ratelimit-bucket: keto-admin-medium
 components:
   schemas:
-    SourcePosition:
+    checkOplSyntaxResult:
       properties:
-        Line:
-          format: int64
-          type: integer
-        column:
-          format: int64
-          type: integer
+        errors:
+          description: The list of syntax errors
+          items:
+            $ref: '#/components/schemas/ParseError'
+          type: array
+      title: CheckOPLSyntaxResponse represents the response for an OPL syntax check request.
       type: object
     relationshipPatch:
       description: Payload for patching a relationship
@@ -303,38 +303,35 @@ components:
         relation_tuple:
           $ref: '#/components/schemas/relationship'
       type: object
-    subjectSet:
+    createRelationshipBody:
+      description: Create Relationship Request Body
       properties:
         namespace:
-          description: Namespace of the Subject Set
+          description: Namespace to query
           type: string
         object:
-          description: Object of the Subject Set
+          description: Object to query
           type: string
         relation:
-          description: Relation of the Subject Set
+          description: Relation to query
           type: string
-      required:
-      - namespace
-      - object
-      - relation
+        subject_id:
+          description: 'SubjectID to query
+
+
+            Either SubjectSet or SubjectID can be provided.'
+          type: string
+        subject_set:
+          $ref: '#/components/schemas/subjectSet'
       type: object
-    checkOplSyntaxResult:
+    ParseError:
       properties:
-        errors:
-          description: The list of syntax errors
-          items:
-            $ref: '#/components/schemas/ParseError'
-          type: array
-      title: CheckOPLSyntaxResponse represents the response for an OPL syntax check request.
-      type: object
-    relationshipNamespaces:
-      description: Relationship Namespace List
-      properties:
-        namespaces:
-          items:
-            $ref: '#/components/schemas/namespace'
-          type: array
+        end:
+          $ref: '#/components/schemas/SourcePosition'
+        message:
+          type: string
+        start:
+          $ref: '#/components/schemas/SourcePosition'
       type: object
     relationship:
       description: Relationship
@@ -361,34 +358,12 @@ components:
       - object
       - relation
       type: object
-    ParseError:
+    relationshipNamespaces:
+      description: Relationship Namespace List
       properties:
-        end:
-          $ref: '#/components/schemas/SourcePosition'
-        message:
-          type: string
-        start:
-          $ref: '#/components/schemas/SourcePosition'
-      type: object
-    namespace:
-      properties:
-        name:
-          description: Name of the namespace.
-          type: string
-      type: object
-    relationships:
-      description: Paginated Relationship List
-      properties:
-        next_page_token:
-          description: 'The opaque token to provide in a subsequent request
-
-            to get the next page. It is the empty string iff this is
-
-            the last page.'
-          type: string
-        relation_tuples:
+        namespaces:
           items:
-            $ref: '#/components/schemas/relationship'
+            $ref: '#/components/schemas/namespace'
           type: array
       type: object
     genericError:
@@ -444,6 +419,21 @@ components:
       required:
       - message
       type: object
+    relationships:
+      description: Paginated Relationship List
+      properties:
+        next_page_token:
+          description: 'The opaque token to provide in a subsequent request
+
+            to get the next page. It is the empty string iff this is
+
+            the last page.'
+          type: string
+        relation_tuples:
+          items:
+            $ref: '#/components/schemas/relationship'
+          type: array
+      type: object
     checkOplSyntaxBody:
       description: Ory Permission Language Document
       type: string
@@ -456,26 +446,36 @@ components:
       - error
       title: JSON API Error Response
       type: object
-    createRelationshipBody:
-      description: Create Relationship Request Body
+    namespace:
+      properties:
+        name:
+          description: Name of the namespace.
+          type: string
+      type: object
+    subjectSet:
       properties:
         namespace:
-          description: Namespace to query
+          description: Namespace of the Subject Set
           type: string
         object:
-          description: Object to query
+          description: Object of the Subject Set
           type: string
         relation:
-          description: Relation to query
+          description: Relation of the Subject Set
           type: string
-        subject_id:
-          description: 'SubjectID to query
-
-
-            Either SubjectSet or SubjectID can be provided.'
-          type: string
-        subject_set:
-          $ref: '#/components/schemas/subjectSet'
+      required:
+      - namespace
+      - object
+      - relation
+      type: object
+    SourcePosition:
+      properties:
+        Line:
+          format: int64
+          type: integer
+        column:
+          format: int64
+          type: integer
       type: object
   responses:
     emptyResponse:

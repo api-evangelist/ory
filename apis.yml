@@ -36,7 +36,8 @@ tags:
 - Authorization
 - Identity
 - OpenID Connect
-- Open-Source
+- Open Source
+- Identity Federation
 tags_raw:
 - Authentication
 - Authorization
@@ -44,39 +45,15 @@ tags_raw:
 - OAuth2
 - OpenID Connect
 - Open Source
+- Identity Federation
+- Open-Source
 url: https://raw.githubusercontent.com/api-evangelist/ory/refs/heads/main/apis.yml
 created: '2026-03-25'
 modified: '2026-09-16'
 specificationVersion: '0.23'
 apis:
-- aid: ory:ory-api-api
-  name: Ory api
-  description: The api API from Ory — 4 operation(s) for api.
-  humanURL: https://www.ory.com/hydra/
-  tags: []
-  tags_raw:
-  - api
-  properties:
-  - type: OpenAPI
-    url: openapi/ory-api-api-openapi.yml
-  - type: Documentation
-    url: https://www.ory.com/docs/hydra/
-  - type: GitHubRepository
-    url: https://github.com/ory/hydra
-  - type: Documentation
-    url: https://www.ory.com/docs/kratos/
-  - type: GitHubRepository
-    url: https://github.com/ory/kratos
-  - type: Documentation
-    url: https://www.ory.com/docs/keto/
-  - type: GitHubRepository
-    url: https://github.com/ory/keto
-  - type: Documentation
-    url: https://www.ory.com/docs/oathkeeper/
-  - type: GitHubRepository
-    url: https://github.com/ory/oathkeeper
 - aid: ory:ory-courier-api
-  name: Ory courier API
+  name: Ory Courier API
   description: APIs for managing email and SMS message delivery.
   humanURL: https://www.ory.com/hydra/
   tags:
@@ -103,7 +80,7 @@ apis:
   - type: GitHubRepository
     url: https://github.com/ory/oathkeeper
 - aid: ory:ory-frontend-api
-  name: Ory frontend API
+  name: Ory Frontend API
   description: >-
     Endpoints used by frontend applications (e.g. Single-Page-App, Native Apps, Server Apps, ...) to manage
     a user's own profile.
@@ -132,7 +109,7 @@ apis:
   - type: GitHubRepository
     url: https://github.com/ory/oathkeeper
 - aid: ory:ory-identity-api
-  name: Ory identity API
+  name: Ory Identity API
   description: APIs for managing identities.
   humanURL: https://www.ory.com/hydra/
   tags:
@@ -159,7 +136,7 @@ apis:
   - type: GitHubRepository
     url: https://github.com/ory/oathkeeper
 - aid: ory:ory-jwk-api
-  name: Ory jwk API
+  name: Ory Jwk API
   description: JSON Web Keys
   humanURL: https://www.ory.com/hydra/
   tags:
@@ -184,7 +161,7 @@ apis:
   - type: GitHubRepository
     url: https://github.com/ory/oathkeeper
 - aid: ory:ory-metadata-api
-  name: Ory metadata API
+  name: Ory Metadata API
   description: Service Metadata
   humanURL: https://www.ory.com/hydra/
   tags:
@@ -211,7 +188,7 @@ apis:
   - type: GitHubRepository
     url: https://github.com/ory/oathkeeper
 - aid: ory:ory-oidc-api
-  name: Ory oidc API
+  name: Ory Oidc API
   description: OpenID Connect
   humanURL: https://www.ory.com/hydra/
   tags:
@@ -238,7 +215,7 @@ apis:
   - type: GitHubRepository
     url: https://github.com/ory/oathkeeper
 - aid: ory:ory-permission-api
-  name: Ory permission API
+  name: Ory Permission API
   description: The permission API from Ory — 4 operation(s) for permission.
   humanURL: https://www.ory.com/hydra/
   tags:
@@ -265,7 +242,7 @@ apis:
   - type: GitHubRepository
     url: https://github.com/ory/oathkeeper
 - aid: ory:ory-relationship-api
-  name: Ory relationship API
+  name: Ory Relationship API
   description: The relationship API from Ory — 4 operation(s) for relationship.
   humanURL: https://www.ory.com/hydra/
   tags:
@@ -862,6 +839,58 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/ory-well-known-api-openapi.yml
+  - type: Documentation
+    url: https://www.ory.com/docs/hydra/
+  - type: GitHubRepository
+    url: https://github.com/ory/hydra
+  - type: Documentation
+    url: https://www.ory.com/docs/kratos/
+  - type: GitHubRepository
+    url: https://github.com/ory/kratos
+  - type: Documentation
+    url: https://www.ory.com/docs/keto/
+  - type: GitHubRepository
+    url: https://github.com/ory/keto
+  - type: Documentation
+    url: https://www.ory.com/docs/oathkeeper/
+  - type: GitHubRepository
+    url: https://github.com/ory/oathkeeper
+- aid: ory:ory-decisions-api
+  name: Ory Decisions API
+  description: The Decisions API from Ory — 1 operation(s) for decisions.
+  humanURL: https://www.ory.com/hydra/
+  baseURL: https://{project-slug}.projects.oryapis.com
+  tags:
+  - Decisions
+  properties:
+  - type: OpenAPI
+    url: openapi/ory-decisions-api-openapi.yml
+  - type: Documentation
+    url: https://www.ory.com/docs/hydra/
+  - type: GitHubRepository
+    url: https://github.com/ory/hydra
+  - type: Documentation
+    url: https://www.ory.com/docs/kratos/
+  - type: GitHubRepository
+    url: https://github.com/ory/kratos
+  - type: Documentation
+    url: https://www.ory.com/docs/keto/
+  - type: GitHubRepository
+    url: https://github.com/ory/keto
+  - type: Documentation
+    url: https://www.ory.com/docs/oathkeeper/
+  - type: GitHubRepository
+    url: https://github.com/ory/oathkeeper
+- aid: ory:ory-rules-api
+  name: Ory Rules API
+  description: The Rules API from Ory — 2 operation(s) for rules.
+  humanURL: https://www.ory.com/hydra/
+  baseURL: https://{project-slug}.projects.oryapis.com
+  tags:
+  - Rules
+  properties:
+  - type: OpenAPI
+    url: openapi/ory-rules-api-openapi.yml
   - type: Documentation
     url: https://www.ory.com/docs/hydra/
   - type: GitHubRepository

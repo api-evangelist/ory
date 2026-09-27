@@ -257,6 +257,38 @@ paths:
       x-ory-ratelimit-bucket: hydra-admin-low
 components:
   schemas:
+    createJsonWebKeySet:
+      description: Create JSON Web Key Set Request Body
+      properties:
+        alg:
+          description: 'JSON Web Key Algorithm
+
+
+            The algorithm to be used for creating the key. Supports `RS256`, `ES256`, `ES512`, `HS512`, and `HS256`.'
+          type: string
+        kid:
+          description: 'JSON Web Key ID
+
+
+            The Key ID of the key to be created.'
+          type: string
+        use:
+          description: 'JSON Web Key Use
+
+
+            The "use" (public key use) parameter identifies the intended use of
+
+            the public key. The "use" parameter is employed to indicate whether
+
+            a public key is used for encrypting data or verifying the signature
+
+            on data. Valid values are "enc" and "sig".'
+          type: string
+      required:
+      - alg
+      - use
+      - kid
+      type: object
     errorOAuth2:
       description: Error
       properties:
@@ -284,6 +316,26 @@ components:
           example: 401
           format: int64
           type: integer
+      type: object
+    jsonWebKeySet:
+      description: JSON Web Key Set
+      properties:
+        keys:
+          description: 'List of JSON Web Keys
+
+
+            The value of the "keys" parameter is an array of JSON Web Key (JWK)
+
+            values. By default, the order of the JWK values within the array does
+
+            not imply an order of preference among them, although applications
+
+            of JWK Sets can choose to assign a meaning to the order for their
+
+            purposes, if desired.'
+          items:
+            $ref: '#/components/schemas/jsonWebKey'
+          type: array
       type: object
     jsonWebKey:
       properties:
@@ -399,58 +451,6 @@ components:
       - kty
       - kid
       - alg
-      type: object
-    createJsonWebKeySet:
-      description: Create JSON Web Key Set Request Body
-      properties:
-        alg:
-          description: 'JSON Web Key Algorithm
-
-
-            The algorithm to be used for creating the key. Supports `RS256`, `ES256`, `ES512`, `HS512`, and `HS256`.'
-          type: string
-        kid:
-          description: 'JSON Web Key ID
-
-
-            The Key ID of the key to be created.'
-          type: string
-        use:
-          description: 'JSON Web Key Use
-
-
-            The "use" (public key use) parameter identifies the intended use of
-
-            the public key. The "use" parameter is employed to indicate whether
-
-            a public key is used for encrypting data or verifying the signature
-
-            on data. Valid values are "enc" and "sig".'
-          type: string
-      required:
-      - alg
-      - use
-      - kid
-      type: object
-    jsonWebKeySet:
-      description: JSON Web Key Set
-      properties:
-        keys:
-          description: 'List of JSON Web Keys
-
-
-            The value of the "keys" parameter is an array of JSON Web Key (JWK)
-
-            values. By default, the order of the JWK values within the array does
-
-            not imply an order of preference among them, although applications
-
-            of JWK Sets can choose to assign a meaning to the order for their
-
-            purposes, if desired.'
-          items:
-            $ref: '#/components/schemas/jsonWebKey'
-          type: array
       type: object
   responses:
     emptyResponse:
