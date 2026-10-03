@@ -353,23 +353,16 @@ components:
         subject_set:
           $ref: '#/components/schemas/subjectSet'
       type: object
-    batchCheckPermissionBody:
-      description: Batch Check Permission Body
+    batchCheckPermissionResult:
+      description: Batch Check Permission Result
       properties:
-        tuples:
+        results:
+          description: An array of check results. The order aligns with the input order.
           items:
-            $ref: '#/components/schemas/relationship'
+            $ref: '#/components/schemas/checkPermissionResultWithError'
           type: array
-      type: object
-    checkPermissionResult:
-      description: The content of the allowed field is mirrored in the HTTP status code.
-      properties:
-        allowed:
-          description: whether the relation tuple is allowed
-          type: boolean
       required:
-      - allowed
-      title: Check Permission Result
+      - results
       type: object
     relationship:
       description: Relationship
@@ -396,6 +389,49 @@ components:
       - object
       - relation
       type: object
+    checkPermissionResult:
+      description: The content of the allowed field is mirrored in the HTTP status code.
+      properties:
+        allowed:
+          description: whether the relation tuple is allowed
+          type: boolean
+      required:
+      - allowed
+      title: Check Permission Result
+      type: object
+    subjectSet:
+      properties:
+        namespace:
+          description: Namespace of the Subject Set
+          type: string
+        object:
+          description: Object of the Subject Set
+          type: string
+        relation:
+          description: Relation of the Subject Set
+          type: string
+      required:
+      - namespace
+      - object
+      - relation
+      type: object
+    errorGeneric:
+      description: The standard Ory JSON API error format.
+      properties:
+        error:
+          $ref: '#/components/schemas/genericError'
+      required:
+      - error
+      title: JSON API Error Response
+      type: object
+    batchCheckPermissionBody:
+      description: Batch Check Permission Body
+      properties:
+        tuples:
+          items:
+            $ref: '#/components/schemas/relationship'
+          type: array
+      type: object
     checkPermissionResultWithError:
       description: Check Permission Result With Error
       properties:
@@ -407,6 +443,27 @@ components:
           type: string
       required:
       - allowed
+      type: object
+    postCheckPermissionBody:
+      description: Check Permission using Post Request Body
+      properties:
+        namespace:
+          description: Namespace to query
+          type: string
+        object:
+          description: Object to query
+          type: string
+        relation:
+          description: Relation to query
+          type: string
+        subject_id:
+          description: 'SubjectID to query
+
+
+            Either SubjectSet or SubjectID can be provided.'
+          type: string
+        subject_set:
+          $ref: '#/components/schemas/subjectSet'
       type: object
     genericError:
       properties:
@@ -460,36 +517,6 @@ components:
           type: string
       required:
       - message
-      type: object
-    postCheckPermissionBody:
-      description: Check Permission using Post Request Body
-      properties:
-        namespace:
-          description: Namespace to query
-          type: string
-        object:
-          description: Object to query
-          type: string
-        relation:
-          description: Relation to query
-          type: string
-        subject_id:
-          description: 'SubjectID to query
-
-
-            Either SubjectSet or SubjectID can be provided.'
-          type: string
-        subject_set:
-          $ref: '#/components/schemas/subjectSet'
-      type: object
-    errorGeneric:
-      description: The standard Ory JSON API error format.
-      properties:
-        error:
-          $ref: '#/components/schemas/genericError'
-      required:
-      - error
-      title: JSON API Error Response
       type: object
     expandedPermissionTree:
       properties:
@@ -545,31 +572,4 @@ components:
             unspecified TreeNodeUnspecified'
       required:
       - type
-      type: object
-    batchCheckPermissionResult:
-      description: Batch Check Permission Result
-      properties:
-        results:
-          description: An array of check results. The order aligns with the input order.
-          items:
-            $ref: '#/components/schemas/checkPermissionResultWithError'
-          type: array
-      required:
-      - results
-      type: object
-    subjectSet:
-      properties:
-        namespace:
-          description: Namespace of the Subject Set
-          type: string
-        object:
-          description: Object of the Subject Set
-          type: string
-        relation:
-          description: Relation of the Subject Set
-          type: string
-      required:
-      - namespace
-      - object
-      - relation
       type: object

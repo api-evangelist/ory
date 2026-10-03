@@ -1244,130 +1244,122 @@ paths:
       x-ory-ratelimit-bucket: kratos-admin-medium
 components:
   schemas:
-    identityWithCredentialsOidcConfigProvider:
-      description: Create Identity and Import Social Sign In Credentials Configuration
-      properties:
-        organization:
-          $ref: '#/components/schemas/NullUUID'
-        provider:
-          description: The OpenID Connect provider to link the subject to. Usually something like `google` or `github`.
-          type: string
-        subject:
-          description: The subject (`sub`) of the OpenID Connect connection. Usually the `sub` field of the ID Token.
-          type: string
-        use_auto_link:
-          description: If set, this credential allows the user to sign in using the OpenID Connect provider without setting the subject first.
-          type: boolean
-      required:
-      - subject
-      - provider
-      type: object
-    createRecoveryLinkForIdentityBody:
-      description: Create Recovery Link for Identity Request Body
-      properties:
-        expires_in:
-          description: 'Link Expires In
-
-
-            The recovery link will expire after that amount of time has passed. Defaults to the configuration value of
-
-            `selfservice.methods.code.config.lifespan`.'
-          pattern: ^[0-9]+(ns|us|ms|s|m|h)$
-          type: string
-        identity_id:
-          description: 'Identity to Recover
-
-
-            The identity''s ID you wish to recover.'
-          format: uuid
-          type: string
-      required:
-      - identity_id
-      type: object
-    recoveryCodeForIdentity:
-      description: Used when an administrator creates a recovery code for an identity.
-      properties:
-        expires_at:
-          description: 'Expires At is the timestamp of when the recovery flow expires
-
-
-            The timestamp when the recovery code expires.'
-          format: date-time
-          type: string
-        recovery_code:
-          description: RecoveryCode is the code that can be used to recover the account
-          type: string
-        recovery_link:
-          description: 'RecoveryLink with flow
-
-
-            This link opens the recovery UI with an empty `code` field.'
-          type: string
-      required:
-      - recovery_link
-      - recovery_code
-      title: Recovery Code for Identity
-      type: object
-    identityVerifiableAddressStatus:
-      description: VerifiableAddressStatus must not exceed 16 characters as that is the limitation in the SQL Schema
+    nullTime:
+      format: date-time
+      title: NullTime implements sql.NullTime functionality.
       type: string
-    jsonPatchDocument:
-      description: A JSONPatchDocument request
-      items:
-        $ref: '#/components/schemas/jsonPatch'
-      type: array
-    session:
-      description: A Session
+    identity:
+      description: An [identity](https://www.ory.com/docs/kratos/concepts/identity-user-model) represents a (human) user in Ory.
       properties:
-        active:
-          description: Active state. If false the session is no longer active.
-          type: boolean
-        authenticated_at:
-          description: 'The Session Authentication Timestamp
-
-
-            When this session was authenticated at. If multi-factor authentication was used this
-
-            is the time when the last factor was authenticated (e.g. the TOTP code challenge was completed).'
+        created_at:
+          description: CreatedAt is a helper struct field for gobuffalo.pop.
           format: date-time
           type: string
-        authentication_methods:
-          $ref: '#/components/schemas/sessionAuthenticationMethods'
-        authenticator_assurance_level:
-          $ref: '#/components/schemas/authenticatorAssuranceLevel'
-        devices:
-          description: Devices has history of all endpoints where the session was used
-          items:
-            $ref: '#/components/schemas/sessionDevice'
-          type: array
-        expires_at:
-          description: 'The Session Expiry
+        credentials:
+          additionalProperties:
+            $ref: '#/components/schemas/identityCredentials'
+          description: Credentials represents all credentials that can be used for authenticating this identity.
+          type: object
+        external_id:
+          description: 'ExternalID is an optional external ID of the identity. This is used to link
 
+            the identity to an external system. If set, the external ID must be unique
 
-            When this session expires at.'
-          format: date-time
+            across all identities.'
           type: string
         id:
-          description: Session ID
+          description: 'ID is the identity''s unique identifier.
+
+
+            The Identity ID can not be changed and can not be chosen. This ensures future
+
+            compatibility and optimization for distributed stores such as CockroachDB.'
           format: uuid
           type: string
-        identity:
-          $ref: '#/components/schemas/identity'
-        issued_at:
-          description: 'The Session Issuance Timestamp
+        metadata_admin:
+          $ref: '#/components/schemas/nullJsonRawMessage'
+        metadata_public:
+          $ref: '#/components/schemas/nullJsonRawMessage'
+        organization_id:
+          $ref: '#/components/schemas/NullUUID'
+        recovery_addresses:
+          description: RecoveryAddresses contains all the addresses that can be used to recover an identity.
+          items:
+            $ref: '#/components/schemas/recoveryIdentityAddress'
+          type: array
+          x-omitempty: true
+        schema_id:
+          description: SchemaID is the ID of the JSON Schema to be used for validating the identity's traits.
+          type: string
+        schema_url:
+          description: 'SchemaURL is the URL of the endpoint where the identity''s traits schema can be fetched from.
 
 
-            When this session was issued at. Usually equal or close to `authenticated_at`.'
+            format: url'
+          type: string
+        state:
+          description: 'State is the identity''s state.
+
+
+            This value has currently no effect.
+
+            active StateActive
+
+            inactive StateInactive'
+          enum:
+          - active
+          - inactive
+          type: string
+          x-go-enum-desc: 'active StateActive
+
+            inactive StateInactive'
+        state_changed_at:
+          $ref: '#/components/schemas/nullTime'
+        traits:
+          $ref: '#/components/schemas/identityTraits'
+        updated_at:
+          description: UpdatedAt is a helper struct field for gobuffalo.pop.
           format: date-time
           type: string
-        tokenized:
-          description: 'Tokenized is the tokenized (e.g. JWT) version of the session.
-
-
-            It is only set when the `tokenize_as` query parameter was set to a valid tokenize template during calls to `/session/whoami`.'
-          type: string
+        verifiable_addresses:
+          description: VerifiableAddresses contains all the addresses that can be verified by the user.
+          items:
+            $ref: '#/components/schemas/verifiableIdentityAddress'
+          type: array
+          x-omitempty: true
       required:
       - id
+      - schema_id
+      - schema_url
+      - traits
+      title: Identity represents an Ory Kratos identity
+      type: object
+    identityCredentialsWebAuthnAttestation:
+      properties:
+        authenticator_data:
+          items:
+            format: uint8
+            type: integer
+          type: array
+        client_dataJSON:
+          items:
+            format: uint8
+            type: integer
+          type: array
+        client_data_hash:
+          items:
+            format: uint8
+            type: integer
+          type: array
+        object:
+          items:
+            format: uint8
+            type: integer
+          type: array
+        public_key_algorithm:
+          format: int64
+          type: integer
+      title: CredentialWebAuthnAttestation contains information about attestation of a webauthn credential.
       type: object
     sessionAuthenticationMethod:
       description: A singular authenticator used during authentication / login.
@@ -1465,6 +1457,79 @@ components:
           type: array
       title: AuthenticationMethod identifies an authentication method
       type: object
+    JSONRawMessage:
+      title: JSONRawMessage represents a json.RawMessage that works well with JSON, SQL, and Swagger.
+      type: object
+    nullJsonRawMessage:
+      description: NullJSONRawMessage represents a json.RawMessage that works well with JSON, SQL, and Swagger and is NULLable-
+    identityWithCredentialsPassword:
+      description: Create Identity and Import Password Credentials
+      properties:
+        config:
+          $ref: '#/components/schemas/identityWithCredentialsPasswordConfig'
+      type: object
+    recoveryIdentityAddress:
+      properties:
+        break_glass_for_organization:
+          $ref: '#/components/schemas/NullUUID'
+        created_at:
+          description: CreatedAt is a helper struct field for gobuffalo.pop.
+          format: date-time
+          type: string
+        id:
+          format: uuid
+          type: string
+        updated_at:
+          description: UpdatedAt is a helper struct field for gobuffalo.pop.
+          format: date-time
+          type: string
+        value:
+          type: string
+        via:
+          type: string
+      required:
+      - value
+      - via
+      type: object
+    identityWithCredentialsTotp:
+      description: Create Identity and Import TOTP 2FA Credentials
+      properties:
+        config:
+          $ref: '#/components/schemas/identityWithCredentialsTotpConfig'
+      type: object
+    identityWithCredentialsPasskey:
+      description: Create Identity and Import Passkey Credentials
+      properties:
+        config:
+          $ref: '#/components/schemas/identityWithCredentialsPasskeyConfig'
+      type: object
+    AdminIdentityImportCredentialsLookupSecretConfig:
+      description: Create Identity and Import Lookup Secret Credentials Configuration
+      properties:
+        codes:
+          description: Codes is a list of "lookup secret" codes configured for the user.
+          items:
+            $ref: '#/components/schemas/identityCredentialsLookupSecretCode'
+          type: array
+      type: object
+    identityWithCredentials:
+      description: Create Identity and Import Credentials
+      properties:
+        lookup_secret:
+          $ref: '#/components/schemas/AdminIdentityImportCredentialsLookupSecret'
+        oidc:
+          $ref: '#/components/schemas/identityWithCredentialsOidc'
+        passkey:
+          $ref: '#/components/schemas/identityWithCredentialsPasskey'
+        password:
+          $ref: '#/components/schemas/identityWithCredentialsPassword'
+        saml:
+          $ref: '#/components/schemas/identityWithCredentialsSaml'
+        totp:
+          $ref: '#/components/schemas/identityWithCredentialsTotp'
+        webauthn:
+          $ref: '#/components/schemas/identityWithCredentialsWebAuthn'
+      type: object
     patchIdentitiesBody:
       description: Patch Identities Body
       properties:
@@ -1477,48 +1542,367 @@ components:
             $ref: '#/components/schemas/identityPatch'
           type: array
       type: object
-    identityWithCredentialsTotpConfig:
-      description: Create Identity and Import TOTP 2FA Credentials Configuration
+    selfServiceFlowType:
+      description: The flow type can either be `api` or `browser`.
+      title: Type is the flow type.
+      type: string
+    updateIdentityBody:
+      description: Update Identity Body
       properties:
-        totp_url:
-          description: 'TOTPURL is the TOTP URL
+        credentials:
+          $ref: '#/components/schemas/identityWithCredentials'
+        external_id:
+          description: 'ExternalID is an optional external ID of the identity. This is used to link
+
+            the identity to an external system. If set, the external ID must be unique
+
+            across all identities.'
+          type: string
+        metadata_admin:
+          description: Store metadata about the user which is only accessible through admin APIs such as `GET /admin/identities/<id>`.
+        metadata_public:
+          description: 'Store metadata about the identity which the identity itself can see when calling for example the
+
+            session endpoint. Do not store sensitive information (e.g. credit score) about the identity in this field.'
+        schema_id:
+          description: 'SchemaID is the ID of the JSON Schema to be used for validating the identity''s traits. If set
+
+            will update the Identity''s SchemaID.'
+          type: string
+        state:
+          description: 'State is the identity''s state.
+
+            active StateActive
+
+            inactive StateInactive'
+          enum:
+          - active
+          - inactive
+          type: string
+          x-go-enum-desc: 'active StateActive
+
+            inactive StateInactive'
+        traits:
+          description: 'Traits represent an identity''s traits. The identity is able to create, modify, and delete traits
+
+            in a self-service manner. The input will always be validated against the JSON Schema defined
+
+            in `schema_id`.'
+          type: object
+      required:
+      - schema_id
+      - traits
+      - state
+      type: object
+    createRecoveryCodeForIdentityBody:
+      description: Create Recovery Code for Identity Request Body
+      properties:
+        expires_in:
+          description: 'Code Expires In
 
 
-            For more details see: https://github.com/google/google-authenticator/wiki/Key-Uri-Format'
+            The recovery code will expire after that amount of time has passed. Defaults to the configuration value of
+
+            `selfservice.methods.code.config.lifespan`.'
+          pattern: ^([0-9]+(ns|us|ms|s|m|h))*$
           type: string
-      type: object
-    errorGeneric:
-      description: The standard Ory JSON API error format.
-      properties:
-        error:
-          $ref: '#/components/schemas/genericError'
-      required:
-      - error
-      title: JSON API Error Response
-      type: object
-    identityWithCredentialsSamlConfigProvider:
-      description: Payload of specific SAML provider
-      properties:
-        organization:
-          $ref: '#/components/schemas/NullUUID'
-        provider:
-          description: The SAML provider to link the subject to.
-          type: string
-        subject:
-          description: The unique subject of the SAML connection. This value must be immutable at the source.
+        flow_type:
+          $ref: '#/components/schemas/selfServiceFlowType'
+        identity_id:
+          description: 'Identity to Recover
+
+
+            The identity''s ID you wish to recover.'
+          format: uuid
           type: string
       required:
-      - subject
-      - provider
+      - identity_id
       type: object
-    AdminIdentityImportCredentialsLookupSecretConfig:
-      description: Create Identity and Import Lookup Secret Credentials Configuration
+    genericError:
       properties:
-        codes:
-          description: Codes is a list of "lookup secret" codes configured for the user.
+        code:
+          description: The status code
+          example: 404
+          format: int64
+          type: integer
+        debug:
+          description: 'Debug information
+
+
+            This field is often not exposed to protect against leaking
+
+            sensitive information.'
+          example: SQL field "foo" is not a bool.
+          type: string
+        details:
+          additionalProperties: false
+          description: Further error details
+          type: object
+        id:
+          description: 'The error ID
+
+
+            Useful when trying to identify various errors in application logic.'
+          type: string
+        message:
+          description: 'Error message
+
+
+            The error''s message.'
+          example: The resource could not be found
+          type: string
+        reason:
+          description: A human-readable reason for the error
+          example: User with ID 1234 does not exist.
+          type: string
+        request:
+          description: 'The request ID
+
+
+            The request ID is often exposed internally in order to trace
+
+            errors across service architectures. This is often a UUID.'
+          example: d7ef54b1-ec15-46e6-bccb-524b82c035e6
+          type: string
+        status:
+          description: The status description
+          example: Not Found
+          type: string
+      required:
+      - message
+      type: object
+    identityWithCredentialsOidcConfig:
+      properties:
+        providers:
+          description: A list of OpenID Connect Providers
           items:
-            $ref: '#/components/schemas/identityCredentialsLookupSecretCode'
+            $ref: '#/components/schemas/identityWithCredentialsOidcConfigProvider'
           type: array
+      type: object
+    recoveryCodeForIdentity:
+      description: Used when an administrator creates a recovery code for an identity.
+      properties:
+        expires_at:
+          description: 'Expires At is the timestamp of when the recovery flow expires
+
+
+            The timestamp when the recovery code expires.'
+          format: date-time
+          type: string
+        recovery_code:
+          description: RecoveryCode is the code that can be used to recover the account
+          type: string
+        recovery_link:
+          description: 'RecoveryLink with flow
+
+
+            This link opens the recovery UI with an empty `code` field.'
+          type: string
+      required:
+      - recovery_link
+      - recovery_code
+      title: Recovery Code for Identity
+      type: object
+    identityCredentialsWebAuthnAuthenticator:
+      properties:
+        aaguid:
+          items:
+            format: uint8
+            type: integer
+          type: array
+        clone_warning:
+          type: boolean
+        sign_count:
+          format: uint32
+          type: integer
+      title: AuthenticatorWebAuthn contains information about the authenticator of a webauthn credential.
+      type: object
+    AuthenticatorTransport:
+      description: 'Authenticators may implement various transports for communicating with clients. This enumeration defines hints as to
+
+        how clients might communicate with a particular authenticator in order to obtain an assertion for a specific
+
+        credential. Note that these hints represent the WebAuthn Relying Party''s best belief as to how an authenticator may
+
+        be reached. A Relying Party will typically learn of the supported transports for a public key credential via
+
+        getTransports().
+
+
+        Specification: §5.8.4. Authenticator Transport Enumeration (https://www.w3.org/TR/webauthn/#enumdef-authenticatortransport)'
+      title: AuthenticatorTransport represents the IDL enum with the same name.
+      type: string
+    identityCredentialsWebAuthnList:
+      items:
+        $ref: '#/components/schemas/identityCredentialsWebAuthn'
+      type: array
+    identityCredentialsLookupSecretCode:
+      description: Recovery codes can be used once and are invalidated after use.
+      properties:
+        code:
+          description: A recovery code
+          type: string
+        used_at:
+          $ref: '#/components/schemas/nullTime'
+      title: RecoveryCode represents one recovery code associated with a lookup_secret credential.
+      type: object
+    identityWithCredentialsWebAuthn:
+      description: Create Identity and Import WebAuthn Credentials
+      properties:
+        config:
+          $ref: '#/components/schemas/identityWithCredentialsWebAuthnConfig'
+      type: object
+    identityCredentialsWebAuthn:
+      properties:
+        added_at:
+          format: date-time
+          type: string
+        attestation:
+          $ref: '#/components/schemas/identityCredentialsWebAuthnAttestation'
+        attestation_type:
+          type: string
+        authenticator:
+          $ref: '#/components/schemas/identityCredentialsWebAuthnAuthenticator'
+        display_name:
+          type: string
+        flags:
+          $ref: '#/components/schemas/identityCredentialsWebAuthnFlags'
+        id:
+          items:
+            format: uint8
+            type: integer
+          type: array
+        is_passwordless:
+          type: boolean
+        public_key:
+          items:
+            format: uint8
+            type: integer
+          type: array
+        transport:
+          items:
+            $ref: '#/components/schemas/AuthenticatorTransport'
+          type: array
+      title: CredentialWebAuthn contains information about a webauthn credential.
+      type: object
+    AdminIdentityImportCredentialsLookupSecret:
+      description: Create Identity and Import Lookup Secret Credentials
+      properties:
+        config:
+          $ref: '#/components/schemas/AdminIdentityImportCredentialsLookupSecretConfig'
+      type: object
+    identityWithCredentialsPasskeyConfig:
+      description: Create Identity and Import Passkey Credentials Configuration
+      properties:
+        credentials:
+          $ref: '#/components/schemas/identityCredentialsWebAuthnList'
+        user_handle:
+          description: UserHandle is the user handle of the webauthn credential.
+          items:
+            format: uint8
+            type: integer
+          type: array
+      type: object
+    createIdentityBody:
+      description: Create Identity Body
+      properties:
+        credentials:
+          $ref: '#/components/schemas/identityWithCredentials'
+        external_id:
+          description: 'ExternalID is an optional external ID of the identity. This is used to link
+
+            the identity to an external system. If set, the external ID must be unique
+
+            across all identities.'
+          type: string
+        metadata_admin:
+          description: Store metadata about the user which is only accessible through admin APIs such as `GET /admin/identities/<id>`.
+        metadata_public:
+          description: 'Store metadata about the identity which the identity itself can see when calling for example the
+
+            session endpoint. Do not store sensitive information (e.g. credit score) about the identity in this field.'
+        organization_id:
+          $ref: '#/components/schemas/NullUUID'
+        recovery_addresses:
+          description: 'RecoveryAddresses contains all the addresses that can be used to recover an identity.
+
+
+            Use this structure to import recovery addresses for an identity. Please keep in mind
+
+            that the address needs to be represented in the Identity Schema or this field will be overwritten
+
+            on the next identity update.'
+          items:
+            $ref: '#/components/schemas/recoveryIdentityAddress'
+          type: array
+        schema_id:
+          description: SchemaID is the ID of the JSON Schema to be used for validating the identity's traits.
+          type: string
+        state:
+          description: 'State is the identity''s state.
+
+            active StateActive
+
+            inactive StateInactive'
+          enum:
+          - active
+          - inactive
+          type: string
+          x-go-enum-desc: 'active StateActive
+
+            inactive StateInactive'
+        traits:
+          description: 'Traits represent an identity''s traits. The identity is able to create, modify, and delete traits
+
+            in a self-service manner. The input will always be validated against the JSON Schema defined
+
+            in `schema_url`.'
+          type: object
+        verifiable_addresses:
+          description: 'VerifiableAddresses contains all the addresses that can be verified by the user.
+
+
+            Use this structure to import verified addresses for an identity. Please keep in mind
+
+            that the address needs to be represented in the Identity Schema or this field will be overwritten
+
+            on the next identity update.'
+          items:
+            $ref: '#/components/schemas/verifiableIdentityAddress'
+          type: array
+      required:
+      - schema_id
+      - traits
+      type: object
+    jsonPatchDocument:
+      description: A JSONPatchDocument request
+      items:
+        $ref: '#/components/schemas/jsonPatch'
+      type: array
+    sessionDevice:
+      description: Device corresponding to a Session
+      properties:
+        id:
+          description: Device record ID
+          format: uuid
+          type: string
+        ip_address:
+          description: IPAddress of the client
+          type: string
+        location:
+          description: Geo Location corresponding to the IP Address
+          type: string
+        user_agent:
+          description: UserAgent of the client
+          type: string
+      required:
+      - id
+      type: object
+    identityWithCredentialsOidc:
+      description: Create Identity and Import Social Sign In Credentials
+      properties:
+        config:
+          $ref: '#/components/schemas/identityWithCredentialsOidcConfig'
       type: object
     identityCredentials:
       description: Credentials represents a specific credential type
@@ -1606,28 +1990,23 @@ components:
           format: int64
           type: integer
       type: object
-    AuthenticatorTransport:
-      description: 'Authenticators may implement various transports for communicating with clients. This enumeration defines hints as to
-
-        how clients might communicate with a particular authenticator in order to obtain an assertion for a specific
-
-        credential. Note that these hints represent the WebAuthn Relying Party''s best belief as to how an authenticator may
-
-        be reached. A Relying Party will typically learn of the supported transports for a public key credential via
-
-        getTransports().
-
-
-        Specification: §5.8.4. Authenticator Transport Enumeration (https://www.w3.org/TR/webauthn/#enumdef-authenticatortransport)'
-      title: AuthenticatorTransport represents the IDL enum with the same name.
-      type: string
-    identityWithCredentialsOidcConfig:
+    sessionAuthenticationMethods:
+      description: A list of authenticators which were used to authenticate the session.
+      items:
+        $ref: '#/components/schemas/sessionAuthenticationMethod'
+      title: List of (Used) AuthenticationMethods
+      type: array
+    identityCredentialsWebAuthnFlags:
       properties:
-        providers:
-          description: A list of OpenID Connect Providers
-          items:
-            $ref: '#/components/schemas/identityWithCredentialsOidcConfigProvider'
-          type: array
+        backup_eligible:
+          type: boolean
+        backup_state:
+          type: boolean
+        user_present:
+          type: boolean
+        user_verified:
+          type: boolean
+      title: CredentialWebAuthnFlags contains information about the flags of a webauthn credential.
       type: object
     identityTraits:
       description: 'Traits represent an identity''s traits. The identity is able to create, modify, and delete traits
@@ -1635,6 +2014,238 @@ components:
         in a self-service manner. The input will always be validated against the JSON Schema defined
 
         in `schema_url`.'
+    identityWithCredentialsSamlConfig:
+      description: Payload of SAML providers
+      properties:
+        providers:
+          description: A list of SAML Providers
+          items:
+            $ref: '#/components/schemas/identityWithCredentialsSamlConfigProvider'
+          type: array
+      type: object
+    identityWithCredentialsOidcConfigProvider:
+      description: Create Identity and Import Social Sign In Credentials Configuration
+      properties:
+        organization:
+          $ref: '#/components/schemas/NullUUID'
+        provider:
+          description: The OpenID Connect provider to link the subject to. Usually something like `google` or `github`.
+          type: string
+        subject:
+          description: The subject (`sub`) of the OpenID Connect connection. Usually the `sub` field of the ID Token.
+          type: string
+        use_auto_link:
+          description: If set, this credential allows the user to sign in using the OpenID Connect provider without setting the subject first.
+          type: boolean
+      required:
+      - subject
+      - provider
+      type: object
+    identityWithCredentialsTotpConfig:
+      description: Create Identity and Import TOTP 2FA Credentials Configuration
+      properties:
+        totp_url:
+          description: 'TOTPURL is the TOTP URL
+
+
+            For more details see: https://github.com/google/google-authenticator/wiki/Key-Uri-Format'
+          type: string
+      type: object
+    identitySchemaContainer:
+      description: An Identity JSON Schema Container
+      properties:
+        id:
+          description: The ID of the Identity JSON Schema
+          type: string
+        schema:
+          description: The actual Identity JSON Schema
+          type: object
+      required:
+      - id
+      - schema
+      type: object
+    identityWithCredentialsSamlConfigProvider:
+      description: Payload of specific SAML provider
+      properties:
+        organization:
+          $ref: '#/components/schemas/NullUUID'
+        provider:
+          description: The SAML provider to link the subject to.
+          type: string
+        subject:
+          description: The unique subject of the SAML connection. This value must be immutable at the source.
+          type: string
+      required:
+      - subject
+      - provider
+      type: object
+    identityVerifiableAddressStatus:
+      description: VerifiableAddressStatus must not exceed 16 characters as that is the limitation in the SQL Schema
+      type: string
+    jsonPatch:
+      description: A JSONPatch document as defined by RFC 6902
+      properties:
+        from:
+          description: 'This field is used together with operation "move" and uses JSON Pointer notation.
+
+
+            Learn more [about JSON Pointers](https://datatracker.ietf.org/doc/html/rfc6901#section-5).'
+          example: /name
+          type: string
+        op:
+          description: The operation to be performed. One of "add", "remove", "replace", "move", "copy", or "test".
+          example: replace
+          type: string
+        path:
+          description: 'The path to the target path. Uses JSON pointer notation.
+
+
+            Learn more [about JSON Pointers](https://datatracker.ietf.org/doc/html/rfc6901#section-5).'
+          example: /name
+          type: string
+        value:
+          description: 'The value to be used within the operations.
+
+
+            Learn more [about JSON Pointers](https://datatracker.ietf.org/doc/html/rfc6901#section-5).'
+          example: foobar
+      required:
+      - op
+      - path
+      type: object
+    identityPatch:
+      description: Payload for patching an identity
+      properties:
+        create:
+          $ref: '#/components/schemas/createIdentityBody'
+        patch_id:
+          description: 'The ID of this patch.
+
+
+            The patch ID is optional. If specified, the ID will be returned in the
+
+            response, so consumers of this API can correlate the response with the
+
+            patch.'
+          format: uuid
+          type: string
+      type: object
+    session:
+      description: A Session
+      properties:
+        active:
+          description: Active state. If false the session is no longer active.
+          type: boolean
+        authenticated_at:
+          description: 'The Session Authentication Timestamp
+
+
+            When this session was authenticated at. If multi-factor authentication was used this
+
+            is the time when the last factor was authenticated (e.g. the TOTP code challenge was completed).'
+          format: date-time
+          type: string
+        authentication_methods:
+          $ref: '#/components/schemas/sessionAuthenticationMethods'
+        authenticator_assurance_level:
+          $ref: '#/components/schemas/authenticatorAssuranceLevel'
+        devices:
+          description: Devices has history of all endpoints where the session was used
+          items:
+            $ref: '#/components/schemas/sessionDevice'
+          type: array
+        expires_at:
+          description: 'The Session Expiry
+
+
+            When this session expires at.'
+          format: date-time
+          type: string
+        id:
+          description: Session ID
+          format: uuid
+          type: string
+        identity:
+          $ref: '#/components/schemas/identity'
+        issued_at:
+          description: 'The Session Issuance Timestamp
+
+
+            When this session was issued at. Usually equal or close to `authenticated_at`.'
+          format: date-time
+          type: string
+        tokenized:
+          description: 'Tokenized is the tokenized (e.g. JWT) version of the session.
+
+
+            It is only set when the `tokenize_as` query parameter was set to a valid tokenize template during calls to `/session/whoami`.'
+          type: string
+      required:
+      - id
+      type: object
+    identitySchema:
+      description: Raw JSON Schema
+      type: object
+    DefaultError:
+      description: 'From https://go.dev/wiki/CodeReviewComments#receiver-type:
+
+        > Can function or methods, either concurrently or when called from this method, be mutating the receiver? A value type creates a copy of the receiver when the method is invoked, so outside updates will not be applied to this receiver. If changes must be visible in the original receiver, the receiver must be a pointer.
+
+        > If the receiver is a struct, array or slice and any of its elements is a pointer to something that might be mutating,
+
+        > prefer a pointer receiver, as it will make the intention clearer to the reader.
+
+        > Don’t mix receiver types. Choose either pointers or struct types for all available methods.'
+      title: 'DefaultError is not safe to shallow copy because it contains
+
+        fields which are not value types, e.g. maps.
+
+        A shallow copy would inadvertently share these underlying fields,
+
+        leading to incorrect behavior and data races in a concurrent context.
+
+        Consequently, all methods take the type by pointer and not by value.'
+    identityPatchResponse:
+      description: Response for a single identity patch
+      properties:
+        action:
+          description: 'The action for this specific patch
+
+            create ActionCreate  Create this identity.
+
+            error ActionError  Error indicates that the patch failed.'
+          enum:
+          - create
+          - error
+          type: string
+          x-go-enum-desc: 'create ActionCreate  Create this identity.
+
+            error ActionError  Error indicates that the patch failed.'
+        error:
+          $ref: '#/components/schemas/DefaultError'
+        identity:
+          description: The identity ID payload of this patch
+          format: uuid
+          type: string
+        patch_id:
+          description: The ID of this patch response, if an ID was specified in the patch.
+          format: uuid
+          type: string
+      type: object
+    batchPatchIdentitiesResponse:
+      description: Patch identities response
+      properties:
+        identities:
+          description: The patch responses for the individual identities.
+          items:
+            $ref: '#/components/schemas/identityPatchResponse'
+          type: array
+      type: object
+    NullUUID:
+      format: uuid4
+      type:
+      - string
+      - 'null'
     verifiableIdentityAddress:
       description: VerifiableAddress is an identity's verifiable address
       properties:
@@ -1679,84 +2290,39 @@ components:
       - via
       - status
       type: object
-    identityCredentialsWebAuthnFlags:
-      properties:
-        backup_eligible:
-          type: boolean
-        backup_state:
-          type: boolean
-        user_present:
-          type: boolean
-        user_verified:
-          type: boolean
-      title: CredentialWebAuthnFlags contains information about the flags of a webauthn credential.
-      type: object
-    identitySchema:
-      description: Raw JSON Schema
-      type: object
-    identityWithCredentialsWebAuthnConfig:
-      description: Create Identity and Import WebAuthn Credentials Configuration
-      properties:
-        credentials:
-          $ref: '#/components/schemas/identityCredentialsWebAuthnList'
-        user_handle:
-          description: UserHandle is the user handle of the webauthn credential.
-          items:
-            format: uint8
-            type: integer
-          type: array
-      type: object
-    identityWithCredentials:
-      description: Create Identity and Import Credentials
-      properties:
-        lookup_secret:
-          $ref: '#/components/schemas/AdminIdentityImportCredentialsLookupSecret'
-        oidc:
-          $ref: '#/components/schemas/identityWithCredentialsOidc'
-        passkey:
-          $ref: '#/components/schemas/identityWithCredentialsPasskey'
-        password:
-          $ref: '#/components/schemas/identityWithCredentialsPassword'
-        saml:
-          $ref: '#/components/schemas/identityWithCredentialsSaml'
-        totp:
-          $ref: '#/components/schemas/identityWithCredentialsTotp'
-        webauthn:
-          $ref: '#/components/schemas/identityWithCredentialsWebAuthn'
-      type: object
-    identityPatch:
-      description: Payload for patching an identity
-      properties:
-        create:
-          $ref: '#/components/schemas/createIdentityBody'
-        patch_id:
-          description: 'The ID of this patch.
-
-
-            The patch ID is optional. If specified, the ID will be returned in the
-
-            response, so consumers of this API can correlate the response with the
-
-            patch.'
-          format: uuid
-          type: string
-      type: object
-    identityWithCredentialsWebAuthn:
-      description: Create Identity and Import WebAuthn Credentials
+    identityWithCredentialsSaml:
+      description: Payload to import SAML credentials
       properties:
         config:
-          $ref: '#/components/schemas/identityWithCredentialsWebAuthnConfig'
+          $ref: '#/components/schemas/identityWithCredentialsSamlConfig'
       type: object
-    identityCredentialsLookupSecretCode:
-      description: Recovery codes can be used once and are invalidated after use.
+    createRecoveryLinkForIdentityBody:
+      description: Create Recovery Link for Identity Request Body
       properties:
-        code:
-          description: A recovery code
+        expires_in:
+          description: 'Link Expires In
+
+
+            The recovery link will expire after that amount of time has passed. Defaults to the configuration value of
+
+            `selfservice.methods.code.config.lifespan`.'
+          pattern: ^[0-9]+(ns|us|ms|s|m|h)$
           type: string
-        used_at:
-          $ref: '#/components/schemas/nullTime'
-      title: RecoveryCode represents one recovery code associated with a lookup_secret credential.
+        identity_id:
+          description: 'Identity to Recover
+
+
+            The identity''s ID you wish to recover.'
+          format: uuid
+          type: string
+      required:
+      - identity_id
       type: object
+    identitySchemas:
+      description: List of Identity JSON Schemas
+      items:
+        $ref: '#/components/schemas/identitySchemaContainer'
+      type: array
     identityWithCredentialsPasswordConfig:
       description: Create Identity and Import Password Credentials Configuration
       properties:
@@ -1770,59 +2336,15 @@ components:
           description: If set to true, the password will be migrated using the password migration hook.
           type: boolean
       type: object
-    updateIdentityBody:
-      description: Update Identity Body
+    errorGeneric:
+      description: The standard Ory JSON API error format.
       properties:
-        credentials:
-          $ref: '#/components/schemas/identityWithCredentials'
-        external_id:
-          description: 'ExternalID is an optional external ID of the identity. This is used to link
-
-            the identity to an external system. If set, the external ID must be unique
-
-            across all identities.'
-          type: string
-        metadata_admin:
-          description: Store metadata about the user which is only accessible through admin APIs such as `GET /admin/identities/<id>`.
-        metadata_public:
-          description: 'Store metadata about the identity which the identity itself can see when calling for example the
-
-            session endpoint. Do not store sensitive information (e.g. credit score) about the identity in this field.'
-        schema_id:
-          description: 'SchemaID is the ID of the JSON Schema to be used for validating the identity''s traits. If set
-
-            will update the Identity''s SchemaID.'
-          type: string
-        state:
-          description: 'State is the identity''s state.
-
-            active StateActive
-
-            inactive StateInactive'
-          enum:
-          - active
-          - inactive
-          type: string
-          x-go-enum-desc: 'active StateActive
-
-            inactive StateInactive'
-        traits:
-          description: 'Traits represent an identity''s traits. The identity is able to create, modify, and delete traits
-
-            in a self-service manner. The input will always be validated against the JSON Schema defined
-
-            in `schema_id`.'
-          type: object
+        error:
+          $ref: '#/components/schemas/genericError'
       required:
-      - schema_id
-      - traits
-      - state
+      - error
+      title: JSON API Error Response
       type: object
-    identitySchemas:
-      description: List of Identity JSON Schemas
-      items:
-        $ref: '#/components/schemas/identitySchemaContainer'
-      type: array
     recoveryLinkForIdentity:
       description: Used when an administrator creates a recovery link for an identity.
       properties:
@@ -1843,135 +2365,8 @@ components:
       - recovery_link
       title: Identity Recovery Link
       type: object
-    identitySchemaContainer:
-      description: An Identity JSON Schema Container
-      properties:
-        id:
-          description: The ID of the Identity JSON Schema
-          type: string
-        schema:
-          description: The actual Identity JSON Schema
-          type: object
-      required:
-      - id
-      - schema
-      type: object
-    identity:
-      description: An [identity](https://www.ory.com/docs/kratos/concepts/identity-user-model) represents a (human) user in Ory.
-      properties:
-        created_at:
-          description: CreatedAt is a helper struct field for gobuffalo.pop.
-          format: date-time
-          type: string
-        credentials:
-          additionalProperties:
-            $ref: '#/components/schemas/identityCredentials'
-          description: Credentials represents all credentials that can be used for authenticating this identity.
-          type: object
-        external_id:
-          description: 'ExternalID is an optional external ID of the identity. This is used to link
-
-            the identity to an external system. If set, the external ID must be unique
-
-            across all identities.'
-          type: string
-        id:
-          description: 'ID is the identity''s unique identifier.
-
-
-            The Identity ID can not be changed and can not be chosen. This ensures future
-
-            compatibility and optimization for distributed stores such as CockroachDB.'
-          format: uuid
-          type: string
-        metadata_admin:
-          $ref: '#/components/schemas/nullJsonRawMessage'
-        metadata_public:
-          $ref: '#/components/schemas/nullJsonRawMessage'
-        organization_id:
-          $ref: '#/components/schemas/NullUUID'
-        recovery_addresses:
-          description: RecoveryAddresses contains all the addresses that can be used to recover an identity.
-          items:
-            $ref: '#/components/schemas/recoveryIdentityAddress'
-          type: array
-          x-omitempty: true
-        schema_id:
-          description: SchemaID is the ID of the JSON Schema to be used for validating the identity's traits.
-          type: string
-        schema_url:
-          description: 'SchemaURL is the URL of the endpoint where the identity''s traits schema can be fetched from.
-
-
-            format: url'
-          type: string
-        state:
-          description: 'State is the identity''s state.
-
-
-            This value has currently no effect.
-
-            active StateActive
-
-            inactive StateInactive'
-          enum:
-          - active
-          - inactive
-          type: string
-          x-go-enum-desc: 'active StateActive
-
-            inactive StateInactive'
-        state_changed_at:
-          $ref: '#/components/schemas/nullTime'
-        traits:
-          $ref: '#/components/schemas/identityTraits'
-        updated_at:
-          description: UpdatedAt is a helper struct field for gobuffalo.pop.
-          format: date-time
-          type: string
-        verifiable_addresses:
-          description: VerifiableAddresses contains all the addresses that can be verified by the user.
-          items:
-            $ref: '#/components/schemas/verifiableIdentityAddress'
-          type: array
-          x-omitempty: true
-      required:
-      - id
-      - schema_id
-      - schema_url
-      - traits
-      title: Identity represents an Ory Kratos identity
-      type: object
-    identityWithCredentialsPassword:
-      description: Create Identity and Import Password Credentials
-      properties:
-        config:
-          $ref: '#/components/schemas/identityWithCredentialsPasswordConfig'
-      type: object
-    JSONRawMessage:
-      title: JSONRawMessage represents a json.RawMessage that works well with JSON, SQL, and Swagger.
-      type: object
-    sessionDevice:
-      description: Device corresponding to a Session
-      properties:
-        id:
-          description: Device record ID
-          format: uuid
-          type: string
-        ip_address:
-          description: IPAddress of the client
-          type: string
-        location:
-          description: Geo Location corresponding to the IP Address
-          type: string
-        user_agent:
-          description: UserAgent of the client
-          type: string
-      required:
-      - id
-      type: object
-    identityWithCredentialsPasskeyConfig:
-      description: Create Identity and Import Passkey Credentials Configuration
+    identityWithCredentialsWebAuthnConfig:
+      description: Create Identity and Import WebAuthn Credentials Configuration
       properties:
         credentials:
           $ref: '#/components/schemas/identityCredentialsWebAuthnList'
@@ -1981,38 +2376,6 @@ components:
             format: uint8
             type: integer
           type: array
-      type: object
-    identityCredentialsWebAuthnAuthenticator:
-      properties:
-        aaguid:
-          items:
-            format: uint8
-            type: integer
-          type: array
-        clone_warning:
-          type: boolean
-        sign_count:
-          format: uint32
-          type: integer
-      title: AuthenticatorWebAuthn contains information about the authenticator of a webauthn credential.
-      type: object
-    nullJsonRawMessage:
-      description: NullJSONRawMessage represents a json.RawMessage that works well with JSON, SQL, and Swagger and is NULLable-
-    sessionAuthenticationMethods:
-      description: A list of authenticators which were used to authenticate the session.
-      items:
-        $ref: '#/components/schemas/sessionAuthenticationMethod'
-      title: List of (Used) AuthenticationMethods
-      type: array
-    identityCredentialsWebAuthnList:
-      items:
-        $ref: '#/components/schemas/identityCredentialsWebAuthn'
-      type: array
-    identityWithCredentialsPasskey:
-      description: Create Identity and Import Passkey Credentials
-      properties:
-        config:
-          $ref: '#/components/schemas/identityWithCredentialsPasskeyConfig'
       type: object
     authenticatorAssuranceLevel:
       description: 'The authenticator assurance level can be one of "aal1", "aal2", or "aal3". A higher number means that it is harder
@@ -2033,380 +2396,7 @@ components:
       - aal3
       title: Authenticator Assurance Level (AAL)
       type: string
-    identityCredentialsWebAuthnAttestation:
-      properties:
-        authenticator_data:
-          items:
-            format: uint8
-            type: integer
-          type: array
-        client_dataJSON:
-          items:
-            format: uint8
-            type: integer
-          type: array
-        client_data_hash:
-          items:
-            format: uint8
-            type: integer
-          type: array
-        object:
-          items:
-            format: uint8
-            type: integer
-          type: array
-        public_key_algorithm:
-          format: int64
-          type: integer
-      title: CredentialWebAuthnAttestation contains information about attestation of a webauthn credential.
-      type: object
-    selfServiceFlowType:
-      description: The flow type can either be `api` or `browser`.
-      title: Type is the flow type.
-      type: string
-    createRecoveryCodeForIdentityBody:
-      description: Create Recovery Code for Identity Request Body
-      properties:
-        expires_in:
-          description: 'Code Expires In
-
-
-            The recovery code will expire after that amount of time has passed. Defaults to the configuration value of
-
-            `selfservice.methods.code.config.lifespan`.'
-          pattern: ^([0-9]+(ns|us|ms|s|m|h))*$
-          type: string
-        flow_type:
-          $ref: '#/components/schemas/selfServiceFlowType'
-        identity_id:
-          description: 'Identity to Recover
-
-
-            The identity''s ID you wish to recover.'
-          format: uuid
-          type: string
-      required:
-      - identity_id
-      type: object
-    jsonPatch:
-      description: A JSONPatch document as defined by RFC 6902
-      properties:
-        from:
-          description: 'This field is used together with operation "move" and uses JSON Pointer notation.
-
-
-            Learn more [about JSON Pointers](https://datatracker.ietf.org/doc/html/rfc6901#section-5).'
-          example: /name
-          type: string
-        op:
-          description: The operation to be performed. One of "add", "remove", "replace", "move", "copy", or "test".
-          example: replace
-          type: string
-        path:
-          description: 'The path to the target path. Uses JSON pointer notation.
-
-
-            Learn more [about JSON Pointers](https://datatracker.ietf.org/doc/html/rfc6901#section-5).'
-          example: /name
-          type: string
-        value:
-          description: 'The value to be used within the operations.
-
-
-            Learn more [about JSON Pointers](https://datatracker.ietf.org/doc/html/rfc6901#section-5).'
-          example: foobar
-      required:
-      - op
-      - path
-      type: object
-    recoveryIdentityAddress:
-      properties:
-        break_glass_for_organization:
-          $ref: '#/components/schemas/NullUUID'
-        created_at:
-          description: CreatedAt is a helper struct field for gobuffalo.pop.
-          format: date-time
-          type: string
-        id:
-          format: uuid
-          type: string
-        updated_at:
-          description: UpdatedAt is a helper struct field for gobuffalo.pop.
-          format: date-time
-          type: string
-        value:
-          type: string
-        via:
-          type: string
-      required:
-      - value
-      - via
-      type: object
-    identityWithCredentialsOidc:
-      description: Create Identity and Import Social Sign In Credentials
-      properties:
-        config:
-          $ref: '#/components/schemas/identityWithCredentialsOidcConfig'
-      type: object
-    identityCredentialsWebAuthn:
-      properties:
-        added_at:
-          format: date-time
-          type: string
-        attestation:
-          $ref: '#/components/schemas/identityCredentialsWebAuthnAttestation'
-        attestation_type:
-          type: string
-        authenticator:
-          $ref: '#/components/schemas/identityCredentialsWebAuthnAuthenticator'
-        display_name:
-          type: string
-        flags:
-          $ref: '#/components/schemas/identityCredentialsWebAuthnFlags'
-        id:
-          items:
-            format: uint8
-            type: integer
-          type: array
-        is_passwordless:
-          type: boolean
-        public_key:
-          items:
-            format: uint8
-            type: integer
-          type: array
-        transport:
-          items:
-            $ref: '#/components/schemas/AuthenticatorTransport'
-          type: array
-      title: CredentialWebAuthn contains information about a webauthn credential.
-      type: object
-    DefaultError:
-      description: 'From https://go.dev/wiki/CodeReviewComments#receiver-type:
-
-        > Can function or methods, either concurrently or when called from this method, be mutating the receiver? A value type creates a copy of the receiver when the method is invoked, so outside updates will not be applied to this receiver. If changes must be visible in the original receiver, the receiver must be a pointer.
-
-        > If the receiver is a struct, array or slice and any of its elements is a pointer to something that might be mutating,
-
-        > prefer a pointer receiver, as it will make the intention clearer to the reader.
-
-        > Don’t mix receiver types. Choose either pointers or struct types for all available methods.'
-      title: 'DefaultError is not safe to shallow copy because it contains
-
-        fields which are not value types, e.g. maps.
-
-        A shallow copy would inadvertently share these underlying fields,
-
-        leading to incorrect behavior and data races in a concurrent context.
-
-        Consequently, all methods take the type by pointer and not by value.'
-    AdminIdentityImportCredentialsLookupSecret:
-      description: Create Identity and Import Lookup Secret Credentials
-      properties:
-        config:
-          $ref: '#/components/schemas/AdminIdentityImportCredentialsLookupSecretConfig'
-      type: object
-    genericError:
-      properties:
-        code:
-          description: The status code
-          example: 404
-          format: int64
-          type: integer
-        debug:
-          description: 'Debug information
-
-
-            This field is often not exposed to protect against leaking
-
-            sensitive information.'
-          example: SQL field "foo" is not a bool.
-          type: string
-        details:
-          additionalProperties: false
-          description: Further error details
-          type: object
-        id:
-          description: 'The error ID
-
-
-            Useful when trying to identify various errors in application logic.'
-          type: string
-        message:
-          description: 'Error message
-
-
-            The error''s message.'
-          example: The resource could not be found
-          type: string
-        reason:
-          description: A human-readable reason for the error
-          example: User with ID 1234 does not exist.
-          type: string
-        request:
-          description: 'The request ID
-
-
-            The request ID is often exposed internally in order to trace
-
-            errors across service architectures. This is often a UUID.'
-          example: d7ef54b1-ec15-46e6-bccb-524b82c035e6
-          type: string
-        status:
-          description: The status description
-          example: Not Found
-          type: string
-      required:
-      - message
-      type: object
-    identityWithCredentialsSaml:
-      description: Payload to import SAML credentials
-      properties:
-        config:
-          $ref: '#/components/schemas/identityWithCredentialsSamlConfig'
-      type: object
-    identityWithCredentialsSamlConfig:
-      description: Payload of SAML providers
-      properties:
-        providers:
-          description: A list of SAML Providers
-          items:
-            $ref: '#/components/schemas/identityWithCredentialsSamlConfigProvider'
-          type: array
-      type: object
-    nullTime:
-      format: date-time
-      title: NullTime implements sql.NullTime functionality.
-      type: string
-    NullUUID:
-      format: uuid4
-      type:
-      - string
-      - 'null'
-    createIdentityBody:
-      description: Create Identity Body
-      properties:
-        credentials:
-          $ref: '#/components/schemas/identityWithCredentials'
-        external_id:
-          description: 'ExternalID is an optional external ID of the identity. This is used to link
-
-            the identity to an external system. If set, the external ID must be unique
-
-            across all identities.'
-          type: string
-        metadata_admin:
-          description: Store metadata about the user which is only accessible through admin APIs such as `GET /admin/identities/<id>`.
-        metadata_public:
-          description: 'Store metadata about the identity which the identity itself can see when calling for example the
-
-            session endpoint. Do not store sensitive information (e.g. credit score) about the identity in this field.'
-        organization_id:
-          $ref: '#/components/schemas/NullUUID'
-        recovery_addresses:
-          description: 'RecoveryAddresses contains all the addresses that can be used to recover an identity.
-
-
-            Use this structure to import recovery addresses for an identity. Please keep in mind
-
-            that the address needs to be represented in the Identity Schema or this field will be overwritten
-
-            on the next identity update.'
-          items:
-            $ref: '#/components/schemas/recoveryIdentityAddress'
-          type: array
-        schema_id:
-          description: SchemaID is the ID of the JSON Schema to be used for validating the identity's traits.
-          type: string
-        state:
-          description: 'State is the identity''s state.
-
-            active StateActive
-
-            inactive StateInactive'
-          enum:
-          - active
-          - inactive
-          type: string
-          x-go-enum-desc: 'active StateActive
-
-            inactive StateInactive'
-        traits:
-          description: 'Traits represent an identity''s traits. The identity is able to create, modify, and delete traits
-
-            in a self-service manner. The input will always be validated against the JSON Schema defined
-
-            in `schema_url`.'
-          type: object
-        verifiable_addresses:
-          description: 'VerifiableAddresses contains all the addresses that can be verified by the user.
-
-
-            Use this structure to import verified addresses for an identity. Please keep in mind
-
-            that the address needs to be represented in the Identity Schema or this field will be overwritten
-
-            on the next identity update.'
-          items:
-            $ref: '#/components/schemas/verifiableIdentityAddress'
-          type: array
-      required:
-      - schema_id
-      - traits
-      type: object
-    batchPatchIdentitiesResponse:
-      description: Patch identities response
-      properties:
-        identities:
-          description: The patch responses for the individual identities.
-          items:
-            $ref: '#/components/schemas/identityPatchResponse'
-          type: array
-      type: object
-    identityWithCredentialsTotp:
-      description: Create Identity and Import TOTP 2FA Credentials
-      properties:
-        config:
-          $ref: '#/components/schemas/identityWithCredentialsTotpConfig'
-      type: object
-    identityPatchResponse:
-      description: Response for a single identity patch
-      properties:
-        action:
-          description: 'The action for this specific patch
-
-            create ActionCreate  Create this identity.
-
-            error ActionError  Error indicates that the patch failed.'
-          enum:
-          - create
-          - error
-          type: string
-          x-go-enum-desc: 'create ActionCreate  Create this identity.
-
-            error ActionError  Error indicates that the patch failed.'
-        error:
-          $ref: '#/components/schemas/DefaultError'
-        identity:
-          description: The identity ID payload of this patch
-          format: uuid
-          type: string
-        patch_id:
-          description: The ID of this patch response, if an ID was specified in the patch.
-          format: uuid
-          type: string
-      type: object
   responses:
-    emptyResponse:
-      description: Empty responses are sent when, for example, resources are deleted. The HTTP status code for empty responses is typically 204.
-    listIdentitySessions:
-      content:
-        application/json:
-          schema:
-            items:
-              $ref: '#/components/schemas/session'
-            type: array
-      description: List Identity Sessions Response
     listIdentities:
       content:
         application/json:
@@ -2415,6 +2405,12 @@ components:
               $ref: '#/components/schemas/identity'
             type: array
       description: Paginated Identity List Response
+    identitySchemas:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/identitySchemas'
+      description: List Identity JSON Schemas Response
     listSessions:
       content:
         application/json:
@@ -2426,12 +2422,16 @@ components:
 
 
         The response given when listing sessions in an administrative context.'
-    identitySchemas:
+    emptyResponse:
+      description: Empty responses are sent when, for example, resources are deleted. The HTTP status code for empty responses is typically 204.
+    listIdentitySessions:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/identitySchemas'
-      description: List Identity JSON Schemas Response
+            items:
+              $ref: '#/components/schemas/session'
+            type: array
+      description: List Identity Sessions Response
   securitySchemes:
     oryAccessToken:
       in: header

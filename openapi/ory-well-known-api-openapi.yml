@@ -32,6 +32,26 @@ paths:
       - .well Known
 components:
   schemas:
+    genericError:
+      description: The standard error format
+      properties:
+        code:
+          format: int64
+          type: integer
+        details:
+          items:
+            additionalProperties: {}
+            type: object
+          type: array
+        message:
+          type: string
+        reason:
+          type: string
+        request:
+          type: string
+        status:
+          type: string
+      type: object
     jsonWebKey:
       properties:
         alg:
@@ -141,26 +161,6 @@ components:
           items:
             $ref: '#/components/schemas/jsonWebKey'
           type: array
-      type: object
-    genericError:
-      description: The standard error format
-      properties:
-        code:
-          format: int64
-          type: integer
-        details:
-          items:
-            additionalProperties: {}
-            type: object
-          type: array
-        message:
-          type: string
-        reason:
-          type: string
-        request:
-          type: string
-        status:
-          type: string
       type: object
     errorOAuth2:
       description: Error

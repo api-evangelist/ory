@@ -256,6 +256,11 @@ paths:
       - jwk
       x-ory-ratelimit-bucket: hydra-admin-low
 components:
+  responses:
+    emptyResponse:
+      description: 'Empty responses are sent when, for example, resources are deleted. The HTTP status code for empty responses is
+
+        typically 204.'
   schemas:
     createJsonWebKeySet:
       description: Create JSON Web Key Set Request Body
@@ -316,26 +321,6 @@ components:
           example: 401
           format: int64
           type: integer
-      type: object
-    jsonWebKeySet:
-      description: JSON Web Key Set
-      properties:
-        keys:
-          description: 'List of JSON Web Keys
-
-
-            The value of the "keys" parameter is an array of JSON Web Key (JWK)
-
-            values. By default, the order of the JWK values within the array does
-
-            not imply an order of preference among them, although applications
-
-            of JWK Sets can choose to assign a meaning to the order for their
-
-            purposes, if desired.'
-          items:
-            $ref: '#/components/schemas/jsonWebKey'
-          type: array
       type: object
     jsonWebKey:
       properties:
@@ -452,11 +437,26 @@ components:
       - kid
       - alg
       type: object
-  responses:
-    emptyResponse:
-      description: 'Empty responses are sent when, for example, resources are deleted. The HTTP status code for empty responses is
+    jsonWebKeySet:
+      description: JSON Web Key Set
+      properties:
+        keys:
+          description: 'List of JSON Web Keys
 
-        typically 204.'
+
+            The value of the "keys" parameter is an array of JSON Web Key (JWK)
+
+            values. By default, the order of the JWK values within the array does
+
+            not imply an order of preference among them, although applications
+
+            of JWK Sets can choose to assign a meaning to the order for their
+
+            purposes, if desired.'
+          items:
+            $ref: '#/components/schemas/jsonWebKey'
+          type: array
+      type: object
   securitySchemes:
     basic:
       scheme: basic

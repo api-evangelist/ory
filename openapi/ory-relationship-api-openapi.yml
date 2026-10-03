@@ -279,7 +279,18 @@ paths:
       - Relationship
       x-ory-ratelimit-bucket: keto-admin-medium
 components:
+  responses:
+    emptyResponse:
+      description: Empty responses are sent when, for example, resources are deleted. The HTTP status code for empty responses is typically 204.
   schemas:
+    relationshipNamespaces:
+      description: Relationship Namespace List
+      properties:
+        namespaces:
+          items:
+            $ref: '#/components/schemas/namespace'
+          type: array
+      type: object
     checkOplSyntaxResult:
       properties:
         errors:
@@ -288,6 +299,39 @@ components:
             $ref: '#/components/schemas/ParseError'
           type: array
       title: CheckOPLSyntaxResponse represents the response for an OPL syntax check request.
+      type: object
+    ParseError:
+      properties:
+        end:
+          $ref: '#/components/schemas/SourcePosition'
+        message:
+          type: string
+        start:
+          $ref: '#/components/schemas/SourcePosition'
+      type: object
+    SourcePosition:
+      properties:
+        Line:
+          format: int64
+          type: integer
+        column:
+          format: int64
+          type: integer
+      type: object
+    relationships:
+      description: Paginated Relationship List
+      properties:
+        next_page_token:
+          description: 'The opaque token to provide in a subsequent request
+
+            to get the next page. It is the empty string iff this is
+
+            the last page.'
+          type: string
+        relation_tuples:
+          items:
+            $ref: '#/components/schemas/relationship'
+          type: array
       type: object
     relationshipPatch:
       description: Payload for patching a relationship
@@ -324,15 +368,6 @@ components:
         subject_set:
           $ref: '#/components/schemas/subjectSet'
       type: object
-    ParseError:
-      properties:
-        end:
-          $ref: '#/components/schemas/SourcePosition'
-        message:
-          type: string
-        start:
-          $ref: '#/components/schemas/SourcePosition'
-      type: object
     relationship:
       description: Relationship
       properties:
@@ -358,13 +393,33 @@ components:
       - object
       - relation
       type: object
-    relationshipNamespaces:
-      description: Relationship Namespace List
+    checkOplSyntaxBody:
+      description: Ory Permission Language Document
+      type: string
+    subjectSet:
       properties:
-        namespaces:
-          items:
-            $ref: '#/components/schemas/namespace'
-          type: array
+        namespace:
+          description: Namespace of the Subject Set
+          type: string
+        object:
+          description: Object of the Subject Set
+          type: string
+        relation:
+          description: Relation of the Subject Set
+          type: string
+      required:
+      - namespace
+      - object
+      - relation
+      type: object
+    errorGeneric:
+      description: The standard Ory JSON API error format.
+      properties:
+        error:
+          $ref: '#/components/schemas/genericError'
+      required:
+      - error
+      title: JSON API Error Response
       type: object
     genericError:
       properties:
@@ -419,64 +474,9 @@ components:
       required:
       - message
       type: object
-    relationships:
-      description: Paginated Relationship List
-      properties:
-        next_page_token:
-          description: 'The opaque token to provide in a subsequent request
-
-            to get the next page. It is the empty string iff this is
-
-            the last page.'
-          type: string
-        relation_tuples:
-          items:
-            $ref: '#/components/schemas/relationship'
-          type: array
-      type: object
-    checkOplSyntaxBody:
-      description: Ory Permission Language Document
-      type: string
-    errorGeneric:
-      description: The standard Ory JSON API error format.
-      properties:
-        error:
-          $ref: '#/components/schemas/genericError'
-      required:
-      - error
-      title: JSON API Error Response
-      type: object
     namespace:
       properties:
         name:
           description: Name of the namespace.
           type: string
       type: object
-    subjectSet:
-      properties:
-        namespace:
-          description: Namespace of the Subject Set
-          type: string
-        object:
-          description: Object of the Subject Set
-          type: string
-        relation:
-          description: Relation of the Subject Set
-          type: string
-      required:
-      - namespace
-      - object
-      - relation
-      type: object
-    SourcePosition:
-      properties:
-        Line:
-          format: int64
-          type: integer
-        column:
-          format: int64
-          type: integer
-      type: object
-  responses:
-    emptyResponse:
-      description: Empty responses are sent when, for example, resources are deleted. The HTTP status code for empty responses is typically 204.

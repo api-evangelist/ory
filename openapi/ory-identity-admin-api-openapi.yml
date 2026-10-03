@@ -325,33 +325,19 @@ paths:
           description: The recovery link.
 components:
   responses:
-    Unauthorized:
-      description: Missing or invalid credentials.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     NotFound:
       description: The requested resource was not found.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Missing or invalid credentials.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
-    Error:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: integer
-            status:
-              type: string
-            message:
-              type: string
-            reason:
-              type: string
     Identity:
       type: object
       properties:
@@ -379,6 +365,22 @@ components:
         updated_at:
           type: string
           format: date-time
+    Session:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        active:
+          type: boolean
+        expires_at:
+          type: string
+          format: date-time
+        authenticated_at:
+          type: string
+          format: date-time
+        identity:
+          $ref: '#/components/schemas/Identity'
     IdentityInput:
       type: object
       required:
@@ -398,22 +400,20 @@ components:
         credentials:
           type: object
           additionalProperties: true
-    Session:
+    Error:
       type: object
       properties:
-        id:
-          type: string
-          format: uuid
-        active:
-          type: boolean
-        expires_at:
-          type: string
-          format: date-time
-        authenticated_at:
-          type: string
-          format: date-time
-        identity:
-          $ref: '#/components/schemas/Identity'
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+            status:
+              type: string
+            message:
+              type: string
+            reason:
+              type: string
   securitySchemes:
     oryApiKey:
       type: http
