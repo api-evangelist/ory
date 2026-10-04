@@ -1,0 +1,185 @@
+slug: ory
+provider: Ory
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 17
+edges:
+- tag: Identity
+  spec_file: ory-identity-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.95
+  evidence: '"List Identities", "Create an Identity", "Delete a credential for a specific identity", "Delete
+    & Invalidate an Identity''s Sessions"'
+  reason: Administrative CRUD over identities, their credentials and sessions is the core of Identity
+    & Access Management. Not customer master data — these are authentication principals with credential
+    schemas (identityWithCredentialsPassword, Totp, Passkey).
+- tag: Identity (Admin)
+  spec_file: ory-identity-admin-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.95
+  evidence: '"Create an identity", "Delete a credential of an identity", "Revoke all of an identity''s
+    sessions", "List all sessions"'
+  reason: Admin management of identities, credentials and sessions — Identity & Access Management.
+- tag: Frontend
+  spec_file: ory-frontend-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.92
+  evidence: '"Submit a Login Flow", "Update Recovery Flow", "Perform Logout for Native Apps"; description:
+    "registration, login, recovery, account verification, profile settings, password reset ... session
+    management"'
+  reason: End-user authentication, registration, credential recovery and session flows are squarely identity
+    and access management; no business-domain capability is realised beyond IAM.
+- tag: OAuth2
+  spec_file: ory-oauth2-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.92
+  evidence: '"List OAuth 2.0 Clients", "Accept OAuth 2.0 Consent Request", "Get OAuth 2.0 Login Request",
+    schema "introspectedOAuth2Token"'
+  reason: Management of OAuth2 clients, login/consent requests and tokens is federation and access management
+    — Identity & Access Management. Client credentials here are the vendor's own authorization server
+    function, not a developer-portal credential programme.
+- tag: Identity (Self-Service)
+  spec_file: ory-identity-self-service-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.9
+  evidence: '"Create a browser login flow", "Submit a registration flow", "Create a browser account recovery
+    flow", "Create a browser email verification flow"'
+  reason: Self-service authentication, registration, recovery and verification flows are IAM end-user
+    journeys, not customer lifecycle or onboarding in a commercial sense.
+- tag: OAuth2 (Admin)
+  spec_file: ory-oauth2-admin-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.9
+  evidence: '"Create an OAuth2 client", "Introspect an OAuth2 token", "Accept an OAuth2 consent request"'
+  reason: Administrative control of OAuth2 clients, token introspection and login/consent/logout requests
+    — Identity & Access Management.
+- tag: OAuth2 (Public)
+  spec_file: ory-oauth2-public-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.9
+  evidence: '"OAuth2 authorization endpoint", "OAuth2 token endpoint", "Revoke an OAuth2 token", "OpenID
+    Connect UserInfo"'
+  reason: Standard OAuth2/OIDC authorization, token issuance and revocation endpoints — authentication
+    and access management runtime.
+- tag: Permission
+  spec_file: ory-permission-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.9
+  evidence: POST /relation-tuples/batch/check  batchCheckPermission  Batch check permissions; GET /relation-tuples/expand  Expand
+    a Relationship into permissions
+  reason: Keto permission checks are authorization decisioning — identity & access management. Cross-industry
+    IT security is the honest mapping for this devtool.
+- tag: Permissions
+  spec_file: ory-permissions-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.9
+  evidence: GET /relation-tuples/check  checkPermission  Check a permission; GET /namespaces  listRelationshipNamespaces  List
+    permission namespaces
+  reason: Same permission-check surface on Ory Network; authorization/access control = Identity & Access
+    Management.
+- tag: OIDC
+  spec_file: ory-oidc-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.88
+  evidence: '"OpenID Connect Discovery", "Register OAuth2 Client using OpenID Dynamic Client Registration",
+    "OpenID Connect Front- and Back-channel Enabled Logout"'
+  reason: OIDC discovery, dynamic client registration, userinfo and session logout are federation capabilities
+    within Identity & Access Management.
+- tag: Relationship
+  spec_file: ory-relationship-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.85
+  evidence: PUT /admin/relation-tuples  createRelationship  Create a Relationship; POST /opl/syntax/check  checkOplSyntax  Check
+    the syntax of an OPL file
+  reason: Relationship tuples and Ory Permission Language are the data model for access control policy,
+    not customer relationships — a homograph. Maps to Identity & Access Management.
+- tag: Relationships
+  spec_file: ory-relationships-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.85
+  evidence: PUT /admin/relation-tuples  createRelationTuple  Create or update a relationship tuple; POST
+    /opl/syntax/check  Check Ory Permission Language syntax
+  reason: Authorization relationship tuples, not CRM relationships. Access control administration.
+- tag: Decisions
+  spec_file: ory-decisions-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.78
+  evidence: GET /decisions — "Access Control Decision API" (Ory Oathkeeper, "a reverse proxy with policy
+    enforcement")
+  reason: The single operation evaluates access control decisions for incoming requests — an access management
+    / policy enforcement function, which is Identity & Access Management. Only one operation, so some
+    thinness, but no other reading fits an authorization decision endpoint.
+- tag: Billing
+  spec_file: ory-billing-api-openapi.yml
+  capability_id: BC-4240.40
+  capability_id_l1: BC-4240
+  capability_name: Subscription Modification
+  confidence: 0.7
+  evidence: POST /workspaces/{workspace}/subscription  createWorkspaceSubscription  Create or change a
+    workspace subscription
+  reason: Operations get and create/change a workspace subscription plan — subscription lifecycle; 'create
+    or change' spans provisioning and modification, so sub-capability choice is uncertain.
+- tag: Projects
+  spec_file: ory-projects-api-openapi.yml
+  capability_id: BC-4230.10
+  capability_id_l1: BC-4230
+  capability_name: Tenant Provisioning & Lifecycle
+  confidence: 0.7
+  evidence: POST /projects  createProject  Create a project; DELETE /projects/{projectId}  purgeProject  Delete
+    a project; GET /workspaces/{workspace}/projects
+  reason: Projects within workspaces in the Ory Network managed cloud are the tenant unit; create/patch-config/purge
+    is tenant provisioning and lifecycle. Some overlap with tenant configuration management.
+- tag: Rules
+  spec_file: ory-rules-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.7
+  evidence: 'GET /rules  listRules  List All Rules; schemas: ruleMatch, Upstream, ruleHandler, rule'
+  reason: Oathkeeper access rules with upstream/match/handler define policy enforcement for proxied requests
+    — access control configuration. Read-only listing makes it thin, hence moderate confidence.
+- tag: jwk
+  spec_file: ory-jwk-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.7
+  evidence: POST /admin/keys/{set}  createJsonWebKeySet  Create JSON Web Key
+  reason: JSON Web Key Set management underpins OAuth2/OIDC token signing — cryptographic credential material
+    for identity federation. Could be argued as secrets management (BC-4210.60) but it is squarely identity
+    infrastructure here.

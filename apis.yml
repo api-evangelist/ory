@@ -908,6 +908,9 @@ apis:
   - type: GitHubRepository
     url: https://github.com/ory/oathkeeper
 common:
+- type: CapabilityMap
+  url: capabilities/ory-capability-edges.yml
+  name: Ory Business Capability Map
 - type: IssueTracker
   url: https://github.com/ory/hydra/issues
 - type: Releases
