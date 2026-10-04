@@ -52,9 +52,6 @@ paths:
       tags:
       - Decisions
 components:
-  responses:
-    emptyResponse:
-      description: An empty response
   schemas:
     genericError:
       description: The standard error format
@@ -76,5 +73,8 @@ components:
         status:
           type: string
       type: object
+  responses:
+    emptyResponse:
+      description: An empty response
 x-forwarded-proto: string
 x-request-id: string

@@ -324,20 +324,26 @@ paths:
         '200':
           description: The recovery link.
 components:
-  responses:
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Missing or invalid credentials.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
+    IdentityInput:
+      type: object
+      required:
+      - schema_id
+      - traits
+      properties:
+        schema_id:
+          type: string
+        state:
+          type: string
+          enum:
+          - active
+          - inactive
+        traits:
+          type: object
+          additionalProperties: true
+        credentials:
+          type: object
+          additionalProperties: true
     Identity:
       type: object
       properties:
@@ -365,6 +371,20 @@ components:
         updated_at:
           type: string
           format: date-time
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+            status:
+              type: string
+            message:
+              type: string
+            reason:
+              type: string
     Session:
       type: object
       properties:
@@ -381,39 +401,19 @@ components:
           format: date-time
         identity:
           $ref: '#/components/schemas/Identity'
-    IdentityInput:
-      type: object
-      required:
-      - schema_id
-      - traits
-      properties:
-        schema_id:
-          type: string
-        state:
-          type: string
-          enum:
-          - active
-          - inactive
-        traits:
-          type: object
-          additionalProperties: true
-        credentials:
-          type: object
-          additionalProperties: true
-    Error:
-      type: object
-      properties:
-        error:
-          type: object
-          properties:
-            code:
-              type: integer
-            status:
-              type: string
-            message:
-              type: string
-            reason:
-              type: string
+  responses:
+    Unauthorized:
+      description: Missing or invalid credentials.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     oryApiKey:
       type: http

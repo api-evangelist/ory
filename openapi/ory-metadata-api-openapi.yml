@@ -113,13 +113,6 @@ paths:
       - Metadata
 components:
   schemas:
-    healthStatus:
-      properties:
-        status:
-          description: Status always contains "ok".
-          type: string
-      title: The health status of the service.
-      type: object
     genericError:
       properties:
         code:
@@ -170,6 +163,13 @@ components:
           type: string
       required:
       - message
+      type: object
+    healthStatus:
+      properties:
+        status:
+          description: Status always contains "ok".
+          type: string
+      title: The health status of the service.
       type: object
   securitySchemes:
     basic:
