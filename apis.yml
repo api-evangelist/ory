@@ -908,6 +908,12 @@ apis:
   - type: GitHubRepository
     url: https://github.com/ory/oathkeeper
 common:
+- type: Plans
+  url: plans/ory-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/ory-rate-limits.yml
+- type: FinOps
+  url: finops/ory-finops.yml
 - type: CapabilityMap
   url: capabilities/ory-capability-edges.yml
   name: Ory Business Capability Map
