@@ -257,37 +257,33 @@ paths:
       x-ory-ratelimit-bucket: hydra-admin-low
 components:
   schemas:
-    createJsonWebKeySet:
-      description: Create JSON Web Key Set Request Body
+    errorOAuth2:
+      description: Error
       properties:
-        alg:
-          description: 'JSON Web Key Algorithm
-
-
-            The algorithm to be used for creating the key. Supports `RS256`, `ES256`, `ES512`, `HS512`, and `HS256`.'
+        error:
+          description: Error
           type: string
-        kid:
-          description: 'JSON Web Key ID
+        error_debug:
+          description: 'Error Debug Information
 
 
-            The Key ID of the key to be created.'
+            Only available in dev mode.'
           type: string
-        use:
-          description: 'JSON Web Key Use
-
-
-            The "use" (public key use) parameter identifies the intended use of
-
-            the public key. The "use" parameter is employed to indicate whether
-
-            a public key is used for encrypting data or verifying the signature
-
-            on data. Valid values are "enc" and "sig".'
+        error_description:
+          description: Error Description
           type: string
-      required:
-      - alg
-      - use
-      - kid
+        error_hint:
+          description: 'Error Hint
+
+
+            Helps the user identify the error cause.'
+          example: The redirect URL is not allowed.
+          type: string
+        status_code:
+          description: HTTP Status Code
+          example: 401
+          format: int64
+          type: integer
       type: object
     jsonWebKey:
       properties:
@@ -404,6 +400,38 @@ components:
       - kid
       - alg
       type: object
+    createJsonWebKeySet:
+      description: Create JSON Web Key Set Request Body
+      properties:
+        alg:
+          description: 'JSON Web Key Algorithm
+
+
+            The algorithm to be used for creating the key. Supports `RS256`, `ES256`, `ES512`, `HS512`, and `HS256`.'
+          type: string
+        kid:
+          description: 'JSON Web Key ID
+
+
+            The Key ID of the key to be created.'
+          type: string
+        use:
+          description: 'JSON Web Key Use
+
+
+            The "use" (public key use) parameter identifies the intended use of
+
+            the public key. The "use" parameter is employed to indicate whether
+
+            a public key is used for encrypting data or verifying the signature
+
+            on data. Valid values are "enc" and "sig".'
+          type: string
+      required:
+      - alg
+      - use
+      - kid
+      type: object
     jsonWebKeySet:
       description: JSON Web Key Set
       properties:
@@ -423,34 +451,6 @@ components:
           items:
             $ref: '#/components/schemas/jsonWebKey'
           type: array
-      type: object
-    errorOAuth2:
-      description: Error
-      properties:
-        error:
-          description: Error
-          type: string
-        error_debug:
-          description: 'Error Debug Information
-
-
-            Only available in dev mode.'
-          type: string
-        error_description:
-          description: Error Description
-          type: string
-        error_hint:
-          description: 'Error Hint
-
-
-            Helps the user identify the error cause.'
-          example: The redirect URL is not allowed.
-          type: string
-        status_code:
-          description: HTTP Status Code
-          example: 401
-          format: int64
-          type: integer
       type: object
   responses:
     emptyResponse:

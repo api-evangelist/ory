@@ -344,33 +344,6 @@ components:
         credentials:
           type: object
           additionalProperties: true
-    Identity:
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-        schema_id:
-          type: string
-        state:
-          type: string
-          enum:
-          - active
-          - inactive
-        traits:
-          type: object
-          additionalProperties: true
-        verifiable_addresses:
-          type: array
-          items:
-            type: object
-            additionalProperties: true
-        created_at:
-          type: string
-          format: date-time
-        updated_at:
-          type: string
-          format: date-time
     Error:
       type: object
       properties:
@@ -401,6 +374,33 @@ components:
           format: date-time
         identity:
           $ref: '#/components/schemas/Identity'
+    Identity:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        schema_id:
+          type: string
+        state:
+          type: string
+          enum:
+          - active
+          - inactive
+        traits:
+          type: object
+          additionalProperties: true
+        verifiable_addresses:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
   responses:
     Unauthorized:
       description: Missing or invalid credentials.
