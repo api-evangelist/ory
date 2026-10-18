@@ -192,9 +192,10 @@ apis:
   description: OpenID Connect
   humanURL: https://www.ory.com/hydra/
   tags:
-  - OIDC
+  - OpenID Connect
   tags_raw:
   - oidc
+  - OIDC
   properties:
   - type: OpenAPI
     url: openapi/ory-oidc-api-openapi.yml
