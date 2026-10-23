@@ -164,6 +164,40 @@ edges:
       repo
   detected_by: sweep-openssf-best-practices-badges.py
   first_seen: '2026-10-22'
+- partner_name: Arch User Repository (AUR)
+  partner: null
+  partner_match: null
+  type: register
+  direction: provider-built
+  category: official CLI (Arch User Repository (AUR))
+  evidence: https://aur.archlinux.org/packages/ory-cli
+  channel: package-registry
+  relationship: distribution-channel
+  contract_reference:
+    register: Arch User Repository (AUR) (public package index)
+    spec_file: null
+    packages:
+    - name: ory-cli
+      kind: aur
+      version: 0.3.4-1
+      released: '2024-02-20'
+      released_field: AUR LastModified
+      out_of_date: true
+      lapsed: true
+      page: https://aur.archlinux.org/packages/ory-cli
+      upstream: https://github.com/ory/cli
+      cli: 'AUR description: Ory command line interface'
+      repo_leg: github-org:ory
+      publisher_leg: artifact-github-org:ory
+      matched_by: github-org
+    current: false
+    signal_note: 'the provider''s own command-line tool packaged for Arch Linux (community-maintained PKGBUILD whose
+      upstream and source artifact are the provider''s): distribution, not an integration; lapsed = flagged out-of-date
+      or not updated in 24 months'
+    detected_by: sweep-aur-vendor-cli-packages.py
+    detected: '2026-10-23'
+  detected_by: sweep-aur-vendor-cli-packages.py
+  first_seen: '2026-10-23'
 generated: '2026-10-20'
 method: searched
 source:
@@ -180,3 +214,6 @@ checked:
 - terraform/integrations/terraform-integration-edges.yml
 - https://www.bestpractices.dev/en/projects.json
 - https://www.bestpractices.dev/en/projects.json?page=N
+- https://aur.archlinux.org/cgit/aur.git/tree/.SRCINFO
+- https://aur.archlinux.org/packages-meta-ext-v1.json.gz
+- https://aur.archlinux.org/rpc/v5/info
