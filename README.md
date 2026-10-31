@@ -1,4 +1,4 @@
-# Ory (ory)
+# Ory
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,142 +66,178 @@
 
 Ory is an open source identity infrastructure platform providing OAuth2 and OpenID Connect (Hydra), identity and user management (Kratos), permissions and authorization (Keto), and a reverse proxy with policy enforcement (Oathkeeper).
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/ory/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/ory/refs/heads/main/apis.yml)
+**Areas:** Authentication · Authorization · Identity · OpenID Connect · Open Source · Identity Federation
 
-## Scope
+## Ory on APIs.io
 
-- **Type:** Index
+Everything profiled for Ory is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/ory/](https://apis.io/providers/ory/)** — or go straight to one of the APIs or properties below.
 
-## Tags
+### APIs (23)
 
-- Authentication
-- Authorization
-- Identity
-- OAuth2
-- OpenID Connect
-- Open Source
+- [Ory Courier API](https://apis.io/apis/ory/ory-courier-api/) — APIs for managing email and SMS message delivery.
+- [Ory Frontend API](https://apis.io/apis/ory/ory-frontend-api/) — Endpoints used by frontend applications (e.g. Single-Page-App, Native Apps, Server Apps, ...) to manage a user's own profile.
+- [Ory Identity API](https://apis.io/apis/ory/ory-identity-api/) — APIs for managing identities.
+- [Ory Jwk API](https://apis.io/apis/ory/ory-jwk-api/) — JSON Web Keys
+- [Ory Metadata API](https://apis.io/apis/ory/ory-metadata-api/) — Service Metadata
+- [Ory Oidc API](https://apis.io/apis/ory/ory-oidc-api/) — OpenID Connect
+- [Ory Permission API](https://apis.io/apis/ory/ory-permission-api/) — The permission API from Ory — 4 operation(s) for permission.
+- [Ory Relationship API](https://apis.io/apis/ory/ory-relationship-api/) — The relationship API from Ory — 4 operation(s) for relationship.
+- [Ory Billing API](https://apis.io/apis/ory/ory-billing-api/) — Ory Network workspace / project subscriptions.
+- [Ory Event Streams API](https://apis.io/apis/ory/ory-event-streams-api/) — Ory Network event stream configuration.
+- [Ory Identity (Admin) API](https://apis.io/apis/ory/ory-identity-admin-api/) — Privileged Kratos identity and session management.
+- [Ory Identity (Self-Service) API](https://apis.io/apis/ory/ory-identity-self-service-api/) — Public Kratos flows for login, registration, recovery, verification, settings, logout, and sessions.
+- [Ory OAuth2 (Admin) API](https://apis.io/apis/ory/ory-oauth2-admin-api/) — Privileged Hydra client, token, consent, and key management.
+- [Ory OAuth2 (Public) API](https://apis.io/apis/ory/ory-oauth2-public-api/) — Public OAuth2 / OpenID Connect provider endpoints (Hydra).
+- [Ory Organizations API](https://apis.io/apis/ory/ory-organizations-api/) — B2B organization management for SSO.
+- [Ory Permissions API](https://apis.io/apis/ory/ory-permissions-api/) — Keto permission checks, expand, and namespace reads.
+- [Ory Project Tokens API](https://apis.io/apis/ory/ory-project-tokens-api/) — Ory Network project API token management.
+- [Ory Projects API](https://apis.io/apis/ory/ory-projects-api/) — Ory Network Console project management.
+- [Ory Relationships API](https://apis.io/apis/ory/ory-relationships-api/) — Keto relationship-tuple writes and OPL syntax checks.
+- [Ory O Auth2 API](https://apis.io/apis/ory/ory-oauth2-api/) — OAuth 2.0
+- [Ory .well Known API](https://apis.io/apis/ory/ory-well-known-api/) — Well-Known Endpoints
+- [Ory Decisions API](https://apis.io/apis/ory/ory-decisions-api/) — The Decisions API from Ory — 1 operation(s) for decisions.
+- [Ory Rules API](https://apis.io/apis/ory/ory-rules-api/) — The Rules API from Ory — 2 operation(s) for rules.
 
-## Timestamps
+### Published properties
 
-- **Created:** 2026-03-25
-- **Modified:** 2026-05-19
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## APIs
+#### MCP servers (1)
 
-### Ory Hydra
+Model Context Protocol servers that expose the API to agents.
 
-Ory Hydra is an OAuth 2.0 and OpenID Connect server. It implements OAuth 2.0 authorization, OpenID Connect Core 1.0, and OpenID Connect Discovery for issuing and managing access tokens, refresh tokens, ID tokens, and OAuth2 clients.
+- [MCP Server](https://apis.io/servers/ory/mcp-server/)
 
-- **Human URL:** [https://www.ory.com/hydra/](https://www.ory.com/hydra/)
+#### Agentic access (1)
 
-#### Tags
+Which operations an agent can call, which act, and which need a human in the loop.
 
-- OAuth2
-- OpenID Connect
-- Authentication
+- [Ory Agentic Access](https://apis.io/agentic-access/ory/ory-agentic-access/)
 
-#### Properties
+#### Collections (28)
 
-- [OpenAPI](https://raw.githubusercontent.com/api-evangelist/ory/refs/heads/main/openapi/ory-hydra-openapi.json) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Documentation](https://www.ory.com/docs/hydra/)
-- [GitHub Repository](https://github.com/ory/hydra)
-- [Postman Collection](collections/ory-hydra.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/ory-hydra.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/ory-keto.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/ory-keto.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/ory-kratos.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/ory-kratos.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/ory-oathkeeper.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/ory-oathkeeper.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+Postman and Open Collection request collections.
 
-### Ory Kratos
+- [Ory Hydra api API](https://apis.io/collections/ory/open-ory-api-api/)
+- [Ory Hydra api courier API](https://apis.io/collections/ory/open-ory-courier-api/)
+- [Ory Hydra api frontend API](https://apis.io/collections/ory/open-ory-frontend-api/)
+- [Ory Hydra API](https://apis.io/collections/ory/open-ory-hydra/)
+- [Ory Hydra api identity API](https://apis.io/collections/ory/open-ory-identity-api/)
+- [Ory Hydra api jwk API](https://apis.io/collections/ory/open-ory-jwk-api/)
+- [Ory Keto API](https://apis.io/collections/ory/open-ory-keto/)
+- [Ory Identities API](https://apis.io/collections/ory/open-ory-kratos/)
+- [Ory Hydra api metadata API](https://apis.io/collections/ory/open-ory-metadata-api/)
+- [Ory Network API](https://apis.io/collections/ory/open-ory-network/)
+- [Ory Network Billing API](https://apis.io/collections/ory/open-ory-network-billing-api/)
+- [Ory Network Billing Courier API](https://apis.io/collections/ory/open-ory-network-courier-api/)
+- [Ory Network Billing Event Streams API](https://apis.io/collections/ory/open-ory-network-event-streams-api/)
+- [Ory Network Billing Identity (Admin) API](https://apis.io/collections/ory/open-ory-network-identity-admin-api/)
+- [Ory Network Billing Identity (Self-Service) API](https://apis.io/collections/ory/open-ory-network-identity-self-service-api/)
+- [Ory Network Billing OAuth2 (Admin) API](https://apis.io/collections/ory/open-ory-network-oauth2-admin-api/)
+- [Ory Network Billing OAuth2 (Public) API](https://apis.io/collections/ory/open-ory-network-oauth2-public-api/)
+- [Ory Network Billing Organizations API](https://apis.io/collections/ory/open-ory-network-organizations-api/)
+- [Ory Network Billing Permissions API](https://apis.io/collections/ory/open-ory-network-permissions-api/)
+- [Ory Network Billing Project Tokens API](https://apis.io/collections/ory/open-ory-network-project-tokens-api/)
+- [Ory Network Billing Projects API](https://apis.io/collections/ory/open-ory-network-projects-api/)
+- [Ory Network Billing Relationships API](https://apis.io/collections/ory/open-ory-network-relationships-api/)
+- [Ory Oathkeeper API](https://apis.io/collections/ory/open-ory-oathkeeper/)
+- [Ory Hydra api oAuth2 API](https://apis.io/collections/ory/open-ory-oauth2-api/)
+- [Ory Hydra api oidc API](https://apis.io/collections/ory/open-ory-oidc-api/)
+- …and 3 more published on APIs.io
 
-Ory Kratos is an identity and user management system. It handles registration, login, multi-factor authentication, account recovery, verification, profile management, and identity schemas with strong security defaults.
+#### Security (4)
 
-- **Human URL:** [https://www.ory.com/kratos/](https://www.ory.com/kratos/)
+Authentication, trust centre, and vulnerability disclosure.
 
-#### Tags
+- [Ory Authentication](https://apis.io/security/ory/ory-authentication/)
+- [Ory Domain Security](https://apis.io/security/ory/ory-domain-security/)
+- [Ory Trust Center](https://apis.io/security/ory/ory-trust-center/)
+- [Ory Vulnerability Disclosure](https://apis.io/security/ory/ory-vulnerability-disclosure/)
 
-- Identity
-- Authentication
-- User Management
+#### OAuth scopes (1)
 
-#### Properties
+The permissions the API asks for.
 
-- [OpenAPI](https://raw.githubusercontent.com/api-evangelist/ory/refs/heads/main/openapi/ory-kratos-openapi.json) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Documentation](https://www.ory.com/docs/kratos/)
-- [GitHub Repository](https://github.com/ory/kratos)
-- [Postman Collection](collections/ory-hydra.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/ory-hydra.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/ory-keto.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/ory-keto.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/ory-kratos.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/ory-kratos.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/ory-oathkeeper.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/ory-oathkeeper.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Ory Scopes](https://apis.io/scopes/ory/ory-scopes/)
 
-### Ory Keto
+#### Plans and pricing (1)
 
-Ory Keto is a permission and authorization server inspired by Google Zanzibar. It provides relationship-based access control (ReBAC), role-based access control (RBAC), and access control list (ACL) checks at scale.
+Published plans, tiers and prices.
 
-- **Human URL:** [https://www.ory.com/keto/](https://www.ory.com/keto/)
+- [Ory Plans Pricing](https://apis.io/plans/ory/ory-plans-pricing/)
 
-#### Tags
+#### Rate limits (1)
 
-- Authorization
-- Permissions
-- Access Control
+Published request limits.
 
-#### Properties
+- [Ory Rate Limits](https://apis.io/rate-limits/ory/ory-rate-limits/)
 
-- [OpenAPI](https://raw.githubusercontent.com/api-evangelist/ory/refs/heads/main/openapi/ory-keto-openapi.json) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Documentation](https://www.ory.com/docs/keto/)
-- [GitHub Repository](https://github.com/ory/keto)
-- [Postman Collection](collections/ory-hydra.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/ory-hydra.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/ory-keto.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/ory-keto.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/ory-kratos.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/ory-kratos.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/ory-oathkeeper.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/ory-oathkeeper.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+#### FinOps (1)
 
-### Ory Oathkeeper
+What the API costs to run, by operation.
 
-Ory Oathkeeper is an identity and access proxy that authenticates, authorizes, and mutates incoming HTTP(S) requests using configurable access rules backed by Hydra, Kratos, and Keto.
+- [Ory Finops](https://apis.io/finops/ory/ory-finops/)
 
-- **Human URL:** [https://www.ory.com/oathkeeper/](https://www.ory.com/oathkeeper/)
+## Where to find this API
 
-#### Tags
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
-- Reverse Proxy
-- Authentication
-- Authorization
-
-#### Properties
-
-- [OpenAPI](https://raw.githubusercontent.com/api-evangelist/ory/refs/heads/main/openapi/ory-oathkeeper-openapi.json) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Documentation](https://www.ory.com/docs/oathkeeper/)
-- [GitHub Repository](https://github.com/ory/oathkeeper)
-- [Postman Collection](collections/ory-hydra.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/ory-hydra.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/ory-keto.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/ory-keto.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/ory-kratos.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/ory-kratos.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/ory-oathkeeper.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/ory-oathkeeper.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-## Common Properties
-
-- [LinkedIn](https://www.linkedin.com/company/ory-corp)
 - [Website](https://www.ory.com)
 - [Documentation](https://www.ory.com/docs/)
-- [GitHub Organization](https://github.com/ory)
 - [Blog](https://www.ory.com/blog/)
-- [M C P Server](https://github.com/ory/mcp)
+- [GitHub](https://github.com/ory)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 45.5** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 61.7 |
+| Contract quality | 44.9 |
+| Contract governance | 0.0 |
+| Operational transparency | 36.8 |
+| Developer ergonomics | 32.1 |
+| Access clarity | 15.8 |
+
+**Agent readiness 33.5** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | documented (partial credit) |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | verified |
+| OpenAPI Examples | partial |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | documented (partial credit) |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | partial |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 32.4** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/ory/](https://apis.io/providers/ory/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Ory: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/ory/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
